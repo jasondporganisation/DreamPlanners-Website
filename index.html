@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Planners Group — Your Trusted Financial Planning Partners</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === HOMEPAGE-SPECIFIC PREMIUM OVERRIDES === */
+
+        /* HERO — full screen, cinematic */
+        .home-hero {
+            min-height: 100vh;
+            background: linear-gradient(160deg, rgba(11,15,55,0.92) 0%, rgba(26,36,114,0.75) 50%, rgba(30,58,138,0.85) 100%), url('images/hero-building.jpg') center/cover no-repeat fixed;
+            display: flex; align-items: center; justify-content: flex-start;
+            text-align: left; padding: 140px 8vw 80px;
+            position: relative; overflow: hidden;
+        }
+        .home-hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--cream), transparent);
+            z-index: 1;
+        }
+        .home-hero-content { position: relative; z-index: 2; max-width: 650px; }
+        .home-hero-content .dpg-section-label { color: var(--gold-pale); margin-bottom: 20px; }
+        .home-hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+            color: var(--white); line-height: 1.08; margin-bottom: 24px;
+            letter-spacing: -0.03em;
+        }
+        .home-hero-content h1 em {
+            font-style: normal; color: var(--gold-pale);
+            text-decoration: underline; text-decoration-color: var(--gold);
+            text-underline-offset: 6px; text-decoration-thickness: 3px;
+        }
+        .home-hero-content p {
+            font-size: 1.15rem; color: rgba(255,255,255,0.65); max-width: 480px;
+            margin-bottom: 40px; line-height: 1.7;
+        }
+        .home-hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        .home-hero-btns .dpg-btn { padding: 16px 36px; font-size: 1rem; text-decoration: none; }
+        .btn-ghost {
+            background: transparent; border: 1px solid rgba(255,255,255,0.25);
+            color: var(--white); padding: 16px 36px; font-size: 1rem;
+            text-decoration: none; border-radius: var(--radius-sm, 8px);
+            font-family: 'DM Sans', sans-serif; font-weight: 600;
+            transition: all 0.3s ease; cursor: pointer; display: inline-block;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-pale); }
+
+        /* WAVE DIVIDER */
+        .wave-divider { width: 100%; line-height: 0; margin-top: -1px; }
+        .wave-divider svg { display: block; width: 100%; height: auto; }
+
+        /* TRUST BAR — horizontal with big numbers */
+        .home-trust {
+            display: grid; grid-template-columns: repeat(3, 1fr); align-items: start;
+            max-width: 1000px; margin: -40px auto 0; position: relative; z-index: 10;
+            background: var(--white); border-radius: var(--radius-lg, 16px);
+            box-shadow: 0 20px 60px rgba(26,36,114,0.1);
+            padding: 40px 20px;
+        }
+        .home-trust-item { text-align: center; position: relative; }
+        .home-trust-item:not(:last-child)::after {
+            content: ''; position: absolute; right: 0; top: 20%; height: 60%;
+            width: 1px; background: var(--gold, #b8952a);
+        }
+        .home-trust-num {
+            font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700; color: var(--navy); line-height: 1;
+        }
+        .home-trust-label {
+            font-size: 0.78rem; color: var(--muted); margin-top: 6px;
+            text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;
+        }
+
+        /* SPLIT SECTION — image left, text right (or reversed) */
+        .split-section {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            min-height: 500px; overflow: hidden;
+        }
+        .split-section.reverse { direction: rtl; }
+        .split-section.reverse > * { direction: ltr; }
+        .split-img {
+            overflow: hidden; position: relative;
+        }
+        .split-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .split-img:hover img { transform: scale(1.04); }
+        .split-text {
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 60px 6vw;
+        }
+        .split-text .dpg-section-label { margin-bottom: 16px; }
+        .split-text h2 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
+            color: var(--navy); line-height: 1.15; margin-bottom: 20px;
+        }
+        .split-text p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 16px; }
+        .split-text .feature-list { list-style: none; padding: 0; margin: 12px 0 24px; }
+        .split-text .feature-list li {
+            padding: 8px 0; font-size: 0.95rem; color: var(--text);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .split-text .feature-list li::before {
+            content: ''; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--gold); flex-shrink: 0;
+        }
+
+        /* DARK SECTION */
+        .dark-section {
+            background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 100%);
+            padding: 100px 5vw; position: relative; overflow: hidden;
+        }
+        .dark-section::before {
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(184,149,42,0.08), transparent 70%);
+        }
+        .dark-section h2 { color: var(--white); }
+        .dark-section p { color: rgba(255,255,255,0.6); }
+        .dark-section .dpg-section-label { color: var(--gold-pale); }
+
+        /* BENTO GRID — mixed sizes for tools */
+        .bento-grid {
+            display: grid; gap: 20px; max-width: 1000px; margin: 0 auto;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+        }
+        .bento-grid .bento-card {
+            background: var(--white); border-radius: var(--radius-md, 12px);
+            padding: 36px 28px; position: relative; overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none; color: inherit; display: flex; flex-direction: column;
+        }
+        .bento-grid .bento-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(26,36,114,0.12);
+            border-color: var(--gold-pale);
+        }
+        .bento-grid .bento-featured {
+            grid-column: span 2; grid-row: span 2;
+            background: linear-gradient(160deg, var(--navy-dark), var(--navy));
+            color: var(--white); padding: 48px 40px;
+        }
+        .bento-featured .dpg-card-title { color: var(--white); font-size: 1.5rem; }
+        .bento-featured .dpg-card-desc { color: rgba(255,255,255,0.65); font-size: 1.05rem; }
+        .bento-featured .dpg-card-btn { color: var(--gold-pale); }
+        .bento-featured .bento-number {
+            font-family: 'Playfair Display', serif; font-size: 6rem;
+            font-weight: 800; color: rgba(255,255,255,0.06); position: absolute;
+            bottom: -10px; right: 20px; line-height: 1;
+        }
+        .bento-card .dpg-icon-circle { margin-bottom: 20px; }
+        .bento-card .dpg-card-title { margin-bottom: 10px; }
+        .bento-card .dpg-card-desc { flex: 1; margin-bottom: 20px; }
+        .bento-featured .dpg-icon-circle { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+        .bento-featured .dpg-icon-circle svg { stroke: rgba(255,255,255,0.9); }
+
+        /* TESTIMONIAL — editorial style */
+        .testimonial-section { padding: 100px 5vw; background: var(--white); }
+        .testimonial-marquee {
+            display: flex; gap: 32px; max-width: 1100px; margin: 0 auto;
+        }
+        .testimonial-card {
+            flex: 1; min-width: 300px; padding: 40px 32px;
+            background: var(--cream); border-radius: var(--radius-md, 12px);
+            position: relative; border-left: 4px solid var(--gold);
+        }
+        .testimonial-card .quote-mark {
+            font-family: 'Playfair Display', serif; font-size: 5rem;
+            color: var(--gold-pale); line-height: 0.8; margin-bottom: 8px;
+            opacity: 0.5;
+        }
+        .testimonial-card p {
+            font-size: 1.05rem; color: var(--text); line-height: 1.7;
+            font-style: italic; margin-bottom: 20px;
+        }
+        .testimonial-card cite {
+            font-style: normal; font-size: 0.85rem; font-weight: 600;
+            color: var(--navy); display: block;
+        }
+        .testimonial-card .cite-role {
+            font-weight: 400; color: var(--muted); font-size: 0.8rem;
+        }
+
+        /* CULTURE — overlapping photo grid */
+        .culture-section { padding: 100px 5vw; overflow: hidden; }
+        .culture-grid {
+            display: grid; grid-template-columns: 1.2fr 0.8fr 1fr;
+            grid-template-rows: 220px 220px;
+            gap: 16px; max-width: 1000px; margin: 0 auto;
+        }
+        .culture-grid .culture-item {
+            border-radius: var(--radius-md, 12px); overflow: hidden; position: relative;
+        }
+        .culture-grid .culture-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .culture-grid .culture-item:hover img { transform: scale(1.06); }
+        .culture-grid .culture-item .culture-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 16px 20px; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white; font-size: 0.85rem; font-weight: 600;
+        }
+        .culture-grid .culture-tall { grid-row: span 2; }
+        .culture-grid .culture-wide { grid-column: span 2; }
+
+        /* FINAL CTA — full width, dramatic */
+        .home-final-cta {
+            background: linear-gradient(160deg, var(--navy-dark), var(--navy), #1e3a8a);
+            padding: 120px 5vw; text-align: center; position: relative; overflow: hidden;
+        }
+        .home-final-cta::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 100%, rgba(184,149,42,0.12), transparent 60%);
+        }
+        .home-final-cta > * { position: relative; z-index: 1; }
+        .home-final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem); color: var(--white);
+            margin-bottom: 16px;
+        }
+        .home-final-cta p {
+            color: rgba(255,255,255,0.55); font-size: 1.1rem;
+            max-width: 500px; margin: 0 auto 40px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .home-hero { padding: 120px 24px 80px; text-align: center; }
+            .home-hero-content { max-width: 100%; }
+            .home-hero-content p { max-width: 100%; }
+            .home-hero-btns { justify-content: center; }
+            .home-trust { grid-template-columns: repeat(2, 1fr); margin: -30px 16px 0; gap: 24px; padding: 32px 16px; }
+            .home-trust-item:nth-child(2)::after { display: none; }
+            .split-section { grid-template-columns: 1fr; min-height: auto; }
+            .split-section.reverse { direction: ltr; }
+            .split-img { height: 300px; }
+            .split-text { padding: 40px 24px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-grid .bento-featured { grid-column: span 1; grid-row: span 1; }
+            .testimonial-marquee { flex-direction: column; }
+            .culture-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+            .culture-grid .culture-tall { grid-row: span 1; }
+            .home-final-cta > div { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) {
+            .home-hero { padding: 100px 20px 60px; }
+            .home-hero-btns { flex-direction: column; align-items: center; }
+            .btn-ghost { width: 100%; text-align: center; padding: 14px 24px; }
+            .home-trust { grid-template-columns: 1fr; margin: -20px 16px 0; }
+            .home-trust-item::after { display: none !important; }
+            .culture-grid { grid-template-columns: 1fr; grid-template-rows: auto; grid-auto-rows: 220px; }
+            .culture-grid .culture-item, .culture-grid .culture-wide { grid-column: 1; grid-row: auto; height: 220px; }
+            .culture-grid .culture-tall { grid-row: span 1; }
+            .home-final-cta { padding: 48px 20px; }
+            .home-final-cta h2 { font-size: 1.5rem; }
+            .home-final-cta .dpg-btn, .home-final-cta .btn-ghost { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html">Tools</a>
+    <a href="careers.html">Careers</a>
+    <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<!-- ====== HERO ====== -->
+<section class="home-hero">
+    <div class="home-hero-content dpg-fade-in">
+        <div class="dpg-section-label">Great Eastern Financial Advisers</div>
+        <h1>Plan smarter. <br>Live better. <br>Start <em>free</em>.</h1>
+        <p>No jargon, no pressure — just clarity on the decisions that matter most. Free tools and expert guidance from Singapore's most trusted insurer.</p>
+        <div class="home-hero-btns">
+            <a href="#tools" class="dpg-btn">Explore Free Tools</a>
+            <a href="careers.html" class="btn-ghost">Join Our Team</a>
+        </div>
+    </div>
+    <div class="dpg-scroll-indicator"><span></span></div>
+</section>
+
+<!-- ====== TRUST BAR (floating card) ====== -->
+<div class="home-trust dpg-trust-bar dpg-fade-in">
+    <div class="home-trust-item">
+        <div class="home-trust-num dpg-trust-number">2013</div>
+        <div class="home-trust-label">Year Founded</div>
+    </div>
+    <div class="home-trust-item">
+        <div class="home-trust-num dpg-trust-number">12+</div>
+        <div class="home-trust-label">Years Experience</div>
+    </div>
+    <div class="home-trust-item">
+        <div class="home-trust-num dpg-trust-number">#1</div>
+        <div class="home-trust-label">Great Eastern — SG's Most Trusted Insurer</div>
+    </div>
+</div>
+
+<!-- ====== SPLIT: WHY US (image left, text right) ====== -->
+<div class="split-section dpg-fade-in" style="margin-top: 80px;">
+    <div class="split-img">
+        <img src="images/family-beach.jpg" alt="Family financial planning">
+    </div>
+    <div class="split-text">
+        <div class="dpg-section-label">Why Dream Planners</div>
+        <h2>We don't sell insurance.<br>We build financial strategies.</h2>
+        <p>Every family's situation is unique. We take the time to understand yours — then build a plan that actually fits your life, not a product quota.</p>
+        <ul class="feature-list">
+            <li>Needs-based approach backed by data</li>
+            <li>Great Eastern — 100+ years of trust</li>
+            <li>Free tools and education, no strings</li>
+            <li>Lifetime partnership at every life stage</li>
+        </ul>
+        <a href="about.html" class="dpg-btn" style="text-decoration:none; width:fit-content;">Learn More About Us</a>
+    </div>
+</div>
+
+<!-- ====== CTA BANNER ====== -->
+<div class="dpg-container dpg-fade-in">
+    <div class="dpg-cta-banner">
+        <h2>Not sure where to start?</h2>
+        <p>Book a free 15-minute financial health check. No obligation, no sales pitch.</p>
+        <a href="health-check.html" class="dpg-btn" style="text-decoration:none;">Book Free Health Check</a>
+    </div>
+</div>
+
+
+<!-- ====== TOOLS — BENTO GRID ====== -->
+<div id="tools" style="padding: 100px 5vw 60px;">
+    <div style="text-align:center; margin-bottom:48px;">
+        <div class="dpg-section-label">Free Value Tools</div>
+        <h2 style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight:700; color:var(--navy); margin-bottom:12px;">Everything you need to plan smarter</h2>
+        <p style="color:var(--muted); max-width:500px; margin:0 auto;">Interactive tools, guides, and calculators — built for Singaporeans, completely free.</p>
+    </div>
+    <div class="bento-grid dpg-fade-in">
+        <a href="gap-calculator.html" class="bento-card bento-featured">
+            <div class="dpg-icon-circle" style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.15);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+            <div class="dpg-card-title">Insurance Gap Calculator</div>
+            <div class="dpg-card-desc">Find out if you're underinsured in 2 minutes. Quick, private, and completely free. Our most popular tool.</div>
+            <span class="dpg-card-btn">Get Started <span class="arrow">&rarr;</span></span>
+            <div class="bento-number">01</div>
+        </a>
+        <a href="health-check.html" class="bento-card">
+            <div class="dpg-icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="dpg-card-title">Free Financial Health Check</div>
+            <div class="dpg-card-desc">15-min consultation. No obligation, no sales pitch.</div>
+            <span class="dpg-card-btn">Book Now <span class="arrow">&rarr;</span></span>
+        </a>
+        <a href="cpf-guide.html" class="bento-card">
+            <div class="dpg-icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="dpg-card-title">CPF Optimization Guide</div>
+            <div class="dpg-card-desc">Make your CPF work harder for you.</div>
+            <span class="dpg-card-btn">Learn More <span class="arrow">&rarr;</span></span>
+        </a>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+        <a href="tools.html" style="color:var(--gold); font-weight:600; text-decoration:none; font-size:0.95rem;">View All Tools &rarr;</a>
+    </div>
+</div>
+
+<!-- ====== ENNEAGRAM PROMO ====== -->
+<div class="dpg-fade-in" style="background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--blue-mid) 100%); padding:80px 5vw; text-align:center; position:relative; overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(184,149,42,0.12),transparent 60%);pointer-events:none;"></div>
+    <div style="position:relative;max-width:680px;margin:0 auto;">
+        <div class="dpg-section-label" style="color:var(--gold-pale); margin-bottom:16px;">Career Discovery Tool</div>
+        <h2 style="color:var(--white);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin-bottom:16px;">What Type of Person Are You at Work?</h2>
+        <p style="color:rgba(255,255,255,0.7);font-size:1rem;line-height:1.7;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto;">Take our free Enneagram personality test and find out which of the 9 types you are, what drives you, and what kind of career suits you best. Takes about 10 minutes.</p>
+        <a href="enneagram.html" class="dpg-btn" style="text-decoration:none;padding:14px 36px;font-size:1rem;">Take the Free Test &rarr;</a>
+    </div>
+</div>
+
+<!-- ====== TESTIMONIALS ====== -->
+<div class="testimonial-section dpg-fade-in">
+    <div style="text-align:center; margin-bottom:48px;">
+        <div class="dpg-section-label">What Our Clients Say</div>
+        <h2 style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight:700; color:var(--navy);">Trusted by families across Singapore</h2>
+    </div>
+    <div class="testimonial-marquee" style="flex-wrap: wrap;">
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>What I like most about Jason is that he is very responsive and proactive in assisting on my financial portfolio when I needed help. I like the professional way of conducting the entire meeting.</p>
+            <cite>Susan Goh</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Tai Chuen did an excellent job in managing my wealth and protection needs. I got to say he shows sincerity and honesty which I could feel it, and he does not engage in product pushing tactics unlike others. Thank you, Tai Chuen!</p>
+            <cite>Clarence Chua</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Zwen is my agent for my life insurance policy. She has been extremely courteous and helpful in her service. There's always a saying "Good one is hard to find and excellent one is even more difficult". You can only meet by luck but not by request.</p>
+            <cite>Master Ricky Chua, Yushuenmen</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Getting BB Ong's start in personal protection! Thanks to Zwen for assisting me, this FTM with all the essential information and help!</p>
+            <cite>Gillian Tong</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Pauline helps me with my hospital claim and that's how I knew her. She knocked on my door many years back. After the successfully claims, I started to get more policies from her.</p>
+            <cite>Kim</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>A person who will reply to your message whenever you have any problems with your policies or any enquiry. Pauline took good care of my policies. I have known her through roadshow. Thank you for your goodies whenever you come over near to my house area.</p>
+            <cite>Alice</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Professional and highly personable, Aqilah gives both confidence and comfort in engaging with personally tailored insurance and investment tools recommendations. Her expertise in distilling complex product terms to a lay person like me thoroughly helped me in understanding what I'm getting into. Without a doubt, my go-to person for planning my future!</p>
+            <cite>Hamka Afiq</cite>
+        </div>
+        <div class="testimonial-card">
+            <div class="quote-mark">&ldquo;</div>
+            <p>Quality service and offers the right help I need. I had doubts about insurance at first but Tai Chuen's sharing enlightened me the importance and benefits of insurance!</p>
+            <cite>Xavier Yeo</cite>
+        </div>
+    </div>
+</div>
+
+<!-- ====== CULTURE — overlapping photo grid ====== -->
+<div class="culture-section dpg-fade-in">
+    <div style="text-align:center; margin-bottom:48px;">
+        <div class="dpg-section-label">Life at Dream Planners</div>
+        <h2 style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight:700; color:var(--navy);">More than a team — a family</h2>
+    </div>
+    <div class="culture-grid">
+        <div class="culture-item culture-tall">
+            <img src="images/christmas-party.jpg" alt="Christmas party">
+            <div class="culture-label">Christmas Celebration</div>
+        </div>
+        <div class="culture-item">
+            <img src="images/winners-circle.jpg" alt="Winners Circle dinner">
+            <div class="culture-label">Winners Circle</div>
+        </div>
+        <div class="culture-item">
+            <img src="images/training-session.jpg" alt="Training workshop">
+            <div class="culture-label">Training &amp; Growth</div>
+        </div>
+        <div class="culture-item culture-wide">
+            <img src="images/food-from-heart.jpg" alt="Food from the Heart volunteering">
+            <div class="culture-label">Giving Back — Food from the Heart</div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== FINAL CTA ====== -->
+<div class="home-final-cta dpg-fade-in">
+    <h2>Ready to take the first step?</h2>
+    <p>Start with any of our free tools — no sign-up required, no strings attached.</p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="gap-calculator.html" class="dpg-btn" style="text-decoration:none; padding:16px 36px;">Try the Gap Calculator</a>
+        <a href="health-check.html" class="btn-ghost" style="padding:16px 36px; border-radius:8px; font-weight:600; font-family:'DM Sans',sans-serif; font-size:1rem; letter-spacing:0.03em; cursor:pointer; border:1px solid rgba(255,255,255,0.25); color:var(--white); text-decoration:none;">Book Health Check</a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact Us</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.dpg-fade-in').forEach(el => observer.observe(el));
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

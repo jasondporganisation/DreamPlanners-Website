@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Plan Comparison Tool | Dream Planners Group</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page-specific: plan card grid & pricing cards (not in shared design system) */
+        .plan-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .plan-cards-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .plan-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.75rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .plan-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(26,36,114,0.1);
+        }
+        .plan-card.popular { border-color: var(--gold); box-shadow: 0 0 20px rgba(184,149,42,0.15); }
+        .popular-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: var(--white);
+            font-size: 0.7rem; font-weight: 600;
+            padding: 3px 14px; border-radius: 12px;
+            text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+        }
+        .plan-tier {
+            font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.25rem;
+        }
+        .plan-name { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+        .plan-price { font-size: 1.75rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
+        .plan-price span { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+        .plan-features { list-style: none; margin: 1.25rem 0; flex: 1; }
+        .plan-features li {
+            padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+            font-size: 0.9rem; display: flex; align-items: flex-start; gap: 0.5rem;
+        }
+        .plan-features li::before { content: "\2713"; color: #1a8a4a; font-weight: 700; flex-shrink: 0; }
+        .plan-features li.not-included::before { content: "\2717"; color: var(--muted); }
+        .plan-features li.not-included { color: var(--muted); }
+
+        .comparison-section { padding: 0 24px 2rem; display: none; }
+        .comparison-section.active { display: block; }
+
+        .tabs-center { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; padding: 0 24px 2rem; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html" class="active">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html" class="active">Tools</a>
+    <a href="careers.html">Careers</a>
+        <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<section class="dpg-hero">
+    <div>
+        <h1>Insurance Plan <em>Comparison Tool</em></h1>
+        <p>Compare plans side by side and find the right coverage for your needs and budget.</p>
+    </div>
+    <div class="dpg-scroll-indicator">
+        <span></span>
+    </div>
+</section>
+
+<div class="dpg-container">
+    <div class="tabs-center">
+        <button class="dpg-tab active" data-category="life">Life Insurance</button>
+        <button class="dpg-tab" data-category="ci">Critical Illness</button>
+        <button class="dpg-tab" data-category="hosp">Hospitalization</button>
+        <button class="dpg-tab" data-category="savings">Savings &amp; Investment</button>
+    </div>
+</div>
+
+<!-- Life Insurance -->
+<div class="comparison-section active" id="cat-life">
+    <div class="plan-cards-grid">
+        <div class="plan-card">
+            <div class="plan-tier">Basic</div>
+            <div class="plan-name">Essential Life</div>
+            <div class="plan-price">~$30<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$200,000 death coverage</li>
+                <li>Term coverage: 20 years</li>
+                <li>Total Permanent Disability (TPD) benefit</li>
+                <li>Convertible to whole life</li>
+                <li class="not-included">Critical illness rider</li>
+                <li class="not-included">Disability income rider</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Life Insurance - Basic')">Get a Quote</button>
+        </div>
+        <div class="plan-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-tier">Enhanced</div>
+            <div class="plan-name">LifeGuard Plus</div>
+            <div class="plan-price">~$65<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$500,000 death coverage</li>
+                <li>Term coverage: 30 years</li>
+                <li>Total Permanent Disability (TPD) benefit</li>
+                <li>Convertible to whole life</li>
+                <li>Critical illness rider included</li>
+                <li class="not-included">Disability income rider</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Life Insurance - Enhanced')">Get a Quote</button>
+        </div>
+        <div class="plan-card">
+            <div class="plan-tier">Premium</div>
+            <div class="plan-name">TotalShield Whole Life</div>
+            <div class="plan-price">~$150<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$1,000,000 death coverage</li>
+                <li>Whole life coverage</li>
+                <li>Total Permanent Disability (TPD) benefit</li>
+                <li>Cash value accumulation</li>
+                <li>Critical illness rider included</li>
+                <li>Disability income rider included</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Life Insurance - Premium')">Get a Quote</button>
+        </div>
+    </div>
+</div>
+
+<!-- Critical Illness -->
+<div class="comparison-section" id="cat-ci">
+    <div class="plan-cards-grid">
+        <div class="plan-card">
+            <div class="plan-tier">Basic</div>
+            <div class="plan-name">CI Starter</div>
+            <div class="plan-price">~$25<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$100,000 CI coverage</li>
+                <li>Early-stage critical illness payout</li>
+                <li>Covers 37 critical illnesses</li>
+                <li class="not-included">Multi-pay benefit</li>
+                <li class="not-included">Late-stage additional payout</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Critical Illness - Basic')">Get a Quote</button>
+        </div>
+        <div class="plan-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-tier">Enhanced</div>
+            <div class="plan-name">CI MultiCare</div>
+            <div class="plan-price">~$55<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$250,000 CI coverage</li>
+                <li>Early-stage critical illness payout</li>
+                <li>Covers 37 critical illnesses</li>
+                <li>Multi-pay benefit (claim multiple times)</li>
+                <li class="not-included">Late-stage additional payout</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Critical Illness - Enhanced')">Get a Quote</button>
+        </div>
+        <div class="plan-card">
+            <div class="plan-tier">Premium</div>
+            <div class="plan-name">CI Complete</div>
+            <div class="plan-price">~$100<span>/month</span></div>
+            <ul class="plan-features">
+                <li>$500,000 CI coverage</li>
+                <li>Early-stage critical illness payout</li>
+                <li>Covers 37 critical illnesses</li>
+                <li>Multi-pay benefit (claim multiple times)</li>
+                <li>Late-stage additional payout</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Critical Illness - Premium')">Get a Quote</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hospitalization -->
+<div class="comparison-section" id="cat-hosp">
+    <div class="plan-cards-grid">
+        <div class="plan-card">
+            <div class="plan-tier">Basic</div>
+            <div class="plan-name">HospitalCare B2</div>
+            <div class="plan-price">~$20<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Ward B2 coverage</li>
+                <li>Government / restructured hospitals</li>
+                <li>Pre- and post-hospitalization coverage</li>
+                <li class="not-included">Private hospital coverage</li>
+                <li class="not-included">Full co-pay rider</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Hospitalization - Basic')">Get a Quote</button>
+        </div>
+        <div class="plan-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-tier">Enhanced</div>
+            <div class="plan-name">HospitalCare A</div>
+            <div class="plan-price">~$45<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Ward A coverage</li>
+                <li>Restructured + private hospitals</li>
+                <li>Pre- and post-hospitalization coverage</li>
+                <li>Outpatient surgery coverage</li>
+                <li class="not-included">Full co-pay rider</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Hospitalization - Enhanced')">Get a Quote</button>
+        </div>
+        <div class="plan-card">
+            <div class="plan-tier">Premium</div>
+            <div class="plan-name">HospitalCare Private</div>
+            <div class="plan-price">~$80<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Private hospital coverage</li>
+                <li>All hospital types covered</li>
+                <li>Pre- and post-hospitalization coverage</li>
+                <li>Outpatient surgery coverage</li>
+                <li>Full rider (minimal co-payment)</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Hospitalization - Premium')">Get a Quote</button>
+        </div>
+    </div>
+</div>
+
+<!-- Savings & Investment -->
+<div class="comparison-section" id="cat-savings">
+    <div class="plan-cards-grid">
+        <div class="plan-card">
+            <div class="plan-tier">Basic</div>
+            <div class="plan-name">SteadyGrow Saver</div>
+            <div class="plan-price">From $200<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Guaranteed returns component</li>
+                <li>10-year savings plan</li>
+                <li>Capital guaranteed at maturity</li>
+                <li class="not-included">Investment-linked options</li>
+                <li class="not-included">Retirement income stream</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Savings & Investment - Basic')">Get a Quote</button>
+        </div>
+        <div class="plan-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-tier">Enhanced</div>
+            <div class="plan-name">WealthBuilder Flex</div>
+            <div class="plan-price">From $300<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Guaranteed + non-guaranteed returns</li>
+                <li>Flexible premium payment term</li>
+                <li>Capital guaranteed at maturity</li>
+                <li>Investment-linked fund options</li>
+                <li class="not-included">Retirement income stream</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Savings & Investment - Enhanced')">Get a Quote</button>
+        </div>
+        <div class="plan-card">
+            <div class="plan-tier">Premium</div>
+            <div class="plan-name">RetireWell Elite</div>
+            <div class="plan-price">From $500<span>/month</span></div>
+            <ul class="plan-features">
+                <li>Guaranteed + non-guaranteed returns</li>
+                <li>Flexible premium payment term</li>
+                <li>Capital guaranteed at maturity</li>
+                <li>Investment-linked fund options</li>
+                <li>Retirement income stream from age 55/60/65</li>
+            </ul>
+            <button class="dpg-btn" onclick="scrollToForm('Savings & Investment - Premium')">Get a Quote</button>
+        </div>
+    </div>
+</div>
+
+<div class="dpg-container">
+    <div class="dpg-section" style="text-align:center;">
+        <p style="font-size:0.85rem;color:var(--muted);">Prices shown are estimates for a 30-year-old non-smoker. Actual premiums vary based on age, health, and coverage details.</p>
+    </div>
+</div>
+
+<!-- Lead Capture Form -->
+<div class="dpg-container" id="quote-form">
+    <div class="dpg-section">
+        <h2 class="dpg-section-title"><span class="dot"></span> Get Your Personalized Quote</h2>
+        <p style="color:var(--muted);margin-bottom:16px;">Tailored to your needs, age, and budget.</p>
+        <form id="leadForm" class="dpg-form">
+            <div class="dpg-form-group">
+                <label for="name" class="dpg-form-label">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your name" class="dpg-form-input">
+            </div>
+            <div class="dpg-form-group">
+                <label for="phone" class="dpg-form-label">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="9XXX XXXX" class="dpg-form-input">
+                <div class="dpg-consent-error" id="compPhoneError">Please enter a valid phone number (digits only).</div>
+            </div>
+            <div class="dpg-form-group">
+                <label for="email" class="dpg-form-label">Email</label>
+                <input type="email" id="email" name="email" required placeholder="you@email.com" class="dpg-form-input">
+                <div class="dpg-consent-error" id="compEmailError">Please enter a valid email address (must include @).</div>
+            </div>
+            <div class="dpg-form-group">
+                <label for="interest" class="dpg-form-label">Plan Interest</label>
+                <select id="interest" name="interest" required class="dpg-form-select">
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="Life Insurance">Life Insurance</option>
+                    <option value="Critical Illness">Critical Illness</option>
+                    <option value="Hospitalization">Hospitalization</option>
+                    <option value="Savings & Investment">Savings &amp; Investment</option>
+                    <option value="Not sure">Not sure yet</option>
+                </select>
+            </div>
+            <div class="dpg-consent-wrap">
+                <input type="checkbox" id="compConsent" name="consent" />
+                <label class="dpg-consent-label" for="compConsent">
+                    I agree to Dream Planners Group collecting and using my personal data to provide a personalized insurance quote and contact me about relevant products and services, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('compTc')">Terms &amp; Conditions and Privacy Policy</button>.
+                </label>
+            </div>
+            <div class="dpg-tc-expand" id="compTc">
+                <h4>1. Purpose of Data Collection</h4>
+                <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, email address, and plan interest) for the purpose of preparing a personalized insurance quote and contacting you about financial products and services distributed by GEFA through all channels including SMS, phone call, email, and social media.</p>
+                <h4>2. Data Protection (PDPA)</h4>
+                <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+                <h4>3. Nature of the Tool</h4>
+                <p>The comparison tool and any quotes provided are indicative only and do not constitute financial advice under the Financial Advisers Act (Cap. 110). You are under no obligation to purchase any product or service. This service is available to Singapore residents aged 18 and above.</p>
+                <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+                <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA and its authorised representatives collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+                <h4>5. General</h4>
+                <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This service is governed by the laws of Singapore.</p>
+            </div>
+            <div class="dpg-consent-error" id="compConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+            <button type="submit" class="dpg-btn" style="width:100%;">Get My Quote</button>
+        </form>
+        <div class="dpg-thankyou" id="thankYou" style="display:none;">
+            <h3>Thank you!</h3>
+            <p>We've received your request. A Dream Planners advisor will reach out to you shortly with a personalized quote.</p>
+        </div>
+    </div>
+</div>
+
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+    // Tabs
+    document.querySelectorAll('.dpg-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.dpg-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.comparison-section').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('cat-' + btn.dataset.category).classList.add('active');
+        });
+    });
+
+    // Scroll to form and pre-select interest
+    function scrollToForm(planLabel) {
+        const category = planLabel.split(' - ')[0];
+        const map = {
+            'Life Insurance': 'Life Insurance',
+            'Critical Illness': 'Critical Illness',
+            'Hospitalization': 'Hospitalization',
+            'Savings & Investment': 'Savings & Investment'
+        };
+        const select = document.getElementById('interest');
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === (map[category] || category)) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
+        document.getElementById('quote-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+    // Form submission
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const consent = document.getElementById('compConsent').checked;
+        const consentErr = document.getElementById('compConsentError');
+        if (!consent) { consentErr.classList.add('visible'); return; }
+        consentErr.classList.remove('visible');
+        const phoneVal = document.getElementById('phone').value.trim();
+        const emailVal = document.getElementById('email').value.trim();
+        const phoneErrEl = document.getElementById('compPhoneError');
+        const emailErrEl = document.getElementById('compEmailError');
+        let valid = true;
+        if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phoneVal.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+        if (!valid) return;
+        const data = {
+            name: document.getElementById('name').value,
+            phone: phoneVal,
+            email: emailVal,
+            interest: document.getElementById('interest').value,
+            source: 'comparison-tool',
+            timestamp: new Date().toISOString()
+        };
+
+        const { error: sbError } = await _supabase
+            .from('client_leads')
+            .insert({
+                tool: 'comparison',
+                name: data.name,
+                phone: data.phone,
+                email: data.email,
+                tool_data: { interest: data.interest }
+            });
+        if (sbError) {
+            console.error('Submission failed:', sbError.message);
+            alert('Something went wrong. Please try again or contact us directly.');
+            return;
+        }
+
+        // Show thank you
+        this.style.display = 'none';
+        document.getElementById('thankYou').style.display = 'block';
+    });
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

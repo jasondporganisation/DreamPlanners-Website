@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Dream Planners Group</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-founder-wrap { display: flex; gap: 40px; align-items: center; max-width: 820px; margin: 0 auto; flex-wrap: wrap; }
+        .about-founder-photo { flex: 0 0 260px; text-align: center; }
+        .about-founder-bio { flex: 1; min-width: 280px; color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+        .about-vision-wrap { display: flex; gap: 24px; max-width: 820px; margin: 0 auto; flex-wrap: wrap; }
+        .about-csr-wrap { display: flex; gap: 32px; align-items: center; max-width: 820px; margin: 0 auto; flex-wrap: wrap; }
+        .about-csr-img { flex: 1; min-width: 280px; }
+        .about-csr-text { flex: 1; min-width: 280px; color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+        @media (max-width: 768px) {
+            .about-founder-wrap { flex-direction: column; text-align: center; }
+            .about-founder-photo { flex: 0 0 auto; width: 100%; max-width: 260px; margin: 0 auto; }
+            .about-founder-bio { text-align: left; }
+            .about-vision-wrap { flex-direction: column; }
+            .about-csr-wrap { flex-direction: column; }
+            .about-csr-img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="tools.html">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="tools.html">Tools</a>
+    <a href="careers.html">Careers</a>
+    <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="dpg-hero" style="min-height:40vh;">
+    <div>
+        <h1>About Dream Planners Group</h1>
+        <p>Building financial security for Singapore families since December 2013.</p>
+    </div>
+    <div class="dpg-scroll-indicator">
+        <span></span>
+    </div>
+</section>
+
+<!-- FOUNDER -->
+<div class="dpg-container dpg-fade-in">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Our Founder</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">Meet Jason Ng</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="about-founder-wrap">
+        <div class="about-founder-photo">
+            <div style="width:260px; border-radius:12px; overflow:hidden; border:3px solid var(--gold); box-shadow:0 8px 24px rgba(26,36,114,0.12);">
+                <img src="images/jason-headshot.jpg" alt="Jason Ng — Financial Services Director" style="width:100%; display:block;">
+            </div>
+            <div style="margin-top:12px; font-size:1.05rem; font-weight:700; color:var(--navy);">Jason Ng</div>
+            <div style="font-size:0.82rem; color:var(--gold); font-weight:600; letter-spacing:0.04em;">Financial Services Director</div>
+            <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">Great Eastern Life Assurance Co. Ltd</div>
+        </div>
+        <div class="about-founder-bio">
+            <p style="margin-bottom:16px;">Jason founded Dream Planners Group in December 2013 as part of Great Eastern Financial Advisers (GEFA) with a simple belief: financial planning should start with understanding people, not pushing products. From day one, the team has been committed to a needs-based approach — taking the time to listen, analyse, and recommend solutions that genuinely fit each client's situation.</p>
+            <div class="dpg-testimonial" style="margin-top:16px; background:var(--white);">
+                <p>"I believe that anyone can turn their dreams into reality if they have the right guiding hands. I lead my team to their destiny with curated training programmes. My dream is to inspire more shining stars who dare to dream!"</p>
+                <cite>— Jason Ng, Financial Services Director</cite>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- OUR STORY -->
+<div class="dpg-container dpg-fade-in">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Our Story</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">How Dream Planners began</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div style="max-width:680px; margin:0 auto; color:var(--muted); font-size:0.95rem; line-height:1.8;">
+        <p style="margin-bottom:16px;">Too many families in Singapore feel overwhelmed by financial jargon and high-pressure sales tactics. Dream Planners was built to be different. We focus on education and transparency, empowering our clients to make informed decisions about insurance, savings, and long-term wealth building. Every conversation starts with your goals, not ours.</p>
+        <p>Over the years, we have grown into a trusted team of advisers who prioritise long-term relationships over quick transactions. Many of our earliest clients are still with us today — not because they have to be, but because they know we genuinely care about their financial wellbeing at every stage of life.</p>
+    </div>
+</div>
+
+<!-- FAMILY BANNER -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="position:relative; border-radius:12px; overflow:hidden; margin:24px 0;">
+        <img src="images/family-beach.jpg" alt="Protecting families and securing futures" style="width:100%; height:320px; object-fit:cover; display:block;">
+        <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(26,36,114,0.7) 0%, rgba(17,24,80,0.5) 100%); display:flex; align-items:center; justify-content:center; text-align:center; padding:24px;">
+            <div>
+                <h3 style="color:var(--white); font-size:1.5rem; font-weight:700; margin-bottom:8px;">Protecting What Matters Most</h3>
+                <p style="color:rgba(255,255,255,0.75); font-size:1rem; max-width:500px; margin:0 auto;">We help Singapore families secure their financial future so they can focus on making memories together.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VISION & MISSION -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="about-vision-wrap">
+        <div class="dpg-section" style="text-align:center; flex:1; min-width:280px;">
+            <div class="dpg-section-label">Our Vision</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:12px;">Where we're headed</h3>
+            <p style="font-size:0.92rem; color:var(--muted); line-height:1.8;">To help every individual fulfil their financial goals and lead a better, more secure life!</p>
+        </div>
+        <div class="dpg-section" style="text-align:center; flex:1; min-width:280px;">
+            <div class="dpg-section-label">Our Mission</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:12px;">What drives us</h3>
+            <p style="font-size:0.92rem; color:var(--muted); line-height:1.8;">To become the most trusted and respected team within the financial planning industry by providing reliable and rewarding advice to our clients.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CORE VALUES -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Core Values</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">What we stand for</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="dpg-why-grid" style="grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));">
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="dpg-why-title">Partnership</div>
+            <div class="dpg-why-desc">We grow with you through every life stage, building lasting relationships based on mutual success.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="dpg-why-title">Integrity</div>
+            <div class="dpg-why-desc">We do what is right, not what is easy. Honesty and ethics guide every recommendation we make.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="dpg-why-title">Respect</div>
+            <div class="dpg-why-desc">We value every individual's unique circumstances and treat all clients and team members with dignity.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="dpg-why-title">Accountability</div>
+            <div class="dpg-why-desc">We take ownership of our commitments and hold ourselves to the highest professional standards.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="dpg-why-title">Trust</div>
+            <div class="dpg-why-desc">Transparency in everything we do — no hidden fees, no fine print surprises. Clear communication always.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="dpg-why-title">Excellence</div>
+            <div class="dpg-why-desc">We strive to deliver the best outcomes through continuous learning and professional development.</div>
+        </div>
+    </div>
+</div>
+
+<!-- GREAT EASTERN -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="dpg-section" style="text-align:center;">
+        <div class="dpg-section-label">Our Backing</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy); margin-bottom:8px;">Part of Great Eastern</h2>
+        <div class="dpg-divider"></div>
+        <p style="color:var(--muted); max-width:600px; margin:0 auto; font-size:0.95rem; line-height:1.8;">Dream Planners Group operates under Great Eastern Financial Advisers (GEFA), a subsidiary of Great Eastern — Singapore's oldest and most established insurance company with over 100 years of heritage. When you work with us, you benefit from the strength and stability of a trusted institution, paired with the personalised attention of a dedicated advisory team.</p>
+    </div>
+</div>
+
+<!-- CSR / COMMUNITY -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Giving Back</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">Community Involvement</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="about-csr-wrap">
+        <div class="about-csr-img">
+            <img src="images/food-from-heart.jpg" alt="Dream Planners Group volunteering with Food from the Heart" style="width:100%; border-radius:8px; box-shadow:0 6px 20px rgba(26,36,114,0.1);">
+        </div>
+        <div class="about-csr-text">
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:12px;">Making a Difference Beyond Finance</h3>
+            <p style="margin-bottom:16px;">Dream Planners Group believes in giving back to the community that supports us. Our team regularly volunteers with <strong style="color:var(--navy);">Food from the Heart</strong>, Singapore's leading food charity, helping to sort and distribute food to families in need.</p>
+            <p>We also participate in <strong style="color:var(--navy);">Operation Rejoice</strong>, spreading festive cheer to underprivileged communities. These initiatives reflect our core belief that true financial planning goes beyond numbers — it's about building a better society for everyone.</p>
+        </div>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="dpg-trust-bar dpg-fade-in" style="max-width:700px; margin:0 auto; background:var(--white); border-radius:16px; box-shadow:0 20px 60px rgba(26,36,114,0.1); padding:40px 20px;">
+    <div class="dpg-trust-item">
+        <div class="dpg-trust-number">2013</div>
+        <div class="dpg-trust-label">Year Founded</div>
+    </div>
+    <div class="dpg-trust-item">
+        <div class="dpg-trust-number">12+</div>
+        <div class="dpg-trust-label">Years Experience</div>
+    </div>
+    <div class="dpg-trust-item">
+        <div class="dpg-trust-number">#1</div>
+        <div class="dpg-trust-label">Most Trusted Insurer</div>
+    </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="dpg-container dpg-fade-in">
+    <div class="dpg-cta-banner">
+        <h2>Want to learn more? Let's have a conversation.</h2>
+        <p>No pressure, no obligation — just an honest chat about your financial goals.</p>
+        <a href="contact.html" class="dpg-btn" style="text-decoration:none;">Get In Touch</a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+// Scroll fade-in animation
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.dpg-fade-in').forEach(el => observer.observe(el));
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

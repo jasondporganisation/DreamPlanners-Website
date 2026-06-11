@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPF Optimization Guide — Dream Planners Group</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html" class="active">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html" class="active">Tools</a>
+    <a href="careers.html">Careers</a>
+        <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<section class="dpg-hero">
+  <div>
+    <h1>CPF Optimization Guide &mdash; Are You <em>Leaving Money</em> on the Table?</h1>
+    <p>Most Singaporeans set and forget their CPF. Here are the strategies that could make a real difference to your financial future.</p>
+  </div>
+  <div class="dpg-scroll-indicator">
+      <span></span>
+  </div>
+</section>
+
+<main class="dpg-container">
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 1. What Most Singaporeans Get Wrong About CPF</h3>
+    <p>Many people think of CPF as just a retirement fund that sits there until they turn 55. In reality, your CPF is one of the most powerful financial tools available to you as a Singaporean.</p>
+    <p>Your CPF can be used for housing, healthcare, education, investment, and retirement planning. The problem? Most people never take the time to optimize how each account works together.</p>
+    <div class="dpg-alert dpg-alert-info">The difference between a passive CPF holder and an active one can amount to tens of thousands of dollars over a working lifetime.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 2. CPF-IS: Invest Your OA for Higher Returns</h3>
+    <p>Your Ordinary Account (OA) earns a guaranteed 2.5% per year. While this is risk-free, the CPF Investment Scheme (CPF-IS) lets you invest your OA savings into approved instruments for potentially higher returns.</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">You can invest OA funds above the first $20,000 (and SA funds above $40,000)</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Approved options include unit trusts, ETFs, fixed deposits, bonds, and selected shares</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Historically, a diversified portfolio can aim for 4-6% annual returns over the long term</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">Important: Investing CPF-IS carries risk. If your investments underperform 2.5%, you would have been better off leaving funds in OA. Speak to an advisor before deciding.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 3. Medisave Optimization</h3>
+    <p>Your Medisave Account (MA) is not just for emergencies. Used strategically, it can work much harder for you:</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Integrated Shield Plans (ISPs):</strong> Pay your health insurance premiums directly from Medisave. Every Singaporean should have an ISP on top of MediShield Life for better hospital coverage.</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Voluntary MediSave top-ups:</strong> Cash top-ups to your own or family members' MA qualify for tax relief under the Retirement Sum Topping-Up Scheme.</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>MediSave for dependants:</strong> You can use your Medisave to pay premiums for your spouse, children, parents, and grandparents.</li>
+    </ul>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 4. Retirement Account Strategies</h3>
+    <p>At age 55, your SA and OA merge into a Retirement Account (RA). The amount you set aside determines your monthly CPF LIFE payouts from age 65.</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Basic Retirement Sum (BRS):</strong> Approximately $105,900 (2025). Requires you to pledge a property.</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Full Retirement Sum (FRS):</strong> Approximately $211,800 (2025). No property pledge needed.</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Enhanced Retirement Sum (ERS):</strong> Approximately $317,700 (2025). Gives the highest monthly payout.</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">Planning which tier to aim for — and starting early — lets compound interest (up to 6% on combined balances) do the heavy lifting.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 5. Top-Up for Tax Savings</h3>
+    <p>Cash top-ups to your Special Account (SA) or Retirement Account (RA) qualify for tax relief under the Retirement Sum Topping-Up Scheme:</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Up to $8,000</strong> tax relief for topping up your own SA/RA</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Up to $8,000</strong> more for topping up a family member's SA/RA (spouse, parents, grandparents, siblings, children)</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">That is a combined <strong>$16,000</strong> in tax deductions each year</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">For someone in the 15% tax bracket, a $16,000 top-up saves $2,400 in taxes — and the money stays yours in your CPF earning 4-6% interest.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 6. CPF Nomination — Why It Matters</h3>
+    <p>Without a CPF nomination, your CPF savings do not go directly to your loved ones. Instead, the money is transferred to the Public Trustee for distribution under the Intestate Succession Act (or Inheritance Certificate for Muslims).</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">This process can take months and your family may not receive the amounts you intended</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Making a CPF nomination is free and takes just a few minutes online</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">You can nominate anyone — spouse, children, parents, siblings, or even a charity</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Review your nomination whenever your life circumstances change (marriage, divorce, new child)</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">Common mistake: Many people made a nomination years ago and forgot to update it after major life events. Check yours today at my.cpf.gov.sg.</div>
+  </div>
+
+  <!-- Lead Capture Form -->
+  <div class="dpg-section" id="formContainer" style="border-color:var(--gold);text-align:center">
+    <div id="formContent">
+      <h3 class="dpg-section-title" style="justify-content:center"><span class="dot"></span> Want a Personalized CPF Strategy?</h3>
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:.95rem">Our advisors can review your CPF statements for free and identify optimization opportunities specific to your situation.</p>
+      <form id="leadForm" class="dpg-form" style="text-align:left">
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="name">Name</label>
+          <input class="dpg-form-input" type="text" id="name" name="name" required placeholder="Your full name">
+        </div>
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="phone">Phone</label>
+          <input class="dpg-form-input" type="tel" id="phone" name="phone" required placeholder="9XXX XXXX">
+          <div class="dpg-consent-error" id="cpfPhoneError">Please enter a valid phone number (digits only).</div>
+        </div>
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="email">Email</label>
+          <input class="dpg-form-input" type="email" id="email" name="email" required placeholder="you@example.com">
+          <div class="dpg-consent-error" id="cpfEmailError">Please enter a valid email address (must include @).</div>
+        </div>
+        <div class="dpg-consent-wrap">
+          <input type="checkbox" id="cpfConsent" name="consent" />
+          <label class="dpg-consent-label" for="cpfConsent">
+            I agree to Dream Planners Group collecting and using my personal data to conduct a free CPF review and contact me about relevant strategies and services, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('cpfTc')">Terms &amp; Conditions and Privacy Policy</button>.
+          </label>
+        </div>
+        <div class="dpg-tc-expand" id="cpfTc">
+          <h4>1. Purpose of Data Collection</h4>
+          <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, and email address) for the purpose of conducting your complimentary CPF review and contacting you about financial products and services distributed by GEFA through all channels including SMS, phone call, email, and social media.</p>
+          <h4>2. Data Protection (PDPA)</h4>
+          <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+          <h4>3. Nature of the Review</h4>
+          <p>The CPF review is informational only and does not constitute financial advice under the Financial Advisers Act (Cap. 110). You are under no obligation to purchase any product or service. This service is available to Singapore residents aged 18 and above.</p>
+          <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+          <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+          <h4>5. General</h4>
+          <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This service is governed by the laws of Singapore.</p>
+        </div>
+        <div class="dpg-consent-error" id="cpfConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+        <button type="submit" class="dpg-btn" style="width:100%;margin-top:.5rem">Get My Free CPF Review</button>
+      </form>
+    </div>
+    <div class="dpg-thankyou" id="thankYou" style="display:none">
+      <h3>Thank you!</h3>
+      <p>We have received your details. One of our advisors will reach out within 1-2 business days to schedule your free CPF review.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const consent = document.getElementById('cpfConsent').checked;
+  const consentErr = document.getElementById('cpfConsentError');
+  if (!consent) { consentErr.classList.add('visible'); return; }
+  consentErr.classList.remove('visible');
+
+  const phoneVal = document.getElementById('phone').value.trim();
+  const emailVal = document.getElementById('email').value.trim();
+  const phoneErrEl = document.getElementById('cpfPhoneError');
+  const emailErrEl = document.getElementById('cpfEmailError');
+  let valid = true;
+  if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phoneVal.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+  if (!valid) return;
+
+  const data = {
+    name: document.getElementById('name').value.trim(),
+    phone: phoneVal,
+    email: emailVal,
+    source: 'cpf-guide',
+    timestamp: new Date().toISOString()
+  };
+
+  const { error: sbError } = await _supabase
+    .from('client_leads')
+    .insert({
+      tool: 'cpf_guide',
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      tool_data: {}
+    });
+  if (sbError) {
+    console.error('Submission failed:', sbError.message);
+    alert('Something went wrong. Please try again or contact us directly.');
+    return;
+  }
+
+  // Show thank you message
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('thankYou').style.display = 'block';
+});
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

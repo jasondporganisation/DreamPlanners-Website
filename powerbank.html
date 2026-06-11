@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Powerbank — Dream Planners</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --yellow:  #FFE600;
+            --red:     #E8192C;
+            --navy:    #0A1628;
+            --cyan:    #00B4D8;
+            --white:   #FFFFFF;
+            --black:   #000000;
+            --border:  4px solid #000;
+        }
+
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: var(--yellow);
+        }
+
+        /* ── HALFTONE MIXIN ── */
+        .dots {
+            background-image: radial-gradient(circle, rgba(0,0,0,0.18) 1.5px, transparent 1.5px);
+            background-size: 10px 10px;
+        }
+        .dots-light {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.25) 1.5px, transparent 1.5px);
+            background-size: 10px 10px;
+        }
+
+        /* ══════════════════════════
+           PAGE GRID
+        ══════════════════════════ */
+        .page {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            border: var(--border);
+        }
+
+        /* ══════════════════════════
+           LEFT — COMIC PANELS
+        ══════════════════════════ */
+        .left {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            border-right: var(--border);
+            overflow: hidden;
+        }
+
+        /* TOP STRIP */
+        .top-strip {
+            background: var(--red);
+            border-bottom: var(--border);
+            padding: 8px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .top-strip-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .top-strip-logos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .top-logo {
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+        .top-brand {
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            color: var(--white);
+        }
+        .top-divider {
+            width: 1px;
+            height: 22px;
+            background: rgba(255,255,255,0.35);
+            margin: 0 4px;
+        }
+        .top-ge-logo {
+            height: 26px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+        .top-reg {
+            font-size: 0.58rem;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 0.04em;
+            margin-top: 2px;
+        }
+        .top-badge {
+            background: var(--yellow);
+            color: var(--black);
+            font-family: 'Bangers', cursive;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            padding: 4px 14px;
+            border: 2px solid var(--black);
+            border-radius: 4px;
+            transform: rotate(-1deg);
+        }
+
+        /* HERO PANEL */
+        .hero-panel {
+            background: var(--yellow);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 28px 16px;
+            gap: 0;
+            overflow: hidden;
+        }
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.12) 1.5px, transparent 1.5px);
+            background-size: 10px 10px;
+            pointer-events: none;
+        }
+
+        /* Headline block */
+        .hero-copy {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        .action-word {
+            font-family: 'Bangers', cursive;
+            font-size: 6.5rem;
+            line-height: 0.88;
+            color: var(--navy);
+            letter-spacing: 0.04em;
+            text-shadow: 5px 5px 0 var(--red), 7px 7px 0 rgba(0,0,0,0.3);
+            display: block;
+        }
+        .action-word .outline {
+            -webkit-text-stroke: 2px var(--black);
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 var(--navy);
+        }
+
+        /* Powerbank in hero */
+        .pb-hero {
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+            margin: 8px auto 4px;
+        }
+        .pb-hero-img {
+            height: 400px;
+            width: auto;
+            transform: rotate(5deg);
+            filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.35));
+            animation: pbWobble 3s ease-in-out infinite;
+        }
+        @keyframes pbWobble {
+            0%,100% { transform: rotate(5deg) translateY(0); }
+            50%      { transform: rotate(3deg) translateY(-10px); }
+        }
+        .pb-starburst {
+            position: absolute;
+            top: 4px; right: calc(41.7% - 40px);
+            width: 80px; height: 80px;
+            background: var(--red);
+            border: 3px solid var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 2;
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        .pb-starburst span {
+            font-family: 'Bangers', cursive;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            line-height: 1.1;
+            animation: spinReverse 8s linear infinite;
+        }
+        @keyframes spinReverse {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(-360deg); }
+        }
+
+        /* Speech bubble */
+        .speech-bubble {
+            background: var(--white);
+            border: 3px solid var(--black);
+            border-radius: 18px;
+            padding: 10px 16px;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            top: -18px; left: 28px;
+            border: 10px solid transparent;
+            border-bottom-color: var(--black);
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            top: -13px; left: 29px;
+            border: 9px solid transparent;
+            border-bottom-color: var(--white);
+        }
+        .speech-text {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--black);
+            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* BOTTOM STRIP — bullets */
+        .bottom-strip {
+            background: var(--navy);
+            border-top: var(--border);
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .bottom-strip ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .bottom-strip li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Bangers', cursive;
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            color: var(--white);
+        }
+        .tick {
+            color: var(--yellow);
+            font-size: 1rem;
+        }
+
+        /* ══════════════════════════
+           RIGHT — FORM PANEL
+        ══════════════════════════ */
+        .right {
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Form header strip */
+        .form-header {
+            background: var(--navy);
+            border-bottom: var(--border);
+            padding: 16px 24px;
+            text-align: center;
+        }
+        .form-header-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 0.08em;
+            color: var(--yellow);
+            line-height: 1;
+        }
+        .form-header-sub {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 3px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        /* Urgency bar */
+        .urgency-bar {
+            background: var(--red);
+            padding: 8px 16px;
+            text-align: center;
+            font-family: 'Bangers', cursive;
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            border-bottom: 3px solid var(--black);
+        }
+
+        /* Form body */
+        .form-body {
+            padding: 16px 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .form-body::-webkit-scrollbar { width: 0; }
+
+        .f-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .f-field { margin-bottom: 10px; }
+        .f-label {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+        .f-label .req { color: var(--red); }
+        .f-input {
+            width: 100%;
+            height: 38px;
+            background: var(--white);
+            border: 2.5px solid var(--black);
+            border-radius: 6px;
+            padding: 0 11px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.84rem;
+            color: var(--navy);
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            -webkit-appearance: none;
+        }
+        .f-input::placeholder { color: #aaa; }
+        .f-input:focus {
+            border-color: var(--red);
+            box-shadow: 3px 3px 0 var(--navy);
+        }
+
+        .consent-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .consent-wrap input[type="checkbox"] {
+            width: 14px; height: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            accent-color: var(--navy);
+            cursor: pointer;
+        }
+        .consent-text {
+            font-size: 0.66rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        .consent-text a {
+            color: var(--red);
+            font-weight: 700;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .f-error {
+            display: none;
+            background: #fff0f0;
+            border: 2px solid var(--red);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            color: var(--red);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .f-error.visible { display: block; }
+
+        .f-btn {
+            width: 100%;
+            height: 52px;
+            background: var(--yellow);
+            color: var(--black);
+            border: 3px solid var(--black);
+            border-radius: 8px;
+            font-family: 'Bangers', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 4px 4px 0 var(--black);
+            margin-top: 10px;
+        }
+        .f-btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+        .f-btn:active:not(:disabled) {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+        .f-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .form-disclaimer {
+            font-size: 0.58rem;
+            color: #999;
+            text-align: center;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Trust badges */
+        .form-trust {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #00875A;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .trust-badge svg {
+            flex-shrink: 0;
+        }
+
+        /* ── SUCCESS ── */
+        .success-view {
+            display: none;
+            text-align: center;
+            padding: 32px 20px;
+        }
+        .success-boom {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--red);
+            letter-spacing: 0.06em;
+            text-shadow: 3px 3px 0 var(--navy);
+            margin-bottom: 8px;
+            animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes popIn {
+            from { transform: scale(0) rotate(-10deg); opacity: 0; }
+            to   { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .success-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 0.06em;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        .success-msg {
+            font-size: 0.84rem;
+            color: #555;
+            line-height: 1.65;
+        }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: var(--white);
+            border: var(--border);
+            border-radius: 12px;
+            max-width: 500px; width: 100%;
+            max-height: 82vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            box-shadow: 6px 6px 0 var(--black);
+        }
+        .modal-close {
+            position: absolute; top: 12px; right: 12px;
+            background: var(--yellow); border: 2px solid var(--black);
+            width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; font-size: 0.9rem; color: var(--black);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900;
+        }
+        .modal-box h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 1.6rem; color: var(--navy);
+            margin-bottom: 14px; letter-spacing: 0.06em;
+        }
+        .modal-box h3 {
+            font-size: 0.62rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.14em;
+            color: var(--red); margin: 14px 0 6px;
+        }
+        .modal-box p, .modal-box li {
+            font-size: 0.8rem; color: #444;
+            line-height: 1.65; margin-bottom: 4px;
+        }
+        .modal-box ul { padding-left: 16px; margin-bottom: 8px; }
+        .modal-btn {
+            display: block; margin: 20px auto 0;
+            background: var(--yellow); color: var(--black);
+            border: 2.5px solid var(--black);
+            padding: 10px 28px; border-radius: 6px;
+            font-family: 'Bangers', cursive;
+            font-size: 1rem; cursor: pointer;
+            letter-spacing: 0.1em;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        /* ── TABLET (1024px and below) ── */
+        @media (max-width: 1024px) {
+            .page { grid-template-columns: 1fr 360px; }
+            .action-word { font-size: 5rem; }
+            .pb-hero-img { height: 320px; }
+            .hero-panel { padding: 16px 20px 12px; }
+        }
+
+        /* ── SMALL TABLET / LARGE MOBILE (768px and below) ── */
+        @media (max-width: 768px) {
+            html, body { height: auto; overflow: auto; }
+            .page {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                border: none;
+            }
+            /* Left panel stacks above form */
+            .left {
+                border-right: none;
+                border-bottom: var(--border);
+                border-left: var(--border);
+                border-top: var(--border);
+                border-right: var(--border);
+            }
+            .top-strip { padding: 10px 16px; }
+            .top-badge { font-size: 0.75rem; padding: 4px 10px; }
+            .hero-panel {
+                padding: 24px 20px 16px;
+                align-items: center;
+            }
+            .hero-copy { text-align: center; width: 100%; }
+            .action-word { font-size: 5rem; text-align: center; display: block; width: 100%; }
+            .pb-hero { width: 100%; margin: 8px 0 4px; }
+            .pb-hero-img { width: 100%; height: auto; }
+            .pb-starburst {
+                width: 68px; height: 68px;
+                top: 4%; right: 38%;
+            }
+            .pb-starburst span { font-size: 0.7rem; }
+            .speech-bubble { text-align: center; width: 100%; max-width: 520px; margin-left: auto; margin-right: auto; }
+            .bottom-strip { padding: 12px 16px; justify-content: center; }
+            .bottom-strip ul { gap: 14px; flex-wrap: wrap; justify-content: center; }
+            .bottom-strip li { font-size: 0.82rem; }
+            /* Right panel */
+            .right { border: var(--border); border-top: none; }
+            .form-body { padding: 16px; }
+        }
+
+        /* ── MOBILE (480px and below) ── */
+        @media (max-width: 480px) {
+            .action-word { font-size: 3.8rem; }
+            .pb-hero-img { width: 100%; height: auto; }
+            .pb-starburst {
+                width: 58px; height: 58px;
+                top: 4%; right: 38%;
+            }
+            .pb-starburst span { font-size: 0.62rem; }
+            .f-row { grid-template-columns: 1fr; }
+            .top-badge { display: none; }
+            .speech-bubble { padding: 8px 12px; }
+            .speech-text { font-size: 0.78rem; }
+            .bottom-strip ul { gap: 10px; }
+            .bottom-strip li { font-size: 0.75rem; }
+            .form-header-title { font-size: 1.5rem; }
+            .urgency-bar { font-size: 0.82rem; }
+            .f-btn { font-size: 1rem; height: 48px; }
+        }
+
+        /* ── SMALL MOBILE (360px and below) ── */
+        @media (max-width: 360px) {
+            .action-word { font-size: 3rem; }
+            .pb-hero-img { width: 100%; height: auto; }
+            .bottom-strip li { font-size: 0.68rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ══════════ LEFT ══════════ -->
+    <div class="left">
+
+        <!-- TOP STRIP -->
+        <div class="top-strip">
+            <div class="top-strip-left">
+                <div class="top-strip-logos">
+                    <img src="logo.png" alt="Dream Planners" class="top-logo">
+                    <span class="top-brand">Dream Planners</span>
+                    <div class="top-divider"></div>
+                    <img src="ge-logo.png" alt="Great Eastern" class="top-ge-logo">
+                </div>
+                <div class="top-reg">Representative of Great Eastern Life · Regulated by MAS</div>
+            </div>
+            <div class="top-badge">⚡ LIMITED OFFER — 30 UNITS ONLY!</div>
+        </div>
+
+        <!-- HERO PANEL -->
+        <div class="hero-panel">
+
+            <div class="hero-copy">
+                <span class="action-word">STAY</span>
+                <span class="action-word"><span class="outline">POWERED.</span></span>
+            </div>
+
+            <div class="pb-hero">
+                <div class="pb-starburst">
+                    <span>FREE<br>GIFT!</span>
+                </div>
+                <img src="powerbank3.png" alt="Dream Planners Powerbank" class="pb-hero-img">
+            </div>
+
+            <div class="speech-bubble">
+                <p class="speech-text">Get a FREE 66W powerbank — just meet one of our advisers for a complimentary financial chat. No catch. No pressure. Just free stuff!</p>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM STRIP -->
+        <div class="bottom-strip">
+            <ul>
+                <li><span class="tick">⚡</span> 66W FAST-CHARGE</li>
+                <li><span class="tick">✓</span> AGES 35–65</li>
+                <li><span class="tick">✓</span> 1 PER HOUSEHOLD</li>
+                <li><span class="tick">✓</span> SG RESIDENTS ONLY</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- ══════════ RIGHT ══════════ -->
+    <div class="right">
+
+        <div class="form-header">
+            <div class="form-header-title">CLAIM YOUR POWERBANK!</div>
+            <div class="form-header-sub">Fill in your details — we'll reach out within 24 hours</div>
+        </div>
+
+        <div class="urgency-bar">ONLY 30 LEFT — FIRST COME, FIRST SERVED!</div>
+
+        <div class="form-body">
+            <div id="formView">
+                <form id="pbForm" onsubmit="submitForm(event)" style="margin-top: 4px;">
+                    <div class="f-row">
+                        <div>
+                            <label class="f-label">First Name <span class="req">*</span></label>
+                            <input type="text" class="f-input" id="pb-fname" placeholder="John" required>
+                        </div>
+                        <div>
+                            <label class="f-label">Last Name <span class="req">*</span></label>
+                            <input type="text" class="f-input" id="pb-lname" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    <div class="f-field">
+                        <label class="f-label">Year of Birth <span class="req">*</span></label>
+                        <input type="number" class="f-input" id="pb-yob" placeholder="1975" min="1961" max="1991" required>
+                    </div>
+                    <div class="f-field">
+                        <label class="f-label">Mobile Number <span class="req">*</span></label>
+                        <input type="tel" class="f-input" id="pb-mobile" placeholder="+65 9123 4567" required>
+                    </div>
+                    <div class="f-field">
+                        <label class="f-label">Email Address <span class="req">*</span></label>
+                        <input type="email" class="f-input" id="pb-email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="f-field">
+                        <label class="f-label">Postal Code <span class="req">*</span></label>
+                        <input type="text" class="f-input" id="pb-postal" placeholder="560123" maxlength="6" required>
+                    </div>
+
+                    <div class="consent-wrap">
+                        <input type="checkbox" id="cb-pdpa" required>
+                        <label class="consent-text" for="cb-pdpa">
+                            I consent to Dream Planners Group and Great Eastern Life contacting me via phone, SMS and email in accordance with the PDPA. <span style="color:var(--red)">*</span>
+                        </label>
+                    </div>
+                    <div class="consent-wrap">
+                        <input type="checkbox" id="cb-tc" required>
+                        <label class="consent-text" for="cb-tc">
+                            I agree to the <a onclick="openTC()">Terms and Conditions</a>. <span style="color:var(--red)">*</span>
+                        </label>
+                    </div>
+
+                    <div class="f-error" id="pb-error">Please complete all fields and accept both checkboxes.</div>
+                    <button type="submit" class="f-btn" id="pb-btn">CLAIM MY POWERBANK NOW!</button>
+                </form>
+
+                <div class="form-trust">
+                    <span class="trust-badge">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#00875A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        PDPA Compliant
+                    </span>
+                    <span class="trust-badge">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#00875A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Licensed under MAS
+                    </span>
+                </div>
+                <p class="form-disclaimer">Dream Planners Group · Authorised Representative of Great Eastern Life Assurance Co. Ltd (Reg. No. 197601143K). A financial planning session is required before this gift may be redeemed.</p>
+            </div>
+
+            <div class="success-view" id="successView">
+                <div class="success-boom">BOOM!</div>
+                <div class="success-title">YOU'RE IN THE LIST!</div>
+                <p class="success-msg">One of our advisers will hit you up within <strong>24 hours</strong> to lock in your free session — and your powerbank. Keep your phone nearby!</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- T&C Modal -->
+<div class="modal-overlay" id="tcModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeTC()">✕</button>
+        <h2>Terms &amp; Conditions</h2>
+
+        <h3>Marketing Consent</h3>
+        <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Life Assurance Co. Ltd collecting, using and processing your personal data for the purposes of this campaign and financial planning services, in accordance with the PDPA 2012.</p>
+
+        <h3>Eligibility</h3>
+        <ul>
+            <li>Singapore Citizens or Permanent Residents residing in Singapore.</li>
+            <li>Aged between 35 and 65 years old.</li>
+            <li>Limited to one gift per family or household.</li>
+            <li>A complimentary financial health check is required before the gift is redeemed.</li>
+        </ul>
+
+        <h3>Gift Redemption</h3>
+        <p>Subject to stock availability, arranged upon completion of the financial health check. Dream Planners Group reserves the right to substitute the gift with an item of equal or greater value.</p>
+        <p>Multiple registrations or inaccurate information will be disqualified.</p>
+
+        <h3>Data &amp; Privacy</h3>
+        <p>Data used solely for this campaign and financial planning services. Not sold to third parties. Retained for no longer than 12 months. To withdraw: email <strong>jason.ng@dporganisation.com</strong>.</p>
+
+        <button class="modal-btn" onclick="closeTC()">GOT IT!</button>
+    </div>
+</div>
+
+<script>
+    var WEBHOOK_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+    function openTC() {
+        document.getElementById('tcModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeTC() {
+        document.getElementById('tcModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('tcModal').addEventListener('click', function(e) {
+        if (e.target === this) closeTC();
+    });
+
+    function submitForm(e) {
+        e.preventDefault();
+        var err = document.getElementById('pb-error');
+        err.classList.remove('visible');
+
+        var fname  = document.getElementById('pb-fname').value.trim();
+        var lname  = document.getElementById('pb-lname').value.trim();
+        var yob    = document.getElementById('pb-yob').value.trim();
+        var mobile = document.getElementById('pb-mobile').value.trim();
+        var email  = document.getElementById('pb-email').value.trim();
+        var postal = document.getElementById('pb-postal').value.trim();
+        var pdpa   = document.getElementById('cb-pdpa').checked;
+        var tc     = document.getElementById('cb-tc').checked;
+
+        var age = new Date().getFullYear() - parseInt(yob);
+        if (age < 35 || age > 65) {
+            err.textContent = 'This campaign is open to applicants aged 35 to 65 only.';
+            err.classList.add('visible');
+            return;
+        }
+        if (!pdpa || !tc) {
+            err.textContent = 'Please accept both checkboxes to proceed.';
+            err.classList.add('visible');
+            return;
+        }
+
+        var btn = document.getElementById('pb-btn');
+        btn.disabled = true;
+        btn.textContent = 'SENDING...';
+
+        var payload = {
+            firstName: fname, lastName: lname,
+            yearOfBirth: yob, mobile: mobile,
+            email: email, postalCode: postal,
+            source: 'DPG Powerbank Campaign',
+            submittedAt: new Date().toISOString()
+        };
+
+        if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(function() { showSuccess(); })
+              .catch(function() { showSuccess(); });
+        } else {
+            showSuccess();
+        }
+    }
+
+    function showSuccess() {
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+    }
+</script>
+</body>
+</html>

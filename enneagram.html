@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Work Personality Test — Dream Planners Group</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ===== INTRO / HERO ===== */
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--blue-mid) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(184,149,42,0.12), transparent 60%);
+    pointer-events: none;
+  }
+  .masthead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    animation: ennFadeIn 1.2s ease-out;
+  }
+  .masthead::before, .masthead::after {
+    content: "";
+    height: 1px;
+    width: 3rem;
+    background: rgba(240,224,168,0.3);
+  }
+  .enneagram-svg {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2rem;
+    animation: ennDrawIn 2s ease-out, ennSpin 60s linear infinite 2s;
+    transform-origin: center;
+  }
+  .enneagram-svg circle, .enneagram-svg line {
+    stroke: rgba(240,224,168,0.4);
+    fill: none;
+    stroke-width: 0.8;
+  }
+  .enneagram-svg .node {
+    fill: var(--navy-dark);
+    stroke: var(--gold-pale);
+    stroke-width: 1.2;
+  }
+  .intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+    animation: ennFadeUp 1.4s ease-out 0.3s both;
+  }
+  .intro h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold-pale);
+  }
+  .intro .lede {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    max-width: 540px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 2.5rem;
+    animation: ennFadeUp 1.4s ease-out 0.5s both;
+  }
+  .meta-row {
+    display: flex;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    animation: ennFadeUp 1.4s ease-out 0.7s both;
+  }
+  .meta-item { text-align: center; }
+  .meta-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+  .meta-item .lbl {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.4rem;
+    display: block;
+  }
+  .begin-btn {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white);
+    border: none;
+    padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.35s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 20px rgba(184,149,42,0.35);
+    animation: ennFadeUp 1.4s ease-out 0.9s both;
+  }
+  .begin-btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 200%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s var(--ease-smooth);
+  }
+  .begin-btn span { position: relative; z-index: 2; }
+  .begin-btn:hover::before { left: 100%; }
+  .begin-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,149,42,0.45); }
+  .footer-note {
+    position: absolute;
+    bottom: 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.3);
+    animation: ennFadeIn 2s ease-out 1.5s both;
+  }
+
+  /* ===== ABOUT ===== */
+  .about {
+    padding: 5rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-heading { text-align: center; margin-bottom: 3.5rem; }
+  .section-heading .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .section-heading .eyebrow::before, .section-heading .eyebrow::after {
+    content: "";
+    height: 1px;
+    width: 2rem;
+    background: var(--border);
+  }
+  .section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+  .section-heading h2 em { font-style: italic; font-weight: 500; color: var(--gold); }
+  .section-heading .tag { font-style: italic; color: var(--muted); font-size: 1rem; margin-top: 0.75rem; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-bottom: 4rem;
+  }
+  .about-prose { font-size: 1rem; line-height: 1.85; color: var(--muted); }
+  .about-prose p { margin-bottom: 1.2rem; }
+  .about-prose p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    float: left;
+    line-height: 0.85;
+    margin: 0.15rem 0.6rem 0 0;
+    color: var(--gold);
+  }
+  .about-aside { position: sticky; top: 2rem; }
+  .centers-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .centers-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+  .centers-card .small {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .center-item { padding: 0.85rem 0; border-bottom: 1px dashed var(--border); }
+  .center-item:last-child { border-bottom: none; }
+  .center-item .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
+  .center-item .name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+  .center-item .nums { font-style: italic; color: var(--gold); font-size: 0.9rem; font-weight: 600; }
+  .center-item .desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== TYPES GRID ===== */
+  .types-section {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem;
+  }
+  .types-inner { max-width: 1100px; margin: 0 auto; }
+  .types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .type-tile {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  .type-tile:hover { background: var(--navy); border-color: var(--navy); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .type-tile:hover .type-tile-num { color: var(--gold-light); }
+  .type-tile:hover .type-tile-name { color: var(--white); }
+  .type-tile:hover .type-tile-sub { color: rgba(255,255,255,0.55); }
+  .type-tile:hover .type-tile-desc { color: rgba(255,255,255,0.7); }
+  .type-tile-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    transition: color 0.3s;
+  }
+  .type-tile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    transition: color 0.3s;
+  }
+  .type-tile-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.85rem; transition: color 0.3s; }
+  .type-tile-desc { font-size: 0.88rem; line-height: 1.6; color: var(--muted); margin-top: auto; transition: color 0.3s; }
+
+  /* ===== FINAL CTA ===== */
+  .final-cta { text-align: center; padding: 5rem 2rem 4rem; max-width: 680px; margin: 0 auto; }
+  .final-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .final-cta h2 em { font-style: italic; font-weight: 500; color: var(--gold); }
+  .final-cta p { font-size: 1rem; line-height: 1.75; color: var(--muted); margin-bottom: 2.25rem; }
+  .scroll-hint {
+    margin-top: 2.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,224,168,0.6);
+    animation: ennBob 2.5s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .scroll-hint::after { content: "↓"; display: block; font-size: 1.1rem; margin-top: 0.5rem; letter-spacing: 0; }
+
+  /* ===== QUIZ ===== */
+  .quiz { display: none; min-height: 100vh; padding: 2.5rem 2rem 4rem; max-width: 760px; margin: 0 auto; }
+  .quiz.active { display: block; animation: ennFadeIn 0.6s ease-out; }
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.25rem;
+    border-bottom: 1.5px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .prog-count { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--muted); }
+  .prog-count .curr { font-size: 2rem; color: var(--navy); font-weight: 700; }
+  .prog-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .prog-bar { height: 4px; background: var(--border); width: 100%; border-radius: 10px; margin-bottom: 3rem; overflow: hidden; position: relative; }
+  .prog-fill {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+    border-radius: 10px;
+    left: 0; top: 0;
+    transition: width 0.6s var(--ease-out);
+    width: 0%;
+  }
+  .question-wrap { min-height: 400px; }
+  .q-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.85rem; display: block; }
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--navy);
+    margin-bottom: 2rem;
+  }
+  .q-instruction { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.5rem; font-style: italic; }
+  .scale { display: flex; flex-direction: column; gap: 0.5rem; }
+  .scale-option {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    text-align: left;
+    width: 100%;
+  }
+  .scale-option:hover { border-color: var(--navy); background: rgba(26,36,114,0.03); transform: translateX(4px); }
+  .scale-option.selected { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .scale-option .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1.5px solid var(--border);
+    margin-right: 1rem; flex-shrink: 0; transition: all 0.2s;
+  }
+  .scale-option.selected .dot { background: var(--gold-light); border-color: var(--gold-light); }
+  .scale-option .num { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; margin-right: 0.85rem; color: var(--muted); min-width: 1.1rem; }
+  .scale-option.selected .num { color: var(--gold-pale); }
+  .pair-wrap { display: flex; flex-direction: column; gap: 0.85rem; }
+  .pair-option {
+    padding: 1.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: left;
+    background: var(--white);
+    transition: all 0.25s var(--ease-out);
+    position: relative;
+  }
+  .pair-option::before {
+    content: attr(data-letter);
+    position: absolute;
+    top: 1rem; right: 1.25rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .pair-option:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .pair-option.selected { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .pair-option.selected::before { color: var(--gold-pale); }
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1.5px solid var(--border);
+  }
+  .nav-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .nav-btn:disabled { color: var(--border); border-color: var(--border); cursor: not-allowed; }
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--navy), var(--blue-mid));
+    color: var(--white);
+    border-color: transparent;
+    padding: 12px 28px;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn.primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 200%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.6s var(--ease-smooth);
+  }
+  .nav-btn.primary:hover::before { left: 100%; }
+  .nav-btn.primary:hover { opacity: 0.9; }
+  .nav-btn.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ===== PROCESSING ===== */
+  .processing {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+  }
+  .processing.active { display: flex; animation: ennFadeIn 0.6s ease-out; }
+  .processing-symbol { width: 130px; height: 130px; margin-bottom: 2.25rem; animation: ennSpin 4s linear infinite; }
+  .processing h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
+  .processing p { font-size: 0.95rem; color: rgba(255,255,255,0.5); font-style: italic; max-width: 380px; line-height: 1.7; }
+
+  /* ===== RESULTS ===== */
+  .results { display: none; padding: 3rem 2rem 5rem; max-width: 880px; margin: 0 auto; }
+  .results.active { display: block; animation: ennFadeIn 0.8s ease-out; }
+  .result-head { text-align: center; margin-bottom: 3.5rem; padding-bottom: 2.5rem; border-bottom: 1.5px solid var(--border); }
+  .result-head .small-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 1rem; }
+  .result-type-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(7rem, 18vw, 12rem);
+    line-height: 0.9;
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.03em;
+  }
+  .result-type-name { font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 4vw, 2.8rem); font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
+  .result-subtitle { font-size: 0.9rem; letter-spacing: 0.05em; color: var(--muted); max-width: 560px; margin: 0 auto; }
+  .accuracy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 6px 16px;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .accuracy-badge .num { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; font-weight: 700; }
+  .result-section { margin-bottom: 3rem; }
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before { content: "§"; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 0; }
+  .summary-prose { font-size: 1rem; line-height: 1.85; color: var(--muted); }
+  .summary-prose p { margin-bottom: 1.1rem; }
+  .summary-prose p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    float: left;
+    line-height: 0.85;
+    margin-right: 0.5rem;
+    margin-top: 0.15rem;
+    color: var(--gold);
+  }
+  .distribution { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  .dist-row { display: grid; grid-template-columns: 3.5rem 1fr auto; gap: 0.85rem; align-items: center; padding: 0.4rem 0; }
+  .dist-num { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+  .dist-row.primary .dist-num { color: var(--navy); font-size: 0.9rem; }
+  .dist-bar-bg { height: 6px; background: var(--border); border-radius: 10px; overflow: hidden; }
+  .dist-bar-fill { height: 100%; background: rgba(26,36,114,0.2); width: 0%; border-radius: 10px; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .dist-row.primary .dist-bar-fill { background: linear-gradient(90deg, var(--navy), var(--gold)); }
+  .dist-pct { font-size: 0.78rem; font-weight: 600; color: var(--muted); min-width: 2.5rem; text-align: right; }
+  .dist-row.primary .dist-pct { color: var(--navy); }
+  .traits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .trait-card { padding: 1.5rem; border: 1.5px solid var(--border); border-radius: var(--radius-lg); background: var(--white); box-shadow: var(--shadow-sm); }
+  .trait-card h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.85rem; color: var(--gold); }
+  .trait-card ul { list-style: none; }
+  .trait-card li { font-size: 0.9rem; padding: 0.3rem 0; color: var(--text); border-bottom: 1px dashed var(--border); line-height: 1.5; }
+  .trait-card li:last-child { border-bottom: none; }
+  .trait-card li::before { content: "—"; color: var(--gold); margin-right: 0.5rem; }
+
+  /* ===== REPORT CTA ===== */
+  .report-cta {
+    background: #fff;
+    color: var(--navy);
+    padding: 3rem 2.5rem;
+    border-radius: var(--radius-xl);
+    margin: 2.5rem 0 1.5rem;
+    border: 1.5px solid #e8e3d9;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .report-cta h3 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+  .report-cta > p { font-size: 0.92rem; color: var(--muted); max-width: 560px; margin: 0 auto 1.8rem; line-height: 1.7; text-align: center; }
+  .report-form { display: flex; flex-direction: column; gap: 0; margin-bottom: 1rem; }
+  .report-form .enn-field { margin-bottom: 16px; }
+  .report-form .enn-field label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; letter-spacing: 0.02em; }
+  .report-form input[type="text"],
+  .report-form input[type="email"],
+  .report-form input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--cream);
+    border: 1.5px solid #ddd8ce;
+    border-radius: 8px;
+    padding: 13px 14px;
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .report-form input[type="text"]:focus,
+  .report-form input[type="email"]:focus,
+  .report-form input[type="number"]:focus { border-color: var(--gold); }
+  .report-form input::placeholder { color: #aaa49b; }
+  .submit-report {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 15px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+    position: relative;
+    z-index: 2;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(184,149,42,0.3);
+  }
+  .submit-report::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 200%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s var(--ease-smooth);
+  }
+  .submit-report:hover::before { left: 100%; }
+  .submit-report:hover { opacity: 0.9; transform: translateY(-1px); }
+  .success-msg {
+    display: none;
+    padding: 1.75rem;
+    text-align: center;
+    border: 1.5px solid rgba(184,149,42,0.4);
+    border-radius: var(--radius-lg);
+    background: rgba(184,149,42,0.08);
+    margin-top: 1.25rem;
+    position: relative;
+    z-index: 2;
+  }
+  .success-msg.visible { display: block; animation: ennFadeIn 0.6s ease; }
+  .success-msg h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--gold); }
+  .success-msg p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+  .restart-link { display: block; text-align: center; margin-top: 1.75rem; font-size: 0.88rem; font-style: italic; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .restart-link:hover { color: var(--navy); }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes ennFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ennFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes ennDrawIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  @keyframes ennSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes ennSlideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes ennBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+  .slide-in { animation: ennSlideIn 0.5s ease-out; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-aside { position: static; }
+    .types-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    /* Hero */
+    .intro { padding: 5rem 1.5rem 3rem; min-height: auto; }
+    .enneagram-svg { width: 100px; height: 100px; margin-bottom: 1.25rem; }
+    .masthead { margin-bottom: 1.5rem; font-size: 0.62rem; }
+    .intro h1 { font-size: clamp(2.2rem, 10vw, 3.2rem); margin-bottom: 1rem; }
+    .intro .lede { font-size: 0.9rem; margin-bottom: 2rem; }
+    .meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem 2rem;
+      margin-bottom: 2rem;
+      justify-items: center;
+    }
+    .meta-item .num { font-size: 1.6rem; }
+    .begin-btn { width: 100%; max-width: 320px; padding: 14px 24px; }
+    .scroll-hint { font-size: 0.65rem; margin-top: 1.25rem; }
+
+    /* About / orientation */
+    .about-section { padding: 3rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-aside { position: static; }
+
+    /* Types grid */
+    .types-section { padding: 3rem 1.5rem; }
+    .types-grid { grid-template-columns: 1fr; }
+    .type-tile { min-height: auto; }
+    .final-cta { padding: 3rem 1.5rem 2.5rem; }
+
+    /* Quiz */
+    .quiz { padding: 1.5rem 1.25rem 3rem; }
+    .q-progress { margin-bottom: 1.5rem; }
+    .q-card { padding: 1.5rem 1.25rem; }
+    .q-text { font-size: clamp(1rem, 4vw, 1.25rem); }
+    .q-option { padding: 0.75rem 1rem; font-size: 0.88rem; }
+    .q-nav { margin-top: 1.5rem; }
+
+    /* Results */
+    .results { padding: 2rem 1.25rem 3rem; }
+    .result-header { padding: 1.75rem 1.25rem; }
+    .result-type-num { font-size: clamp(4rem, 20vw, 6rem); }
+    .result-type-name { font-size: clamp(1.5rem, 6vw, 2.2rem); }
+    .result-section { margin-bottom: 2rem; }
+    .dist-row { grid-template-columns: 2.5rem 1fr auto; }
+    .traits-grid { grid-template-columns: 1fr; }
+
+    /* Report form */
+    .report-cta { padding: 2rem 1.25rem; margin: 1.5rem 0 1rem; }
+    .report-form { gap: 0; }
+    .enn-field { margin-bottom: 14px; }
+    .submit-report { padding: 14px; font-size: 0.9rem; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<div class="dpg-scroll-progress" id="scrollProgress"></div>
+<div class="dpg-cursor" id="cursor"></div>
+<div class="dpg-cursor-follower" id="cursorFollower"></div>
+
+<nav class="dpg-nav">
+  <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+  <div class="dpg-nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html">Tools</a>
+    <a href="careers.html">Careers</a>
+  </div>
+  <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+  <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="dpg-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="tools.html">Tools</a>
+  <a href="careers.html">Careers</a>
+  <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<div class="stage">
+
+<!-- ========== LANDING ========== -->
+<div id="landing">
+<section class="intro" id="intro">
+  <div class="masthead">Vol. IX &nbsp;·&nbsp; A Contemplative Study</div>
+
+  <svg class="enneagram-svg" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="85" />
+    <g id="lines">
+      <line x1="100" y1="15" x2="176.4" y2="150" />
+      <line x1="176.4" y1="150" x2="23.6" y2="150" />
+      <line x1="23.6" y1="150" x2="100" y2="15" />
+      <line x1="156.2" y1="49.2" x2="66" y2="173.5" />
+      <line x1="66" y1="173.5" x2="183.5" y2="95" />
+      <line x1="183.5" y1="95" x2="43.8" y2="49.2" />
+      <line x1="43.8" y1="49.2" x2="134" y2="173.5" />
+      <line x1="134" y1="173.5" x2="16.5" y2="95" />
+      <line x1="16.5" y1="95" x2="156.2" y2="49.2" />
+    </g>
+    <circle class="node" cx="100" cy="15" r="4" />
+    <circle class="node" cx="156.2" cy="49.2" r="4" />
+    <circle class="node" cx="183.5" cy="95" r="4" />
+    <circle class="node" cx="176.4" cy="150" r="4" />
+    <circle class="node" cx="134" cy="173.5" r="4" />
+    <circle class="node" cx="66" cy="173.5" r="4" />
+    <circle class="node" cx="23.6" cy="150" r="4" />
+    <circle class="node" cx="16.5" cy="95" r="4" />
+    <circle class="node" cx="43.8" cy="49.2" r="4" />
+  </svg>
+
+  <h1>The <em>Enneagram</em><br/>of Personality</h1>
+
+  <p class="lede">
+    "Know thyself" — the oldest instruction given to any seeker. What follows is an instrument
+    calibrated across decades of inquiry, designed to reflect the shape of your interior life.
+  </p>
+
+  <div class="meta-row">
+    <div class="meta-item"><span class="num">45</span><span class="lbl">Questions</span></div>
+    <div class="meta-item"><span class="num">9</span><span class="lbl">Archetypes</span></div>
+    <div class="meta-item"><span class="num">~8</span><span class="lbl">Minutes</span></div>
+    <div class="meta-item"><span class="num">90%</span><span class="lbl">Accuracy</span></div>
+  </div>
+
+  <button class="begin-btn" onclick="startQuiz()" style="margin-bottom:1.5rem; animation-delay:0.7s;"><span>Begin the Inquiry</span></button>
+
+  <div class="scroll-hint" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    Or read a brief orientation first
+  </div>
+
+  <div class="footer-note">— Answer from instinct, not intention —</div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="about" id="about">
+  <div class="section-heading">
+    <div class="eyebrow">What is the Enneagram</div>
+    <h2>An ancient map of <em>human nature</em></h2>
+    <div class="tag">Nine patterns. One of them is quietly running your life.</div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-prose">
+      <p>
+        The Enneagram is a system of nine personality types — each one a distinct pattern of
+        attention, motivation, and fear. Its roots trace back through centuries of contemplative
+        traditions, refined in the twentieth century into the modern psychological framework used
+        today by therapists, leadership coaches, and serious students of the self.
+      </p>
+      <p>
+        Unlike tests that describe what you <em>do</em>, the Enneagram reveals <em>why</em> you do it.
+        It names the unconscious strategy you adopted early in life to feel safe, loved, or significant
+        — a strategy so habitual you've likely mistaken it for your personality itself.
+      </p>
+      <p>
+        You will have one dominant type. You'll also have a "wing" (a neighbouring flavour), specific
+        directions you move in under stress and in growth, and an instinctual subtype that shades
+        everything. Knowing your type won't change who you are — but it will show you the shape of the
+        prison you've been living inside, and the door you didn't know was unlocked.
+      </p>
+    </div>
+
+    <aside class="about-aside">
+      <div class="centers-card">
+        <h3>The Three Centres</h3>
+        <p class="small">Each type belongs to one of three intelligence centres — the seat of its core reaction to the world.</p>
+        <div class="center-item">
+          <div class="head"><span class="name">Gut / Body</span><span class="nums">8 · 9 · 1</span></div>
+          <p class="desc">Respond from instinct. Core emotion: anger.</p>
+        </div>
+        <div class="center-item">
+          <div class="head"><span class="name">Heart / Feeling</span><span class="nums">2 · 3 · 4</span></div>
+          <p class="desc">Respond through image &amp; relationship. Core emotion: shame.</p>
+        </div>
+        <div class="center-item">
+          <div class="head"><span class="name">Head / Thinking</span><span class="nums">5 · 6 · 7</span></div>
+          <p class="desc">Respond through analysis &amp; planning. Core emotion: fear.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ========== THE NINE TYPES ========== -->
+<section class="types-section">
+  <div class="types-inner">
+    <div class="section-heading">
+      <div class="eyebrow">The Nine Types</div>
+      <h2>Which of these <em>is you</em>?</h2>
+      <div class="tag">Read them honestly. Something usually flinches in recognition.</div>
+    </div>
+    <div class="types-grid">
+      <div class="type-tile"><div class="type-tile-num">1</div><div class="type-tile-name">The Reformer</div><div class="type-tile-sub">Principled · Purposeful</div><div class="type-tile-desc">Driven by a vision of how things ought to be. Holds themselves, and the world, to a standard that rarely sleeps.</div></div>
+      <div class="type-tile"><div class="type-tile-num">2</div><div class="type-tile-name">The Helper</div><div class="type-tile-sub">Warm · Perceptive</div><div class="type-tile-desc">Senses what others need before they name it. Finds belonging through giving — and struggles to receive.</div></div>
+      <div class="type-tile"><div class="type-tile-num">3</div><div class="type-tile-name">The Achiever</div><div class="type-tile-sub">Driven · Adaptive</div><div class="type-tile-desc">Reads the room, becomes what the room rewards. Terrified of failure and of being seen not succeeding.</div></div>
+      <div class="type-tile"><div class="type-tile-num">4</div><div class="type-tile-name">The Individualist</div><div class="type-tile-sub">Expressive · Introspective</div><div class="type-tile-desc">Feels fundamentally different from others. Drawn to depth, beauty, and longing — suspicious of the ordinary.</div></div>
+      <div class="type-tile"><div class="type-tile-num">5</div><div class="type-tile-name">The Investigator</div><div class="type-tile-sub">Perceptive · Private</div><div class="type-tile-desc">Retreats into the mind to stay safe. Protects energy fiercely; trades intimacy for understanding.</div></div>
+      <div class="type-tile"><div class="type-tile-num">6</div><div class="type-tile-name">The Loyalist</div><div class="type-tile-sub">Vigilant · Committed</div><div class="type-tile-desc">Scans constantly for what could go wrong. Fiercely loyal, quietly anxious, unsure who to trust — sometimes including themselves.</div></div>
+      <div class="type-tile"><div class="type-tile-num">7</div><div class="type-tile-name">The Enthusiast</div><div class="type-tile-sub">Spontaneous · Versatile</div><div class="type-tile-desc">Generates possibilities endlessly. Runs from pain into the next exciting thing — keeping all doors open as a way of life.</div></div>
+      <div class="type-tile"><div class="type-tile-num">8</div><div class="type-tile-name">The Challenger</div><div class="type-tile-sub">Powerful · Protective</div><div class="type-tile-desc">Takes up space without apology. Protects the people they love, guards a tenderness no one is allowed to see.</div></div>
+      <div class="type-tile"><div class="type-tile-num">9</div><div class="type-tile-name">The Peacemaker</div><div class="type-tile-sub">Receptive · Reassuring</div><div class="type-tile-desc">Merges with those around them, loses track of their own preferences. Keeps the peace — sometimes at the cost of their own aliveness.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL CTA ========== -->
+<section class="final-cta">
+  <h2>Ready to find <em>yours</em>?</h2>
+  <p>
+    Forty-five questions. Roughly eight minutes. Answer from the gut — the version of you that
+    reacts before it edits. That's the one the instrument is listening for.
+  </p>
+  <button class="begin-btn" onclick="startQuiz()"><span>Begin the Inquiry</span></button>
+</section>
+</div>
+<!-- ========== END LANDING ========== -->
+
+<!-- ========== QUIZ ========== -->
+<section class="quiz" id="quiz">
+  <div class="progress-head">
+    <div class="prog-count"><span class="curr" id="currQ">1</span><span style="color:var(--muted)">  /  45</span></div>
+    <div class="prog-label" id="progPhase">Phase I · Instincts</div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+  <div class="question-wrap" id="questionWrap"></div>
+  <div class="nav-row">
+    <button class="nav-btn" id="prevBtn" onclick="prevQuestion()" disabled>← Previous</button>
+    <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()" disabled>Continue →</button>
+  </div>
+</section>
+
+<!-- ========== PROCESSING ========== -->
+<section class="processing" id="processing">
+  <svg class="processing-symbol" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(240,224,168,0.3)" stroke-width="0.8" />
+    <circle class="node" cx="100" cy="15" r="5" fill="var(--gold-light)" stroke="none" />
+    <circle class="node" cx="156.2" cy="49.2" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="183.5" cy="95" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="176.4" cy="150" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="134" cy="173.5" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="66" cy="173.5" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="23.6" cy="150" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="16.5" cy="95" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <circle class="node" cx="43.8" cy="49.2" r="5" fill="rgba(255,255,255,0.2)" stroke="none" />
+    <line x1="100" y1="15" x2="176.4" y2="150" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="176.4" y1="150" x2="23.6" y2="150" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="23.6" y1="150" x2="100" y2="15" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="156.2" y1="49.2" x2="66" y2="173.5" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="66" y1="173.5" x2="183.5" y2="95" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="183.5" y1="95" x2="43.8" y2="49.2" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="43.8" y1="49.2" x2="134" y2="173.5" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="134" y1="173.5" x2="16.5" y2="95" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+    <line x1="16.5" y1="95" x2="156.2" y2="49.2" stroke="rgba(240,224,168,0.25)" stroke-width="0.8" />
+  </svg>
+  <h2>Interpreting your responses</h2>
+  <p>Weighing instinctual patterns against the nine archetypal structures…</p>
+</section>
+
+<!-- ========== RESULTS ========== -->
+<section class="results" id="results">
+  <div class="result-head">
+    <div class="small-label">Your Primary Archetype</div>
+    <div class="result-type-num" id="typeNum">3</div>
+    <div class="result-type-name" id="typeName">The Achiever</div>
+    <div class="result-subtitle" id="typeSubtitle">Driven · Adaptive · Image-Conscious</div>
+    <div class="accuracy-badge">
+      <span>Confidence</span>
+      <span class="num" id="confidence">92%</span>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="section-label">A Glimpse</div>
+    <div class="summary-prose" id="portraitText"></div>
+  </div>
+
+  <div class="result-section">
+    <div class="section-label">Your Key Strengths</div>
+    <div class="traits-grid" id="traitsGrid"></div>
+  </div>
+
+  <div class="result-section">
+    <div class="section-label">Type Distribution</div>
+    <div class="distribution" id="distribution"></div>
+  </div>
+
+  <div class="report-cta">
+    <h3><span style="color:var(--gold);margin-right:0.4em;">&#8226;</span>Want to know what drives you?</h3>
+    <p>
+      Your full profile goes deeper — your core motivations, fears, how you behave under stress, and what your growth path looks like in a career. Book a session with Jason to receive it.
+    </p>
+    <form class="report-form" id="reportForm" onsubmit="submitReport(event)">
+      <div class="enn-field">
+        <label for="ennName">Name</label>
+        <input type="text" id="ennName" name="name" placeholder="Your full name" required />
+      </div>
+      <div class="enn-field">
+        <label for="ennEmail">Email</label>
+        <input type="email" name="email" id="ennEmail" placeholder="you@example.com" required />
+        <div class="dpg-consent-error" id="ennEmailError">Please enter a valid email address (must include @).</div>
+      </div>
+      <div class="enn-field">
+        <label for="ennAge">Age</label>
+        <input type="number" id="ennAge" name="age" placeholder="Age" min="13" max="120" />
+      </div>
+      <div style="margin-top:0.5rem;">
+        <div class="dpg-consent-wrap">
+          <input type="checkbox" id="ennConsent" name="consent" />
+          <label class="dpg-consent-label" for="ennConsent">
+            I agree to Dream Planners Group collecting and using my personal data to send me my Enneagram results and contact me about relevant career and financial planning opportunities, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('ennTc')">Terms &amp; Conditions and Privacy Policy</button>.
+          </label>
+        </div>
+        <div class="dpg-tc-expand" id="ennTc">
+          <h4>1. Purpose of Data Collection</h4>
+          <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, email address, and age) for the purpose of sending your Enneagram personality profile and contacting you about career and financial planning opportunities through all channels including email.</p>
+          <h4>2. Data Protection (PDPA)</h4>
+          <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+          <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+        </div>
+        <div class="dpg-consent-error" id="ennConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+      </div>
+      <button type="submit" class="submit-report">Send My Full Report</button>
+    </form>
+    <div class="success-msg" id="successMsg">
+      <h4>Your report is on its way</h4>
+      <p>Expect it in your inbox within a few moments. Read it somewhere quiet.</p>
+    </div>
+  </div>
+
+  <a class="restart-link" onclick="restart()">Retake the assessment →</a>
+</section>
+
+</div>
+
+<footer class="dpg-footer">
+  <div class="dpg-footer-brand">Dream Planners Group</div>
+  <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+  <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+    <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+    <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+    <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+    <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact Us</a>
+  </div>
+  <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+// ===================== QUESTION BANK =====================
+const questions = [
+  { phase: "Phase I · Instincts", type: "likert", weight: 1, text: "I feel a quiet, constant pressure to improve everything around me — including myself." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 1, text: "A small error in my work can bother me for hours after it's discovered." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 1, text: "I notice what is wrong in a situation almost before I notice what is right." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 1, text: "I hold myself to standards I would never impose on anyone else." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 2, text: "I sense what people need emotionally before they know it themselves." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 2, text: "It is difficult for me to name my own needs — even when I'm alone." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 2, text: "I feel most alive when someone needs me in a specific, personal way." },
+  { phase: "Phase I · Instincts", type: "likert", weight: 2, text: "I quietly keep track of what I've given to others, even if I never mention it." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 3, text: "I shape myself to match what each situation seems to reward." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 3, text: "Failure frightens me more than almost anything else." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 3, text: "I am very aware of how I am perceived — and I optimize for it." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 3, text: "Rest feels indulgent to me when there is still something to accomplish." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 4, text: "I feel fundamentally different from other people in a way that's hard to explain." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 4, text: "I'm drawn to melancholy, depth, and what others might call 'too much feeling.'" },
+  { phase: "Phase II · Motivations", type: "likert", weight: 4, text: "I long for something I cannot name — and ordinary happiness feels insufficient." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 4, text: "I romanticize what is absent more than I enjoy what is present." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 5, text: "My energy is a finite resource I must protect from other people's demands." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 5, text: "I retreat into thinking when the world becomes emotionally loud." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 5, text: "I prefer to observe a situation thoroughly before participating in it." },
+  { phase: "Phase II · Motivations", type: "likert", weight: 5, text: "Competence — knowing something deeply — is how I feel safe in the world." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 6, text: "My mind rehearses worst-case scenarios so I won't be caught unprepared." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 6, text: "I second-guess decisions I've already made, sometimes for days." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 6, text: "I am deeply loyal to the people and systems I trust — and skeptical of the rest." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 6, text: "Authority makes me uneasy, whether I'm following it or resisting it." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 7, text: "When pain or boredom appears, I instinctively look for the next exciting thing." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 7, text: "My mind is always generating possibilities — too many to follow through on." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 7, text: "I'm uncomfortable sitting with difficult emotions; I'd rather reframe them." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 7, text: "I keep my options open because commitment feels like a door closing." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 8, text: "I take up space without apology, and I expect others to hold their ground with me." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 8, text: "Vulnerability feels dangerous — as if someone might use it against me." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 8, text: "I'd rather confront something directly than work around it politely." },
+  { phase: "Phase III · Patterns", type: "likert", weight: 8, text: "I instinctively protect people I consider mine — even from themselves." },
+  { phase: "Phase IV · Currents", type: "likert", weight: 9, text: "I merge with the preferences of others, sometimes losing track of my own." },
+  { phase: "Phase IV · Currents", type: "likert", weight: 9, text: "Conflict drains me; I'll make significant compromises to restore calm." },
+  { phase: "Phase IV · Currents", type: "likert", weight: 9, text: "I procrastinate on what matters most to me, as if distance makes it safer." },
+  { phase: "Phase IV · Currents", type: "likert", weight: 9, text: "I fall asleep to my own desires — it takes effort to remember what I actually want." },
+  { phase: "Phase IV · Currents", type: "pair", text: "Which of these feels more instinctively true of you?", options: [{ text: "I push myself toward an ideal I can almost — but never quite — reach.", weight: 1 }, { text: "I retreat inward to protect a rich, private inner world from the noise outside.", weight: 5 }] },
+  { phase: "Phase IV · Currents", type: "pair", text: "Which of these feels more instinctively true of you?", options: [{ text: "I read other people's needs fluently and find it hard to say no.", weight: 2 }, { text: "I carry a quiet sense that something essential is missing from my life.", weight: 4 }] },
+  { phase: "Phase IV · Currents", type: "pair", text: "Which of these feels more instinctively true of you?", options: [{ text: "I adapt my persona to the room — the right version of me wins.", weight: 3 }, { text: "I stand my ground and trust my own authority more than anyone else's.", weight: 8 }] },
+  { phase: "Phase IV · Currents", type: "pair", text: "Which of these feels more instinctively true of you?", options: [{ text: "My mind scans for what could go wrong, so I can be ready.", weight: 6 }, { text: "My mind scans for what could be next, so I don't get stuck.", weight: 7 }] },
+  { phase: "Phase V · Shadow", type: "pair", text: "When something goes wrong in a relationship, you are more likely to:", options: [{ text: "Withdraw into silence and process it privately.", weight: 9 }, { text: "Confront the other person head-on until it's resolved.", weight: 8 }] },
+  { phase: "Phase V · Shadow", type: "pair", text: "Which describes your relationship with emotion more honestly?", options: [{ text: "I feel too much, too deeply, and often too long.", weight: 4 }, { text: "I stay above emotion — thinking is safer terrain.", weight: 5 }] },
+  { phase: "Phase V · Shadow", type: "pair", text: "Which sounds more like your inner critic?", options: [{ text: "\"You should have done better. You know what's right.\"", weight: 1 }, { text: "\"Are you sure? What if you're wrong? What if they turn on you?\"", weight: 6 }] },
+  { phase: "Phase V · Shadow", type: "pair", text: "When you enter a new group of people, you tend to:", options: [{ text: "Energize the room and find the fun quickly.", weight: 7 }, { text: "Blend in easily and go with the group's flow.", weight: 9 }] },
+  { phase: "Phase V · Shadow", type: "pair", text: "Which fear sits closer to your core?", options: [{ text: "Being worthless without achievement.", weight: 3 }, { text: "Being unloved without giving.", weight: 2 }] }
+];
+
+// ===================== TYPE DATA =====================
+const types = {
+  1: { name: "The Reformer", subtitle: "Principled · Purposeful · Self-Controlled", portrait: "You are animated by a vision of how things ought to be. The world, as you encounter it, is rarely acceptable as found — there is always a correction to be made, a standard to uphold, a rightness to pursue. This is not arrogance; it is a moral seriousness that runs so deep you often can't turn it off, least of all against yourself. Your inner critic is a permanent houseguest, vigilant and rarely pleased.\n\nAt your best, you are the person a community quietly depends on — fair, disciplined, and incorruptible. At your most constrained, you grow rigid, resentful of those who seem to live without the same internal burden, and exhausted by your own standards. Growth, for you, begins the moment you allow something to be imperfect and still beloved.", traits: { "Core Motivation": ["To be good", "To have integrity", "To be beyond criticism"], "Core Fear": ["Being defective", "Being corrupted", "Being wrong"], "Gifts": ["Integrity", "Fairness", "Discipline", "Clarity of purpose"], "Growth Edge": ["Self-compassion", "Receiving rest", "Tolerating imperfection"] } },
+  2: { name: "The Helper", subtitle: "Generous · Perceptive · People-Pleasing", portrait: "You move through the world with your antennae tuned to other people. You sense what they need, often before they name it, and you find yourself giving — time, attention, emotional labor — almost automatically. Relationships are your native medium; being needed, your quiet reward. Underneath the warmth, however, is a harder truth: you struggle to receive, and you may not know what you actually want when no one is asking.\n\nAt your best, you are genuinely selfless, warmly perceptive, and a stabilizing force in the lives you touch. At your most constrained, you grow covertly resentful, manipulate through care, and collapse from running a reservoir you never let anyone refill. Growth begins the moment you let yourself be cared for without earning it first.", traits: { "Core Motivation": ["To feel loved", "To be needed", "To express affection"], "Core Fear": ["Being unwanted", "Being unworthy of love", "Being alone"], "Gifts": ["Empathy", "Warmth", "Generosity", "Relational intuition"], "Growth Edge": ["Receiving without earning", "Naming own needs", "Solitude"] } },
+  3: { name: "The Achiever", subtitle: "Driven · Adaptive · Image-Conscious", portrait: "You are engineered for forward motion. You read the room, identify what success looks like, and become that — fluently, efficiently, often before anyone has noticed you working. Your adaptability is your superpower and your hiding place. Behind the polish is a private question you rarely let yourself ask: who am I when no one is watching, and when nothing is being measured?\n\nAt your best, you are magnetic, effective, and genuinely inspiring — someone who makes ambition look noble. At your most constrained, you confuse image for substance, outrun your own emotional life, and burn out in private while the world applauds you. Growth begins the moment you risk being seen failing — and discover you're still there.", traits: { "Core Motivation": ["To be valuable", "To be successful", "To be admired"], "Core Fear": ["Being worthless", "Being exposed as a fraud", "Failure"], "Gifts": ["Efficiency", "Adaptability", "Inspiring presence", "Execution"], "Growth Edge": ["Authenticity over image", "Rest", "Feeling instead of performing"] } },
+  4: { name: "The Individualist", subtitle: "Expressive · Introspective · Melancholic", portrait: "You inhabit a world most people don't know exists — one colored by longing, nuance, and a sense of being fundamentally other. You feel things deeply, at a volume that can be beautiful and exhausting. You're drawn to what's missing, what's unreachable, what hurts in a meaningful way; ordinary contentment can feel thin, even suspicious. Your creative interior is one of your truest possessions.\n\nAt your best, you are extraordinarily self-aware, emotionally honest, and capable of turning private experience into something others can finally recognize in themselves. At your most constrained, you over-identify with suffering, envy what others have, and reject the ordinary goodness already in your life. Growth begins the moment you stop mining your feelings for identity and let yourself be plain.", traits: { "Core Motivation": ["To be authentic", "To express the inner self", "To find meaning"], "Core Fear": ["Having no identity", "Being ordinary", "Being insignificant"], "Gifts": ["Emotional depth", "Creative vision", "Honesty about pain", "Aesthetic sense"], "Growth Edge": ["Equanimity", "Welcoming the ordinary", "Action over feeling"] } },
+  5: { name: "The Investigator", subtitle: "Perceptive · Private · Detached", portrait: "You are an observer by design. You stand a little apart from the world — watching, gathering, understanding — because full contact feels depleting in a way it doesn't seem to for others. Your mind is your fortress, your sanctuary, and your primary instrument. You believe, correctly or otherwise, that understanding is a form of safety: if you can see something clearly enough, it can't surprise you.\n\nAt your best, you are the rare person who sees what no one else has bothered to look at, a mind that produces genuine originality. At your most constrained, you retreat so far inward that life passes you on the outside, and your emotions become a country you only visit. Growth begins the moment you let experience precede understanding — and discover you survive it.", traits: { "Core Motivation": ["To be competent", "To understand", "To protect autonomy"], "Core Fear": ["Being depleted", "Being overwhelmed", "Being incompetent"], "Gifts": ["Depth of insight", "Objectivity", "Originality", "Inner resourcefulness"], "Growth Edge": ["Embodiment", "Emotional engagement", "Generosity with self"] } },
+  6: { name: "The Loyalist", subtitle: "Vigilant · Committed · Ambivalent", portrait: "You are built for vigilance. Your mind runs constant scenarios — what could go wrong, who can be trusted, what is actually happening beneath what is being said. This isn't pessimism; it's how you take care of the people and systems you've committed to. You are the most loyal person in most rooms, even if no one realizes how much inner work that loyalty costs you.\n\nAt your best, you are the quiet backbone of organizations and relationships — courageous, devoted, and relentlessly responsible. At your most constrained, your mind spirals through worst-cases you'll never meet, you project threats onto what is safe, and you oscillate between dependence and rebellion toward authority. Growth begins the moment you recognize the voice in your head is not the world — and you trust yourself anyway.", traits: { "Core Motivation": ["To feel safe", "To belong", "To have support"], "Core Fear": ["Being without guidance", "Abandonment", "Being unprepared"], "Gifts": ["Loyalty", "Courage under fear", "Perceptiveness", "Responsibility"], "Growth Edge": ["Inner trust", "Quieting anxiety", "Acting without certainty"] } },
+  7: { name: "The Enthusiast", subtitle: "Spontaneous · Versatile · Scattered", portrait: "You are the person most in love with possibility. You generate ideas like a machine that was never switched off — trips to take, books to read, careers to try, tangents to chase. Life is a menu and you want to taste all of it. Beneath the brightness, however, is the quieter truth of your type: you are running from something. Pain, limitation, stillness — anything that might trap you inside a feeling you don't want to meet.\n\nAt your best, you are joyful, adventurous, and genuinely expansive — the person who reminds others that life is big. At your most constrained, you scatter yourself across options, stay permanently in the planning phase, and use optimism as a numbing agent. Growth begins the moment you stay — with the harder feeling, the deeper commitment, the slower joy.", traits: { "Core Motivation": ["To be satisfied", "To experience freedom", "To avoid pain"], "Core Fear": ["Being trapped", "Being deprived", "Inner emptiness"], "Gifts": ["Joy", "Vision", "Adaptability", "Optimism in darkness"], "Growth Edge": ["Commitment", "Sitting with pain", "Depth over breadth"] } },
+  8: { name: "The Challenger", subtitle: "Powerful · Protective · Confrontational", portrait: "You have a physical relationship with power. You walk into rooms and something shifts; you state what you think; you expect others to meet you with equal force. Weakness — in yourself or shown to you by others — makes you uncomfortable in ways you rarely articulate. Beneath the armor, your most guarded secret is simple: you are protecting a tenderness you decided, long ago, could never be safe in the open.\n\nAt your best, you are a natural protector — a force for justice, a leader who uses power to shield others rather than dominate them. At your most constrained, you bulldoze, intimidate, and punish vulnerability wherever you find it, including inside yourself. Growth begins the moment you let someone see you soft without losing respect for yourself.", traits: { "Core Motivation": ["To be strong", "To protect", "To control own fate"], "Core Fear": ["Being controlled", "Being harmed", "Vulnerability"], "Gifts": ["Strength", "Leadership", "Protection of others", "Decisiveness"], "Growth Edge": ["Vulnerability", "Receiving tenderness", "Gentleness of force"] } },
+  9: { name: "The Peacemaker", subtitle: "Receptive · Reassuring · Self-Forgetting", portrait: "You are the person most able to see every side. You merge with the people around you — their preferences, moods, rhythms — so gracefully that you often lose track of where you end and they begin. Harmony is your atmosphere; conflict contracts something in you at the physiological level. Your great gift, and your great hazard, is the same: you can fall asleep to yourself, and no one, not even you, will notice for a long time.\n\nAt your best, you are a stabilizing, unifying presence — the calm center others instinctively trust. At your most constrained, you disappear from your own life, procrastinate on what matters most to you, and use comfort as an anesthetic. Growth begins the moment you let your own voice into the room — even when you're the only one who will hear it.", traits: { "Core Motivation": ["To maintain peace", "To be connected", "To merge with others"], "Core Fear": ["Loss", "Separation", "Conflict"], "Gifts": ["Presence", "Calm", "Empathic understanding", "Mediation"], "Growth Edge": ["Self-assertion", "Engaging priorities", "Waking to own desires"] } }
+};
+
+// ===================== STATE =====================
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+
+// ===================== UTILS =====================
+function toggleTC(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// ===================== NAV =====================
+function startQuiz() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("quiz").classList.add("active");
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const wrap = document.getElementById("questionWrap");
+  wrap.classList.remove("slide-in");
+  void wrap.offsetWidth;
+  wrap.classList.add("slide-in");
+
+  document.getElementById("currQ").textContent = currentQ + 1;
+  document.getElementById("progFill").style.width = ((currentQ + 1) / questions.length * 100) + "%";
+  document.getElementById("progPhase").textContent = q.phase;
+
+  let html = `<span class="q-num">Question ${String(currentQ + 1).padStart(2, '0')}</span>`;
+
+  if (q.type === "likert") {
+    html += `<h2 class="q-text">"${q.text}"</h2>`;
+    html += `<p class="q-instruction">How true is this of you, from instinct?</p>`;
+    const labels = [
+      { n: 1, label: "Not at all like me" },
+      { n: 2, label: "Rarely like me" },
+      { n: 3, label: "Sometimes like me" },
+      { n: 4, label: "Often like me" },
+      { n: 5, label: "Deeply like me" }
+    ];
+    html += `<div class="scale">`;
+    labels.forEach(l => {
+      const sel = answers[currentQ] === l.n ? 'selected' : '';
+      html += `<button class="scale-option ${sel}" onclick="pickLikert(${l.n})">
+                 <span class="dot"></span>
+                 <span class="num">${l.n}</span>
+                 <span>${l.label}</span>
+               </button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === "pair") {
+    html += `<h2 class="q-text">${q.text}</h2>`;
+    html += `<p class="q-instruction">Choose the one that lands closer to the truth — not the better-sounding one.</p>`;
+    html += `<div class="pair-wrap">`;
+    q.options.forEach((opt, i) => {
+      const sel = answers[currentQ] === i ? 'selected' : '';
+      html += `<button class="pair-option ${sel}" data-letter="${String.fromCharCode(65 + i)}" onclick="pickPair(${i})">${opt.text}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  wrap.innerHTML = html;
+  document.getElementById("prevBtn").disabled = currentQ === 0;
+  document.getElementById("nextBtn").disabled = answers[currentQ] === null;
+  document.getElementById("nextBtn").textContent = currentQ === questions.length - 1 ? "Reveal My Type →" : "Continue →";
+}
+
+function pickLikert(n) {
+  answers[currentQ] = n;
+  renderQuestion();
+  setTimeout(() => {
+    if (currentQ < questions.length - 1) nextQuestion();
+    else document.getElementById("nextBtn").disabled = false;
+  }, 280);
+}
+
+function pickPair(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+  setTimeout(() => {
+    if (currentQ < questions.length - 1) nextQuestion();
+    else document.getElementById("nextBtn").disabled = false;
+  }, 320);
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ===================== SCORING =====================
+function computeScores() {
+  const scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+  questions.forEach((q, i) => {
+    const ans = answers[i];
+    if (ans === null) return;
+    if (q.type === "likert") {
+      scores[q.weight] += ans;
+    } else if (q.type === "pair") {
+      const chosenType = q.options[ans].weight;
+      scores[chosenType] += 4;
+    }
+  });
+  return scores;
+}
+
+function getPercentages(scores) {
+  const maxPerType = {};
+  for (let t = 1; t <= 9; t++) maxPerType[t] = 20;
+  questions.forEach(q => {
+    if (q.type === "pair") {
+      q.options.forEach(opt => { maxPerType[opt.weight] += 4; });
+    }
+  });
+  const pcts = {};
+  for (let t = 1; t <= 9; t++) {
+    pcts[t] = Math.round((scores[t] / maxPerType[t]) * 100);
+  }
+  return pcts;
+}
+
+// ===================== FINISH =====================
+function finishQuiz() {
+  document.getElementById("quiz").classList.remove("active");
+  document.getElementById("processing").classList.add("active");
+  setTimeout(() => {
+    document.getElementById("processing").classList.remove("active");
+    showResults();
+  }, 2600);
+}
+
+function showResults() {
+  const scores = computeScores();
+  const pcts = getPercentages(scores);
+
+  let primary = 1, maxScore = -1;
+  for (let t = 1; t <= 9; t++) {
+    if (scores[t] > maxScore) { maxScore = scores[t]; primary = t; }
+  }
+
+  const type = types[primary];
+  document.getElementById("typeNum").textContent = primary;
+  document.getElementById("typeName").textContent = type.name;
+  document.getElementById("typeSubtitle").textContent = type.subtitle;
+
+  const sorted = Object.entries(pcts).sort((a, b) => b[1] - a[1]);
+  const gap = sorted[0][1] - sorted[1][1];
+  const confidence = Math.min(95, Math.max(72, 78 + gap * 1.2));
+  document.getElementById("confidence").textContent = Math.round(confidence) + "%";
+
+  // Portrait teaser — first paragraph only, capped at ~200 chars
+  const firstPara = type.portrait.split("\n\n")[0];
+  const sentences = firstPara.match(/[^.!?]+[.!?]+/g) || [firstPara];
+  const teaser = sentences.slice(0, 2).join(" ").trim() + "…";
+  const portraitEl = document.getElementById("portraitText");
+  portraitEl.innerHTML = `<p>${teaser}</p>`;
+
+  // Gifts only — top 3
+  const gifts = (type.traits["Gifts"] || []).slice(0, 3);
+  const traitsEl = document.getElementById("traitsGrid");
+  traitsEl.innerHTML = `<div class="trait-card" style="grid-column:1/-1;">
+    <h4>Your Strengths</h4>
+    <ul>${gifts.map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>`;
+
+  // Distribution
+  const distEl = document.getElementById("distribution");
+  const typeOrder = Object.entries(pcts).sort((a, b) => b[1] - a[1]);
+  distEl.innerHTML = typeOrder.map(([t, p], idx) => {
+    const cls = idx === 0 ? "primary" : "";
+    return `<div class="dist-row ${cls}">
+              <span class="dist-num">Type ${t}</span>
+              <div class="dist-bar-bg"><div class="dist-bar-fill" data-w="${p}"></div></div>
+              <span class="dist-pct">${p}%</span>
+            </div>`;
+  }).join("");
+
+  document.getElementById("results").classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  // Animate bars after section is visible
+  setTimeout(() => {
+    document.querySelectorAll(".dist-bar-fill").forEach(bar => {
+      bar.style.width = bar.dataset.w + "%";
+    });
+  }, 300);
+}
+
+// ===================== REPORT SUBMISSION =====================
+async function submitReport(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form));
+
+  const consent = document.getElementById('ennConsent').checked;
+  const consentErr = document.getElementById('ennConsentError');
+  if (!consent) { consentErr.classList.add('visible'); return; }
+  consentErr.classList.remove('visible');
+
+  const emailErrEl = document.getElementById('ennEmailError');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((data.email || '').trim())) {
+    emailErrEl.classList.add('visible');
+    return;
+  }
+  emailErrEl.classList.remove('visible');
+  const scores = computeScores();
+  const pcts = getPercentages(scores);
+  let primary = 1, maxScore = -1;
+  for (let t = 1; t <= 9; t++) { if (scores[t] > maxScore) { maxScore = scores[t]; primary = t; } }
+  const { error: sbError } = await _supabase
+    .from('recruitment_leads')
+    .insert({
+      source: 'enneagram',
+      name: data.name,
+      phone: '',
+      email: data.email,
+      source_data: {
+        enneagram_type: String(primary),
+        type_name: types[primary].name,
+        age: data.age || '',
+        focus: data.focus || '',
+        scores
+      }
+    });
+  if (sbError) {
+    console.error('Submission failed:', sbError.message);
+    alert('Something went wrong. Please try again or contact us directly.');
+    return;
+  }
+  form.style.display = "none";
+  document.getElementById("successMsg").classList.add("visible");
+}
+
+function restart() {
+  currentQ = 0;
+  answers = new Array(questions.length).fill(null);
+  document.getElementById("results").classList.remove("active");
+  document.getElementById("landing").style.display = "block";
+  document.getElementById("reportForm").style.display = "grid";
+  document.getElementById("reportForm").reset();
+  document.getElementById("successMsg").classList.remove("visible");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+  if (!document.getElementById("quiz").classList.contains("active")) return;
+  const q = questions[currentQ];
+  if (q.type === "likert" && e.key >= "1" && e.key <= "5") {
+    pickLikert(parseInt(e.key));
+  } else if (q.type === "pair") {
+    if (e.key.toLowerCase() === "a") pickPair(0);
+    if (e.key.toLowerCase() === "b") pickPair(1);
+  } else if (e.key === "ArrowLeft") {
+    prevQuestion();
+  } else if (e.key === "ArrowRight" && answers[currentQ] !== null) {
+    nextQuestion();
+  }
+});
+
+// Scroll progress
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  const el = document.getElementById('scrollProgress');
+  if (el) el.style.width = scrolled + '%';
+});
+
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('cursorFollower');
+if (cursor && follower) {
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { follower.style.left = e.clientX + 'px'; follower.style.top = e.clientY + 'px'; }, 80);
+  });
+}
+</script>
+</body>
+</html>

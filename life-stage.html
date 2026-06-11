@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Stage Checklists — Dream Planners Group</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+</head>
+<body>
+
+  <nav class="dpg-nav">
+      <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+      <div class="dpg-nav-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="tools.html" class="active">Tools</a>
+          <a href="careers.html">Careers</a>
+    </div>
+      <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+      <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+          <span></span><span></span><span></span>
+      </button>
+  </nav>
+  <div class="dpg-mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="tools.html" class="active">Tools</a>
+      <a href="careers.html">Careers</a>
+        <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+  <section class="dpg-hero">
+    <div>
+      <h1>Life Stage <em>Checklists</em></h1>
+      <p>What You Need Before You Sign Anything</p>
+    </div>
+    <div class="dpg-scroll-indicator">
+        <span></span>
+    </div>
+  </section>
+
+  <main class="dpg-container">
+
+    <!-- Tabs -->
+    <div class="dpg-tabs">
+      <button class="dpg-tab active" data-tab="married">Getting Married</button>
+      <button class="dpg-tab" data-tab="property">BTO / Buying Property</button>
+      <button class="dpg-tab" data-tab="baby">New Baby</button>
+      <button class="dpg-tab" data-tab="career">Career Change</button>
+    </div>
+
+    <!-- Checklist: Getting Married -->
+    <div class="dpg-section checklist-card active" id="married">
+      <h2 class="dpg-section-title"><span class="dot"></span> Getting Married</h2>
+      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">Key financial and protection steps before and after tying the knot.</p>
+      <div class="progress-wrap" style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--muted);margin-bottom:6px;"><span>Progress</span><span class="progress-text">0 / 7</span></div>
+        <div class="dpg-progress-bg"><div class="dpg-progress-fill"></div></div>
+      </div>
+      <div class="checklist-items">
+        <div class="dpg-checklist-item"><input type="checkbox" id="m1"><label for="m1" class="dpg-checklist-text">Review and update insurance beneficiaries</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m2"><label for="m2" class="dpg-checklist-text">Consider joint/combined hospitalization coverage</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m3"><label for="m3" class="dpg-checklist-text">Assess if death coverage is sufficient for spouse dependency</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m4"><label for="m4" class="dpg-checklist-text">Review CPF nominations</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m5"><label for="m5" class="dpg-checklist-text">Plan for wedding expenses without depleting emergency fund</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m6"><label for="m6" class="dpg-checklist-text">Consider a will / lasting power of attorney</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="m7"><label for="m7" class="dpg-checklist-text">Discuss financial goals and protection needs as a couple</label></div>
+      </div>
+    </div>
+
+    <!-- Checklist: BTO / Buying Property -->
+    <div class="dpg-section checklist-card" id="property" style="display:none;">
+      <h2 class="dpg-section-title"><span class="dot"></span> BTO / Buying Property</h2>
+      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">Protect your biggest purchase and plan your finances wisely.</p>
+      <div class="progress-wrap" style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--muted);margin-bottom:6px;"><span>Progress</span><span class="progress-text">0 / 6</span></div>
+        <div class="dpg-progress-bg"><div class="dpg-progress-fill"></div></div>
+      </div>
+      <div class="checklist-items">
+        <div class="dpg-checklist-item"><input type="checkbox" id="p1"><label for="p1" class="dpg-checklist-text">Ensure Home Protection Scheme (HPS) is adequate</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="p2"><label for="p2" class="dpg-checklist-text">Consider Mortgage Reducing Term Assurance (MRTA)</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="p3"><label for="p3" class="dpg-checklist-text">Review CPF OA usage for downpayment vs keeping for investment</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="p4"><label for="p4" class="dpg-checklist-text">Budget for renovation without touching emergency fund</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="p5"><label for="p5" class="dpg-checklist-text">Assess if existing coverage accounts for new mortgage liability</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="p6"><label for="p6" class="dpg-checklist-text">Consider property insurance (fire, home contents)</label></div>
+      </div>
+    </div>
+
+    <!-- Checklist: New Baby -->
+    <div class="dpg-section checklist-card" id="baby" style="display:none;">
+      <h2 class="dpg-section-title"><span class="dot"></span> New Baby</h2>
+      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">More dependants means more responsibility — plan ahead.</p>
+      <div class="progress-wrap" style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--muted);margin-bottom:6px;"><span>Progress</span><span class="progress-text">0 / 7</span></div>
+        <div class="dpg-progress-bg"><div class="dpg-progress-fill"></div></div>
+      </div>
+      <div class="checklist-items">
+        <div class="dpg-checklist-item"><input type="checkbox" id="b1"><label for="b1" class="dpg-checklist-text">Add child as dependant for coverage assessment</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b2"><label for="b2" class="dpg-checklist-text">Consider child's hospitalization plan (Integrated Shield Plan)</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b3"><label for="b3" class="dpg-checklist-text">Start an education fund early (endowment or investment-linked)</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b4"><label for="b4" class="dpg-checklist-text">Update will to include guardianship provisions</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b5"><label for="b5" class="dpg-checklist-text">Increase death/TPD coverage — more dependants = higher need</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b6"><label for="b6" class="dpg-checklist-text">Review maternity/paternity benefits and claims</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="b7"><label for="b7" class="dpg-checklist-text">MediSave for newborn — understand the MediSave grant</label></div>
+      </div>
+    </div>
+
+    <!-- Checklist: Career Change / Starting Business -->
+    <div class="dpg-section checklist-card" id="career" style="display:none;">
+      <h2 class="dpg-section-title"><span class="dot"></span> Career Change / Starting Business</h2>
+      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">Don't let a career move leave you exposed — review your safety net.</p>
+      <div class="progress-wrap" style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--muted);margin-bottom:6px;"><span>Progress</span><span class="progress-text">0 / 7</span></div>
+        <div class="dpg-progress-bg"><div class="dpg-progress-fill"></div></div>
+      </div>
+      <div class="checklist-items">
+        <div class="dpg-checklist-item"><input type="checkbox" id="c1"><label for="c1" class="dpg-checklist-text">Assess impact of losing group insurance from employer</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c2"><label for="c2" class="dpg-checklist-text">Port any existing group policies if possible</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c3"><label for="c3" class="dpg-checklist-text">Ensure personal hospitalization plan is in place (not just employer's)</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c4"><label for="c4" class="dpg-checklist-text">Review income protection / disability insurance</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c5"><label for="c5" class="dpg-checklist-text">Consider keyman insurance if starting a business</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c6"><label for="c6" class="dpg-checklist-text">Update CPF contribution strategy if self-employed</label></div>
+        <div class="dpg-checklist-item"><input type="checkbox" id="c7"><label for="c7" class="dpg-checklist-text">Review emergency fund — 6-12 months if self-employed</label></div>
+      </div>
+    </div>
+
+    <!-- Lead Capture Form -->
+    <div class="dpg-section" style="margin-top:24px;">
+      <div id="lead-form-wrap">
+        <h2 class="dpg-section-title"><span class="dot"></span> Get a Personalized Checklist</h2>
+        <p style="font-size:0.9rem;color:var(--muted);margin-bottom:20px;">Want a personalized checklist for your life stage? Let us review your situation — it's free.</p>
+        <form id="lead-form" class="dpg-form">
+          <div class="dpg-form-group">
+            <label for="lead-name" class="dpg-form-label">Name</label>
+            <input type="text" id="lead-name" class="dpg-form-input" placeholder="Your full name" required>
+          </div>
+          <div class="dpg-form-group">
+            <label for="lead-phone" class="dpg-form-label">Phone</label>
+            <input type="tel" id="lead-phone" class="dpg-form-input" placeholder="e.g. 9123 4567" required>
+            <div class="dpg-consent-error" id="lsPhoneError">Please enter a valid phone number (digits only).</div>
+          </div>
+          <div class="dpg-form-group">
+            <label for="lead-email" class="dpg-form-label">Email</label>
+            <input type="email" id="lead-email" class="dpg-form-input" placeholder="you@email.com" required>
+            <div class="dpg-consent-error" id="lsEmailError">Please enter a valid email address (must include @).</div>
+          </div>
+          <div class="dpg-form-group">
+            <label for="lead-stage" class="dpg-form-label">Which life stage applies to you?</label>
+            <select id="lead-stage" class="dpg-form-select" required>
+              <option value="" disabled selected>Select a life stage</option>
+              <option value="Getting Married">Getting Married</option>
+              <option value="BTO / Buying Property">BTO / Buying Property</option>
+              <option value="New Baby">New Baby</option>
+              <option value="Career Change / Starting Business">Career Change / Starting Business</option>
+            </select>
+          </div>
+          <div class="dpg-consent-wrap">
+            <input type="checkbox" id="lsConsent" name="consent" />
+            <label class="dpg-consent-label" for="lsConsent">
+              I agree to Dream Planners Group collecting and using my personal data to provide a personalized financial planning checklist and contact me about relevant services, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('lsTc')">Terms &amp; Conditions and Privacy Policy</button>.
+            </label>
+          </div>
+          <div class="dpg-tc-expand" id="lsTc">
+            <h4>1. Purpose of Data Collection</h4>
+            <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, email address, and life stage) for the purpose of preparing a personalized financial planning checklist and contacting you about financial products and services distributed by GEFA through all channels including SMS, phone call, email, and social media.</p>
+            <h4>2. Data Protection (PDPA)</h4>
+            <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+            <h4>3. Nature of the Tool</h4>
+            <p>The life stage checklist is informational only and does not constitute financial advice under the Financial Advisers Act (Cap. 110). You are under no obligation to purchase any product or service. This service is available to Singapore residents aged 18 and above.</p>
+            <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+            <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+            <h4>5. General</h4>
+            <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This service is governed by the laws of Singapore.</p>
+          </div>
+          <div class="dpg-consent-error" id="lsConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+          <button type="submit" class="dpg-btn" style="width:100%;">Submit</button>
+        </form>
+      </div>
+      <div class="dpg-thankyou" id="thank-you" style="display:none;">
+        <h3>Thank you!</h3>
+        <p>We've received your details. A Dream Planners adviser will reach out to you shortly.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+  <script>
+
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.dpg-tab');
+    const cards = document.querySelectorAll('.checklist-card');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        cards.forEach(c => { c.classList.remove('active'); c.style.display = 'none'; });
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.tab);
+        target.classList.add('active');
+        target.style.display = 'block';
+      });
+    });
+
+    // Checkbox progress tracking
+    cards.forEach(card => {
+      const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+      const progressFill = card.querySelector('.dpg-progress-fill');
+      const progressText = card.querySelector('.progress-text');
+      const total = checkboxes.length;
+      const cardId = card.id;
+
+      // Load saved state
+      checkboxes.forEach(cb => {
+        const saved = localStorage.getItem('dpg-ls-' + cb.id);
+        if (saved === 'true') cb.checked = true;
+      });
+      updateProgress();
+
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          localStorage.setItem('dpg-ls-' + cb.id, cb.checked);
+          updateProgress();
+        });
+      });
+
+      function updateProgress() {
+        const checked = card.querySelectorAll('input[type="checkbox"]:checked').length;
+        progressText.textContent = checked + ' / ' + total;
+        progressFill.style.width = (total > 0 ? (checked / total) * 100 : 0) + '%';
+      }
+    });
+
+    function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+    // Lead form submission
+    document.getElementById('lead-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const consent = document.getElementById('lsConsent').checked;
+      const consentErr = document.getElementById('lsConsentError');
+      if (!consent) { consentErr.classList.add('visible'); return; }
+      consentErr.classList.remove('visible');
+
+      const phoneVal = document.getElementById('lead-phone').value.trim();
+      const emailVal = document.getElementById('lead-email').value.trim();
+      const phoneErrEl = document.getElementById('lsPhoneError');
+      const emailErrEl = document.getElementById('lsEmailError');
+      let valid = true;
+      if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phoneVal.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+      if (!valid) return;
+
+      const data = {
+        name: document.getElementById('lead-name').value.trim(),
+        phone: phoneVal,
+        email: emailVal,
+        lifeStage: document.getElementById('lead-stage').value,
+        source: 'life-stage-checklist',
+        submittedAt: new Date().toISOString()
+      };
+
+      const { error: sbError } = await _supabase
+        .from('client_leads')
+        .insert({
+          tool: 'life_stage',
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          tool_data: { life_stage: data.lifeStage }
+        });
+      if (sbError) {
+        console.error('Submission failed:', sbError.message);
+        alert('Something went wrong. Please try again or contact us directly.');
+        return;
+      }
+
+      // Show thank you
+      document.getElementById('lead-form-wrap').style.display = 'none';
+      document.getElementById('thank-you').style.display = 'block';
+    });
+  </script>
+  <script src="premium.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Gap Calculator | Dream Planners Group</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Step animation */
+.calc-step {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.calc-step.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress segments */
+.progress-segments {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.progress-segment {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.4s ease;
+}
+.progress-segment.active {
+  background: var(--gold);
+}
+.progress-segment.done {
+  background: #1a8a4a;
+}
+
+/* Option buttons */
+.option-btns {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.option-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 0.75rem 1rem;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.option-btn:hover {
+  border-color: var(--gold);
+}
+.option-btn.selected {
+  border-color: var(--gold);
+  background: rgba(184, 149, 42, 0.12);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Dollar input prefix */
+.dollar-input {
+  position: relative;
+}
+.dollar-input::before {
+  content: 'S$';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+.dollar-input input {
+  padding-left: 2.8rem !important;
+}
+
+/* Range slider */
+.range-value {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  background: transparent;
+  margin-top: 0.5rem;
+}
+input[type="range"]::-webkit-slider-track {
+  background: var(--border);
+  height: 6px;
+  border-radius: 3px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -8px;
+}
+
+/* Traffic light */
+.traffic-light {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.traffic-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Total gap display */
+.total-gap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.total-gap .label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.total-gap .amount {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+.total-gap .amount.gap { color: #c43232; }
+.total-gap .amount.ok { color: #1a8a4a; }
+
+/* Gap items */
+.gap-item {
+  margin-bottom: 1.25rem;
+}
+.gap-item .gap-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+.gap-item .gap-header .gap-label { color: var(--text); font-weight: 500; }
+.gap-item .gap-header .gap-value { font-weight: 600; }
+.gap-item .gap-header .gap-value.positive { color: #1a8a4a; }
+.gap-item .gap-header .gap-value.negative { color: #c43232; }
+
+/* Recommendation box */
+.recommendation {
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.recommendation h4 {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--navy);
+}
+.recommendation ul {
+  padding-left: 1.25rem;
+}
+.recommendation li {
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+
+/* Button row */
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.btn-row .dpg-btn,
+.btn-row .dpg-btn-outline {
+  flex: 1;
+}
+
+/* Thank-you check */
+.check-circle {
+  width: 64px;
+  height: 64px;
+  background: rgba(26, 138, 74, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+  color: #1a8a4a;
+}
+
+/* Hide number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+@media (max-width: 480px) {
+  .total-gap .amount { font-size: 1.8rem; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html" class="active">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html" class="active">Tools</a>
+    <a href="careers.html">Careers</a>
+        <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<!-- Hero -->
+<section class="dpg-hero">
+  <div>
+    <h1>Insurance <em>Gap Calculator</em></h1>
+    <p>Find out if you're adequately covered in just 2 minutes.</p>
+  </div>
+  <div class="dpg-scroll-indicator">
+      <span></span>
+  </div>
+</section>
+
+<div class="dpg-container" style="max-width:640px;">
+  <!-- Progress -->
+  <p style="text-align:center;font-size:0.75rem;color:var(--muted);margin-bottom:0.25rem;" id="progressLabel">Step 1 of 7</p>
+  <div class="progress-segments" id="progressBar">
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+    <div class="progress-segment"></div>
+  </div>
+
+  <!-- Step 1: Age -->
+  <div class="calc-step active" id="step1">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>How old are you?</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Your age helps us estimate the right coverage levels.</p>
+      <div class="dpg-form-group">
+        <div class="range-value" id="ageDisplay">30</div>
+        <input type="range" id="age" min="18" max="70" value="30" oninput="document.getElementById('ageDisplay').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">
+          <span>18</span><span>70</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn" onclick="goTo(2)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Income -->
+  <div class="calc-step" id="step2">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>What is your annual income?</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">This determines your recommended death and critical illness coverage.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Annual Income</label>
+        <div class="dollar-input">
+          <input type="number" id="income" class="dpg-form-input" placeholder="e.g. 60000" min="0">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn-outline" onclick="goTo(1)">Back</button>
+        <button class="dpg-btn" onclick="goTo(3)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Marital & Dependents -->
+  <div class="calc-step" id="step3">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>Tell us about your family</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Family situation affects how much coverage you need.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Marital Status</label>
+        <div class="option-btns" id="maritalOptions">
+          <div class="option-btn" onclick="selectOption('marital','Single',this)">Single</div>
+          <div class="option-btn" onclick="selectOption('marital','Married',this)">Married</div>
+          <div class="option-btn" onclick="selectOption('marital','Divorced',this)">Divorced</div>
+        </div>
+      </div>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Number of Dependents</label>
+        <div class="option-btns" id="dependentOptions">
+          <div class="option-btn" onclick="selectOption('dependents','0',this)">0</div>
+          <div class="option-btn" onclick="selectOption('dependents','1',this)">1</div>
+          <div class="option-btn" onclick="selectOption('dependents','2',this)">2</div>
+          <div class="option-btn" onclick="selectOption('dependents','3',this)">3</div>
+          <div class="option-btn" onclick="selectOption('dependents','4',this)">4</div>
+          <div class="option-btn" onclick="selectOption('dependents','5+',this)">5+</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn-outline" onclick="goTo(2)">Back</button>
+        <button class="dpg-btn" onclick="goTo(4)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Expenses -->
+  <div class="calc-step" id="step4">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>What are your monthly expenses?</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">We use this to calculate your recommended emergency fund.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Monthly Expenses</label>
+        <div class="dollar-input">
+          <input type="number" id="expenses" class="dpg-form-input" placeholder="e.g. 3000" min="0">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn-outline" onclick="goTo(3)">Back</button>
+        <button class="dpg-btn" onclick="goTo(5)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Loans -->
+  <div class="calc-step" id="step5">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>Outstanding loans</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Total of housing, car, education, and other loans.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Total Outstanding Loans</label>
+        <div class="dollar-input">
+          <input type="number" id="loans" class="dpg-form-input" placeholder="e.g. 500000" min="0">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn-outline" onclick="goTo(4)">Back</button>
+        <button class="dpg-btn" onclick="goTo(6)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 6: Existing Coverage -->
+  <div class="calc-step" id="step6">
+    <div class="dpg-section">
+      <h2 class="dpg-section-title"><span class="dot"></span>Your existing insurance</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Tell us what you already have so we can find the gaps.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Existing Death / TPD Coverage</label>
+        <div class="dollar-input">
+          <input type="number" id="existingDeath" class="dpg-form-input" placeholder="e.g. 200000" min="0">
+        </div>
+      </div>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Existing Critical Illness Coverage</label>
+        <div class="dollar-input">
+          <input type="number" id="existingCI" class="dpg-form-input" placeholder="e.g. 100000" min="0">
+        </div>
+      </div>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Do you have a hospitalization plan?</label>
+        <div class="option-btns" id="hospOptions">
+          <div class="option-btn" onclick="selectOption('hosp','Yes',this)">Yes</div>
+          <div class="option-btn" onclick="selectOption('hosp','No',this)">No</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="dpg-btn-outline" onclick="goTo(5)">Back</button>
+        <button class="dpg-btn" onclick="calculate()">See My Results</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 7: Results -->
+  <div class="calc-step" id="step7">
+    <h2 class="dpg-section-title" style="font-size:1.25rem;"><span class="dot"></span>Your Insurance Gap Report</h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Based on Singapore financial planning standards</p>
+
+    <!-- Traffic light & results -->
+    <div class="dpg-section">
+      <div class="traffic-light">
+        <div class="traffic-dot" id="trafficDot"></div>
+        <div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--navy);" id="trafficLabel"></div>
+          <div style="font-size:0.8rem;color:var(--muted);" id="trafficDesc"></div>
+        </div>
+      </div>
+
+      <div class="total-gap">
+        <div class="label">Total Coverage Gap</div>
+        <div class="amount" id="totalGapAmount"></div>
+      </div>
+
+      <div id="gapBars"></div>
+
+      <div class="recommendation" id="recommendations"></div>
+    </div>
+
+    <!-- Lead capture -->
+    <div class="dpg-section" id="leadForm" style="margin-top:24px;">
+      <h3 class="dpg-section-title" style="font-size:1.15rem;"><span class="dot"></span>Get your detailed report</h3>
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">A Dream Planners advisor will review your numbers personally.</p>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Name</label>
+        <input type="text" id="leadName" class="dpg-form-input" placeholder="Your full name">
+      </div>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Phone</label>
+        <input type="tel" id="leadPhone" class="dpg-form-input" placeholder="e.g. 9123 4567">
+        <div class="dpg-consent-error" id="gapPhoneError">Please enter a valid phone number (digits only).</div>
+      </div>
+      <div class="dpg-form-group">
+        <label class="dpg-form-label">Email</label>
+        <input type="email" id="leadEmail" class="dpg-form-input" placeholder="you@example.com">
+        <div class="dpg-consent-error" id="gapEmailError">Please enter a valid email address (must include @).</div>
+      </div>
+      <div class="dpg-consent-wrap">
+        <input type="checkbox" id="gapConsent" name="consent" />
+        <label class="dpg-consent-label" for="gapConsent">
+          I agree to Dream Planners Group collecting and using my personal data to provide a detailed coverage gap report and contact me about relevant products and services, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('gapTc')">Terms &amp; Conditions and Privacy Policy</button>.
+        </label>
+      </div>
+      <div class="dpg-tc-expand" id="gapTc">
+        <h4>1. Purpose of Data Collection</h4>
+        <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, and email address) for the purpose of providing a detailed coverage gap report and contacting you about financial products and services distributed by GEFA through all channels including SMS, phone call, email, and social media.</p>
+        <h4>2. Data Protection (PDPA)</h4>
+        <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+        <h4>3. Nature of the Tool</h4>
+        <p>The gap calculator and resulting report are informational only and do not constitute financial advice under the Financial Advisers Act (Cap. 110). You are under no obligation to purchase any product or service. This service is available to Singapore residents aged 18 and above.</p>
+        <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+        <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+        <h4>5. General</h4>
+        <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This service is governed by the laws of Singapore.</p>
+      </div>
+      <div class="dpg-consent-error" id="gapConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+      <button class="dpg-btn" style="width:100%;background:#1a8a4a;" onclick="submitLead()">Get My Free Report</button>
+    </div>
+
+    <!-- Thank you (hidden) -->
+    <div class="dpg-section" id="thankYou" style="display:none;margin-top:24px;">
+      <div class="dpg-thankyou">
+        <div class="check-circle">&#10003;</div>
+        <h3>Thank you!</h3>
+        <p>We'll be in touch within 24 hours!</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="dpg-btn-outline" onclick="startOver()">Start Over</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+let currentStep = 1;
+const totalSteps = 7;
+const selections = { marital: '', dependents: '', hosp: '' };
+let calculatedResults = null;
+
+function selectOption(key, value, el) {
+  selections[key] = value;
+  const parent = el.parentElement;
+  parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateProgress(step) {
+  const steps = document.querySelectorAll('.progress-segment');
+  steps.forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i < step - 1) s.classList.add('done');
+    if (i === step - 1) s.classList.add('active');
+  });
+  document.getElementById('progressLabel').textContent = step <= totalSteps ? `Step ${step} of ${totalSteps}` : '';
+}
+
+function goTo(step) {
+  if (step < 1 || step > totalSteps) return;
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = step;
+  // Re-trigger animation
+  const el = document.getElementById('step' + step);
+  el.classList.remove('active');
+  void el.offsetWidth;
+  el.classList.add('active');
+  updateProgress(step);
+  document.getElementById('step' + step).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function num(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function fmt(n) {
+  if (n < 0) n = 0;
+  return 'S$' + n.toLocaleString('en-SG', { maximumFractionDigits: 0 });
+}
+
+function calculate() {
+  const age = parseInt(document.getElementById('age').value);
+  const income = num('income');
+  const expenses = num('expenses');
+  const loans = num('loans');
+  const existingDeath = num('existingDeath');
+  const existingCI = num('existingCI');
+  const hasHosp = selections.hosp === 'Yes';
+
+  // Recommended
+  const recDeath = 9 * income + loans;
+  const recCI = 4 * income;
+  const recEmergency = 6 * expenses;
+
+  // Gaps (positive = gap, negative = surplus)
+  const deathGap = recDeath - existingDeath;
+  const ciGap = recCI - existingCI;
+
+  // Coverage percentages
+  const deathPct = recDeath > 0 ? Math.min(existingDeath / recDeath * 100, 100) : 100;
+  const ciPct = recCI > 0 ? Math.min(existingCI / recCI * 100, 100) : 100;
+
+  // Total gap (only count shortfalls, not surpluses)
+  let totalGap = 0;
+  if (deathGap > 0) totalGap += deathGap;
+  if (ciGap > 0) totalGap += ciGap;
+
+  // Traffic light score
+  let score = 'green';
+  let gapCount = 0;
+  if (deathGap > 0) gapCount++;
+  if (ciGap > 0) gapCount++;
+  if (!hasHosp) gapCount++;
+
+  if (totalGap > income * 5 || gapCount >= 3) score = 'red';
+  else if (totalGap > 0 || gapCount >= 1) score = 'amber';
+
+  calculatedResults = {
+    age, income, marital: selections.marital, dependents: selections.dependents,
+    expenses, loans, existingDeath, existingCI, hasHosp,
+    recDeath, recCI, recEmergency,
+    deathGap, ciGap, deathPct, ciPct,
+    totalGap, score
+  };
+
+  renderResults(calculatedResults);
+  goTo(7);
+}
+
+function renderResults(r) {
+  // Traffic light
+  const dot = document.getElementById('trafficDot');
+  const label = document.getElementById('trafficLabel');
+  const desc = document.getElementById('trafficDesc');
+
+  if (r.score === 'green') {
+    dot.style.background = '#1a8a4a';
+    dot.innerHTML = '&#10003;';
+    label.textContent = 'Well Covered';
+    desc.textContent = 'Your insurance coverage looks solid.';
+  } else if (r.score === 'amber') {
+    dot.style.background = '#f59e0b';
+    dot.innerHTML = '!';
+    label.textContent = 'Some Gaps Found';
+    desc.textContent = 'A few areas need attention.';
+  } else {
+    dot.style.background = '#c43232';
+    dot.innerHTML = '!!';
+    label.textContent = 'Significantly Underinsured';
+    desc.textContent = 'Urgent gaps in your coverage.';
+  }
+
+  // Total gap
+  const totalEl = document.getElementById('totalGapAmount');
+  if (r.totalGap > 0) {
+    totalEl.textContent = fmt(r.totalGap);
+    totalEl.className = 'amount gap';
+  } else {
+    totalEl.textContent = 'No Gap';
+    totalEl.className = 'amount ok';
+  }
+
+  // Gap bars
+  const barsHtml = `
+    ${gapBarHTML('Death / TPD Coverage', r.recDeath, r.existingDeath, r.deathPct, r.deathGap)}
+    ${gapBarHTML('Critical Illness Coverage', r.recCI, r.existingCI, r.ciPct, r.ciGap)}
+    <div class="gap-item">
+      <div class="gap-header">
+        <span class="gap-label">Hospitalization Plan</span>
+        <span class="gap-value ${r.hasHosp ? 'positive' : 'negative'}">${r.hasHosp ? 'Covered' : 'Not Covered'}</span>
+      </div>
+      <div class="dpg-gap-bar-bg">
+        <div class="dpg-gap-bar-fill ${r.hasHosp ? 'covered' : 'gap'}" style="width:${r.hasHosp ? 100 : 0}%"></div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-header">
+        <span class="gap-label">Emergency Fund (6 months)</span>
+        <span class="gap-value" style="color:var(--muted)">${fmt(r.recEmergency)} recommended</span>
+      </div>
+      <div class="dpg-gap-bar-bg">
+        <div class="dpg-gap-bar-fill" style="width:100%;background:var(--gold);opacity:0.5"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('gapBars').innerHTML = barsHtml;
+
+  // Trigger bar animations
+  setTimeout(() => {
+    document.querySelectorAll('.dpg-gap-bar-fill').forEach(bar => {
+      bar.style.width = bar.style.width; // force reflow
+    });
+  }, 50);
+
+  // Recommendations
+  let recs = [];
+  if (r.deathGap > 0) recs.push(`Increase your death/TPD coverage by <strong>${fmt(r.deathGap)}</strong> to meet the recommended 9x annual income plus outstanding loans.`);
+  if (r.ciGap > 0) recs.push(`Increase your critical illness coverage by <strong>${fmt(r.ciGap)}</strong> to meet the recommended 4x annual income.`);
+  if (!r.hasHosp) recs.push('Get a hospitalization plan (Integrated Shield Plan) to protect against large medical bills.');
+  if (r.recEmergency > 0) recs.push(`Build an emergency fund of at least <strong>${fmt(r.recEmergency)}</strong> (6 months of expenses).`);
+  if (recs.length === 0) recs.push('Your insurance coverage is looking strong. Consider reviewing annually to keep it up to date.');
+
+  document.getElementById('recommendations').innerHTML = `<h4>Recommendations</h4><ul>${recs.map(r => '<li>' + r + '</li>').join('')}</ul>`;
+}
+
+function gapBarHTML(label, recommended, existing, pct, gap) {
+  const isGap = gap > 0;
+  const valueText = isGap ? `Gap: ${fmt(gap)}` : 'Fully covered';
+  const valueClass = isGap ? 'negative' : 'positive';
+  return `
+    <div class="gap-item">
+      <div class="gap-header">
+        <span class="gap-label">${label}</span>
+        <span class="gap-value ${valueClass}">${valueText}</span>
+      </div>
+      <div class="dpg-gap-bar-bg">
+        <div class="dpg-gap-bar-fill ${isGap ? 'gap' : 'covered'}" style="width:${pct}%;${isGap ? 'background:linear-gradient(90deg, #1a8a4a, #c43232)' : ''}"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted);margin-top:0.2rem;">
+        <span>Have: ${fmt(existing)}</span>
+        <span>Need: ${fmt(recommended)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+async function submitLead() {
+  const consent = document.getElementById('gapConsent').checked;
+  const consentErr = document.getElementById('gapConsentError');
+  if (!consent) { consentErr.classList.add('visible'); return; }
+  consentErr.classList.remove('visible');
+
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const phoneErrEl = document.getElementById('gapPhoneError');
+  const emailErrEl = document.getElementById('gapEmailError');
+
+  if (!name) { alert('Please enter your name.'); return; }
+  let valid = true;
+  if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phone.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+  if (!valid) return;
+
+  const payload = {
+    name: name,
+    phone: phone,
+    email: email,
+    source: 'gap-calculator',
+    age: calculatedResults.age,
+    income: calculatedResults.income,
+    marital: calculatedResults.marital,
+    dependents: calculatedResults.dependents,
+    expenses: calculatedResults.expenses,
+    loans: calculatedResults.loans,
+    existing_death: calculatedResults.existingDeath,
+    existing_ci: calculatedResults.existingCI,
+    has_hosp: calculatedResults.hasHosp,
+    gap_score: calculatedResults.score,
+    death_gap: calculatedResults.deathGap,
+    ci_gap: calculatedResults.ciGap,
+    total_gap: calculatedResults.totalGap,
+    submittedAt: new Date().toISOString()
+  };
+
+  const { error: sbError } = await _supabase
+    .from('client_leads')
+    .insert({
+      tool: 'gap_calculator',
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      tool_data: {
+        age: payload.age,
+        income: payload.income,
+        marital: payload.marital,
+        dependents: payload.dependents,
+        expenses: payload.expenses,
+        loans: payload.loans,
+        existing_death: payload.existing_death,
+        existing_ci: payload.existing_ci,
+        has_hosp: payload.has_hosp,
+        gap_score: payload.gap_score,
+        death_gap: payload.death_gap,
+        ci_gap: payload.ci_gap,
+        total_gap: payload.total_gap
+      }
+    });
+  if (sbError) {
+    console.error('Submission failed:', sbError.message);
+    alert('Something went wrong. Please try again or contact us directly.');
+    return;
+  }
+
+  // Show thank you
+  document.getElementById('leadForm').style.display = 'none';
+  document.getElementById('thankYou').style.display = 'block';
+}
+
+function startOver() {
+  // Reset form values
+  document.getElementById('age').value = 30;
+  document.getElementById('ageDisplay').textContent = '30';
+  document.getElementById('income').value = '';
+  document.getElementById('expenses').value = '';
+  document.getElementById('loans').value = '';
+  document.getElementById('existingDeath').value = '';
+  document.getElementById('existingCI').value = '';
+  document.getElementById('leadName').value = '';
+  document.getElementById('leadPhone').value = '';
+  document.getElementById('leadEmail').value = '';
+
+  // Reset selections
+  selections.marital = '';
+  selections.dependents = '';
+  selections.hosp = '';
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+
+  // Reset lead form visibility
+  document.getElementById('leadForm').style.display = 'block';
+  document.getElementById('thankYou').style.display = 'none';
+
+  calculatedResults = null;
+  goTo(1);
+}
+
+// Initialize progress
+updateProgress(1);
+</script>
+<script src="premium.js"></script>
+</body>
+</html>

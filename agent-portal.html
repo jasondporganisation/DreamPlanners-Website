@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Portal — Dream Planners Group</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: var(--cream); }
+
+        /* ── PORTAL HEADER ── */
+        .portal-header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1e3a8a 100%);
+            padding: 28px 5vw 0;
+            position: relative;
+        }
+        .portal-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .portal-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+        .portal-header-logo img {
+            height: 38px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+        .portal-header-logo span {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .portal-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .portal-agent-badge {
+            text-align: right;
+        }
+        .portal-agent-badge .agent-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .portal-agent-badge .agent-role {
+            font-size: 0.75rem;
+            color: var(--gold-pale);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .portal-agent-badge .agent-id {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 2px;
+        }
+        .portal-logout-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-sm);
+            color: rgba(255,255,255,0.65);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .portal-logout-btn:hover {
+            background: rgba(255,255,255,0.14);
+            color: var(--white);
+        }
+
+        /* ── TABS ── */
+        .portal-tabs {
+            display: flex;
+            gap: 4px;
+            margin-top: 24px;
+            padding: 0 0 0 2px;
+        }
+        .portal-tab {
+            padding: 12px 24px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: rgba(255,255,255,0.5);
+            background: transparent;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            position: relative;
+        }
+        .portal-tab:hover { color: rgba(255,255,255,0.8); }
+        .portal-tab.active {
+            color: var(--navy);
+            background: var(--cream);
+        }
+        .portal-tab .tab-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .tab-dev-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 2px 7px;
+            border-radius: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+        .portal-tab.active .tab-dev-badge {
+            background: rgba(26,36,114,0.12);
+            color: var(--muted);
+        }
+
+        /* ── CONTENT ── */
+        .portal-content {
+            min-height: calc(100vh - 200px);
+            padding: 40px 5vw;
+        }
+        .portal-panel { display: none; }
+        .portal-panel.active { display: block; }
+
+        /* Section titles */
+        .portal-section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .portal-section-sub {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        /* ── TRAINING / DRIVE EMBED ── */
+        .drive-frame-wrap {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        .drive-frame-wrap iframe {
+            width: 100%;
+            height: 75vh;
+            min-height: 500px;
+            border: none;
+            display: block;
+        }
+        .drive-note {
+            padding: 14px 20px;
+            background: rgba(184,149,42,0.06);
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .drive-note::before { content: 'ℹ'; font-size: 1rem; color: var(--gold); }
+
+        /* ── SOP PLACEHOLDER ── */
+        .placeholder-card {
+            background: var(--white);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.4;
+        }
+        .placeholder-card h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        .placeholder-card p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        /* ── ROADSHOW ── */
+        .roadshow-card {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            border-radius: var(--radius-lg);
+            padding: 60px 40px;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .roadshow-card::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184,149,42,0.12) 0%, transparent 70%);
+        }
+        .roadshow-card h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .roadshow-card p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            max-width: 400px;
+            margin: 0 auto 28px;
+            position: relative;
+        }
+        .roadshow-dev-pill {
+            display: inline-block;
+            background: rgba(184,149,42,0.2);
+            border: 1px solid rgba(184,149,42,0.4);
+            color: var(--gold-pale);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border-radius: 40px;
+            position: relative;
+        }
+
+        /* ── LEADS ── */
+        .leads-empty {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 60px 40px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .leads-empty h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .leads-empty p { font-size: 0.88rem; color: var(--muted); }
+
+        .leads-table-wrap {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leads-table thead {
+            background: var(--navy);
+        }
+        .leads-table thead th {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+        .leads-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .leads-table tbody tr:last-child { border-bottom: none; }
+        .leads-table tbody tr:hover { background: rgba(26,36,114,0.03); }
+        .leads-table td {
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+        .lead-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .lead-status.new { background: rgba(37,99,235,0.1); color: #2563eb; }
+        .lead-status.contacted { background: rgba(184,149,42,0.12); color: var(--gold); }
+        .lead-status.converted { background: rgba(22,163,74,0.1); color: #16a34a; }
+        .lead-status.closed { background: rgba(107,107,126,0.1); color: var(--muted); }
+
+        .leads-count {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+        .leads-count strong { color: var(--navy); }
+
+        /* Director toggle */
+        .director-toggle {
+            display: inline-flex;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 40px;
+            padding: 4px;
+            margin-bottom: 24px;
+            gap: 4px;
+        }
+        .dir-toggle-btn {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 40px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--muted);
+            transition: all 0.2s;
+        }
+        .dir-toggle-btn.active { background: var(--navy); color: var(--white); }
+
+        /* Status dropdown */
+        .lead-status-select {
+            border: none;
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .lead-status-select.status-new { background: rgba(37,99,235,0.1); color: #2563eb; }
+        .lead-status-select.status-contacted { background: rgba(184,149,42,0.12); color: var(--gold); }
+        .lead-status-select.status-converted { background: rgba(22,163,74,0.1); color: #16a34a; }
+        .lead-status-select.status-closed { background: rgba(107,107,126,0.1); color: var(--muted); }
+
+        /* Director view */
+        .director-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .director-summary-stat {
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            color: var(--white);
+        }
+        .director-summary-num {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold-pale);
+        }
+        .director-summary-label { font-size: 0.78rem; opacity: 0.6; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .director-section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+        .director-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .director-agent-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .director-agent-card:hover { border-color: var(--navy); box-shadow: var(--shadow-md); }
+        .director-agent-card.active { border-color: var(--gold); box-shadow: var(--shadow-md); }
+        .director-agent-name { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+        .director-agent-role { font-size: 0.72rem; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .director-agent-count { font-family: 'Playfair Display', Georgia, serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); }
+        .director-agent-label { font-size: 0.72rem; color: var(--muted); }
+        .agent-leads-section { margin-bottom: 24px; }
+        .agent-leads-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--navy);
+            color: var(--white);
+            padding: 14px 20px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+        .agent-leads-tag { font-size: 0.75rem; opacity: 0.6; font-weight: 400; }
+        .agent-leads-section .leads-table-wrap { border-radius: 0 0 var(--radius-md) var(--radius-md); }
+
+        @media (max-width: 600px) {
+            .director-summary { grid-template-columns: repeat(2, 1fr); }
+            .director-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ── TRAINING CATEGORY BUTTONS ── */
+        .training-cat {
+            padding: 9px 18px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--navy);
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.02em;
+        }
+        .training-cat:hover { border-color: var(--gold); color: var(--gold); }
+        .training-cat.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+        /* ── SOP STYLES ── */
+        .sop-subnav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0;
+        }
+        .sop-subbtn {
+            padding: 10px 22px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            letter-spacing: 0.03em;
+        }
+        .sop-subbtn:hover { color: var(--navy); }
+        .sop-subbtn.active { color: var(--navy); border-bottom-color: var(--gold); }
+
+        .sop-subpanel { display: none; }
+        .sop-subpanel.active { display: block; }
+
+        .sop-h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .sop-intro {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        .sop-kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .sop-kpi-card {
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            color: var(--white);
+        }
+        .sop-kpi-card.gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
+        .sop-kpi-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.65;
+            margin-bottom: 6px;
+        }
+        .sop-kpi-val {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .sop-kpi-sub { font-size: 0.78rem; opacity: 0.7; margin-top: 2px; }
+
+        .sop-section {
+            margin-bottom: 40px;
+        }
+        .sop-section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .sop-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .sop-section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+        }
+        .sop-section-sub {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 16px;
+            margin-top: -8px;
+            padding-left: 50px;
+        }
+        .sop-phase-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 4px;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .sop-phase-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .sop-phase-desc {
+            font-size: 0.87rem;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        /* Script boxes */
+        .sop-script {
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .sop-script-role {
+            display: inline-block;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .sop-script-text {
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            font-style: italic;
+        }
+        .sop-script.adviser { background: var(--navy-dark); }
+        .sop-script.adviser .sop-script-role { background: var(--navy); color: rgba(255,255,255,0.6); }
+        .sop-script.adviser .sop-script-text { color: rgba(255,255,255,0.9); }
+        .sop-script.puller { background: #1a4a3a; }
+        .sop-script.puller .sop-script-role { background: #2d8a6a; color: rgba(255,255,255,0.8); }
+        .sop-script.puller .sop-script-text { color: rgba(255,255,255,0.9); }
+        .sop-script.format { background: #111850; }
+        .sop-script.format .sop-script-role { background: #1a2472; color: rgba(255,255,255,0.6); }
+        .sop-script.format .sop-script-text { color: rgba(255,255,255,0.9); }
+
+        /* Info / tip boxes */
+        .sop-tip {
+            background: rgba(184,149,42,0.07);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+        .sop-tip-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+        }
+        .sop-tip ul { margin: 0; padding-left: 20px; }
+        .sop-tip li { font-size: 0.85rem; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+
+        /* Tables */
+        .sop-table-wrap {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .sop-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .sop-table thead tr { background: var(--navy); }
+        .sop-table thead th {
+            padding: 12px 16px;
+            text-align: left;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+        .sop-table tbody tr { border-bottom: 1px solid var(--border); }
+        .sop-table tbody tr:last-child { border-bottom: none; }
+        .sop-table tbody tr:nth-child(even) { background: rgba(247,244,238,0.6); }
+        .sop-table td { padding: 12px 16px; color: var(--text); vertical-align: top; line-height: 1.5; }
+        .sop-table td:first-child { font-weight: 600; color: var(--navy); }
+        .sop-table td strong { color: var(--navy-dark); }
+
+        /* Comparison table */
+        .sop-compare-wrap {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .sop-compare {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .sop-compare thead tr th {
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+        .sop-compare thead th:first-child { background: #c0392b; color: white; }
+        .sop-compare thead th:last-child { background: #1a7a3a; color: white; }
+        .sop-compare tbody tr { border-bottom: 1px solid var(--border); }
+        .sop-compare tbody tr:last-child { border-bottom: none; }
+        .sop-compare td { padding: 11px 16px; vertical-align: top; line-height: 1.5; }
+        .sop-compare td:first-child { background: #fff5f5; color: #c0392b; }
+        .sop-compare td:last-child { background: #f0fff4; color: #1a5c2e; }
+
+        /* Step cards */
+        .sop-step {
+            display: flex;
+            gap: 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+        .sop-step-num {
+            background: var(--navy);
+            color: var(--gold-pale);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 56px;
+        }
+        .sop-step-body {
+            padding: 14px 18px;
+            background: var(--white);
+            flex: 1;
+        }
+        .sop-step-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .sop-step-detail {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Checklist */
+        .sop-checklist-wrap {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .sop-checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.87rem;
+            background: var(--white);
+        }
+        .sop-checklist-item:last-child { border-bottom: none; }
+        .sop-checklist-item:nth-child(even) { background: rgba(247,244,238,0.5); }
+        .sop-checklist-num {
+            width: 28px; height: 28px;
+            background: var(--navy);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .sop-checklist-box {
+            width: 20px; height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .sop-checklist-text { flex: 1; color: var(--text); line-height: 1.45; }
+
+        /* Role cards */
+        .sop-role-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .sop-role-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .sop-role-header {
+            background: var(--navy);
+            padding: 14px 16px;
+            color: var(--gold-pale);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .sop-role-body { padding: 14px 16px; }
+        .sop-role-body p { font-size: 0.82rem; color: var(--text); margin-bottom: 10px; line-height: 1.5; }
+        .sop-role-key { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+
+        /* Product recommendation cards */
+        .sop-product {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+        }
+        .sop-product-name { font-weight: 700; color: var(--navy); margin-bottom: 4px; font-size: 0.92rem; }
+        .sop-product-best { font-size: 0.78rem; font-weight: 700; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+        .sop-product-say { font-size: 0.84rem; color: var(--text); font-style: italic; line-height: 1.5; }
+
+        /* Cost table */
+        .sop-cost-total td { background: var(--navy) !important; color: white !important; font-weight: 700; }
+
+        /* Divider */
+        .sop-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 36px 0;
+            opacity: 0.4;
+        }
+
+        /* Tracker table */
+        .sop-tracker-wrap {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .sop-tracker {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .sop-tracker thead tr { background: var(--navy); }
+        .sop-tracker thead th {
+            padding: 12px 16px;
+            text-align: left;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+        .sop-tracker tbody tr { border-bottom: 1px solid var(--border); }
+        .sop-tracker tbody tr:last-child { border-bottom: none; }
+        .sop-tracker td { padding: 16px; background: var(--white); }
+        .sop-tracker td:first-child { font-weight: 600; color: var(--navy); }
+
+        /* Final banner */
+        .sop-banner {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            border-radius: var(--radius-lg);
+            padding: 36px 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .sop-banner h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .sop-banner p { font-size: 0.88rem; color: var(--gold-pale); }
+
+        @media (max-width: 768px) {
+            .sop-kpi-grid { grid-template-columns: 1fr 1fr; }
+            .sop-role-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .sop-kpi-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Lead assigner form */
+        .lead-form-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+        .lead-form-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+        .lead-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+        .lead-form-field label {
+            display: block;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .lead-form-field input,
+        .lead-form-field select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--navy);
+            background: var(--bg);
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .lead-form-field input:focus,
+        .lead-form-field select:focus { border-color: var(--navy); }
+        .lead-form-submit {
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 11px 28px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .lead-form-submit:hover { opacity: 0.85; }
+        .lead-form-success {
+            display: none;
+            background: rgba(22,163,74,0.1);
+            border: 1px solid rgba(22,163,74,0.3);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            color: #16a34a;
+            margin-top: 12px;
+        }
+        .lead-form-success.visible { display: block; }
+
+        /* ── SOP ACCORDION ── */
+        .sop-section {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: var(--white);
+        }
+        .sop-section .sop-section-header {
+            cursor: pointer;
+            padding: 16px 20px;
+            user-select: none;
+            transition: background 0.15s;
+        }
+        .sop-section .sop-section-header:hover { background: #f4f5f8; }
+        .sop-acc-arrow {
+            float: right;
+            font-size: 0.7rem;
+            color: var(--muted);
+            transition: transform 0.2s;
+            margin-top: 2px;
+        }
+        .sop-section-header.acc-open .sop-acc-arrow { transform: rotate(180deg); }
+        .sop-acc-content {
+            display: none;
+            padding: 4px 20px 24px 20px;
+            border-top: 1px solid var(--border);
+        }
+        .sop-acc-content.acc-open { display: block; }
+
+        /* ── SOP QUICK REFERENCE ── */
+        .sop-quickref {
+            background: linear-gradient(135deg, var(--navy-dark), #1a2472);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+        .sop-quickref-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+        .sop-quickref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .sop-quickref-item {
+            background: rgba(255,255,255,0.07);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+        }
+        .sop-quickref-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .sop-quickref-value {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.55;
+        }
+        .sop-acronym-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .sop-acronym-tag {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.74rem;
+            color: var(--text);
+        }
+        .sop-acronym-tag strong { color: var(--navy); font-weight: 800; }
+        .sop-acc-badge {
+            display: inline-block;
+            background: var(--navy);
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            border-radius: 6px;
+            padding: 3px 10px;
+            margin-left: 12px;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .sop-quickref-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .sop-quickref-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Remarks */
+        .lead-remark-input {
+            width: 100%;
+            min-width: 100px;
+            max-width: 160px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 7px 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--navy);
+            background: var(--bg);
+            resize: vertical;
+            min-height: 38px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .lead-remark-input:focus { border-color: var(--navy); }
+        .leads-table td { white-space: nowrap; }
+        .leads-table td.remark-cell { white-space: normal; word-break: break-word; max-width: 160px; }
+
+        @media (max-width: 768px) {
+            .portal-header-top { flex-wrap: wrap; gap: 16px; }
+            .portal-tabs { overflow-x: auto; padding-bottom: 0; }
+            .portal-tab { white-space: nowrap; padding: 10px 16px; font-size: 0.8rem; }
+            .portal-content { padding: 28px 20px; }
+            .drive-frame-wrap iframe { height: 400px; }
+            .placeholder-card, .leads-empty { padding: 48px 24px; }
+            .lead-form-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .lead-form-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── UNASSIGNED LEADS TABS ── */
+        .unassigned-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .unassigned-tab {
+            padding: 10px 24px; border-radius: 40px;
+            border: 1.5px solid var(--border); background: var(--white);
+            color: var(--muted); cursor: pointer;
+            font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+            transition: all 0.2s;
+        }
+        .unassigned-tab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+        .tool-badge {
+            display: inline-block; background: rgba(184,149,42,0.12);
+            color: var(--gold); border-radius: 4px; padding: 2px 8px;
+            font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+        }
+        .tool-data-wrap { margin-top: 4px; }
+        .tool-data-pill {
+            display: inline-block; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 4px;
+            padding: 1px 6px; font-size: 0.72rem; color: var(--muted);
+            margin: 2px 2px 0 0;
+        }
+        .assign-select {
+            width: 100%; border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 7px 10px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+            color: var(--navy); background: var(--bg); outline: none;
+        }
+        .assign-btn {
+            margin-top: 6px; width: 100%; padding: 8px;
+            background: var(--gold); color: var(--white);
+            border: none; border-radius: var(--radius-sm); cursor: pointer;
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+            transition: opacity 0.2s;
+        }
+        .assign-btn:hover { opacity: 0.85; }
+        .leads-table td { white-space: normal; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+
+<!-- ── PORTAL HEADER ── -->
+<div class="portal-header">
+    <div class="portal-header-top">
+        <a href="index.html" class="portal-header-logo">
+            <img src="logo.png" alt="DPG">
+            <span>Agent Portal</span>
+        </a>
+        <div class="portal-agent-info">
+            <div class="portal-agent-badge">
+                <div class="agent-name" id="agentName">—</div>
+                <div class="agent-role" id="agentRole">—</div>
+                <div class="agent-id" id="agentIdDisplay">—</div>
+            </div>
+            <button class="portal-logout-btn" onclick="logout()">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="portal-tabs">
+        <button class="portal-tab active" onclick="switchTab('training', this)">Training Materials</button>
+        <button class="portal-tab" onclick="switchTab('sop', this)">SOP</button>
+        <button class="portal-tab" onclick="switchTab('roadshow', this)">Roadshow <span class="tab-dev-badge">Dev</span></button>
+        <button class="portal-tab" onclick="switchTab('leads', this)">My Leads <span class="tab-badge" id="leadsCount">0</span></button>
+    </div>
+</div>
+
+<!-- ── CONTENT ── -->
+<div class="portal-content">
+
+    <!-- TRAINING -->
+    <div class="portal-panel active" id="panel-training">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+            <div>
+                <h2 class="portal-section-title" style="margin-bottom:4px;">Training Materials</h2>
+                <p class="portal-section-sub" style="margin:0;">Resources, guides, and videos for Dream Planners Group agents.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1S_RW9-_cYQmZdZqP1MXDbufG2wDPSWPO" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:white;text-decoration:none;padding:10px 20px;border-radius:var(--radius-sm);font-size:0.83rem;font-weight:600;white-space:nowrap;">
+                ↗ Open in Drive
+            </a>
+        </div>
+
+        <!-- Category selector -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;" id="trainingCats">
+            <button class="training-cat active" onclick="switchTraining('1m5dKA5HoRySg6BxWPIeTjswhfz2Nhee2', this)">Health Protection</button>
+            <button class="training-cat" onclick="switchTraining('1vSagozs8RuctnuVrhSzrTgGSEoADHp5k', this)">Life Protection</button>
+            <button class="training-cat" onclick="switchTraining('1OMu3e8wuUemBimmKrkwghqIEyhBl1D4Q', this)">Personal Accident</button>
+            <button class="training-cat" onclick="switchTraining('1ddb3RYBV-HbUsqgMc7sbH3U-KuHo-Odk', this)">Prestige Series</button>
+            <button class="training-cat" onclick="switchTraining('1X0hg6Ma6cx4Ch5xibxHqx2Wm_rw2F0uj', this)">Retirement</button>
+            <button class="training-cat" onclick="switchTraining('15S24d8XhzIRAIawN6BUDChy_hMmB6XNI', this)">Wealth Accumulation</button>
+        </div>
+
+        <div class="drive-frame-wrap">
+            <iframe class="training-iframe" data-folder="1m5dKA5HoRySg6BxWPIeTjswhfz2Nhee2"
+                src="https://drive.google.com/embeddedfolderview?id=1m5dKA5HoRySg6BxWPIeTjswhfz2Nhee2#list"
+                title="Health Protection" style="display:block;"></iframe>
+            <iframe class="training-iframe" data-folder="1vSagozs8RuctnuVrhSzrTgGSEoADHp5k"
+                src="https://drive.google.com/embeddedfolderview?id=1vSagozs8RuctnuVrhSzrTgGSEoADHp5k#list"
+                title="Life Protection" style="display:none;"></iframe>
+            <iframe class="training-iframe" data-folder="1OMu3e8wuUemBimmKrkwghqIEyhBl1D4Q"
+                src="https://drive.google.com/embeddedfolderview?id=1OMu3e8wuUemBimmKrkwghqIEyhBl1D4Q#list"
+                title="Personal Accident" style="display:none;"></iframe>
+            <iframe class="training-iframe" data-folder="1ddb3RYBV-HbUsqgMc7sbH3U-KuHo-Odk"
+                src="https://drive.google.com/embeddedfolderview?id=1ddb3RYBV-HbUsqgMc7sbH3U-KuHo-Odk#list"
+                title="Prestige Series" style="display:none;"></iframe>
+            <iframe class="training-iframe" data-folder="1X0hg6Ma6cx4Ch5xibxHqx2Wm_rw2F0uj"
+                src="https://drive.google.com/embeddedfolderview?id=1X0hg6Ma6cx4Ch5xibxHqx2Wm_rw2F0uj#list"
+                title="Retirement" style="display:none;"></iframe>
+            <iframe class="training-iframe" data-folder="15S24d8XhzIRAIawN6BUDChy_hMmB6XNI"
+                src="https://drive.google.com/embeddedfolderview?id=15S24d8XhzIRAIawN6BUDChy_hMmB6XNI#list"
+                title="Wealth Accumulation" style="display:none;"></iframe>
+            <div class="drive-note">Click any file to open it. Videos and PDFs will open in Google Drive.</div>
+        </div>
+    </div>
+
+    <!-- SOP -->
+    <div class="portal-panel" id="panel-sop">
+        <h2 class="portal-section-title">Standard Operating Procedures</h2>
+        <p class="portal-section-sub">Internal use only — Dream Planners Group · Great Eastern</p>
+
+        <!-- Sub-nav -->
+        <div class="sop-subnav">
+            <button class="sop-subbtn active" onclick="switchSop('voucher', this)">Voucher Follow-Up System</button>
+            <button class="sop-subbtn" onclick="switchSop('roadshow', this)">Roadshow SOP & CareShield Close</button>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- VOUCHER FOLLOW-UP SYSTEM                           -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div class="sop-subpanel active" id="sop-voucher">
+            <h2 class="sop-h1">Voucher Follow-Up Conversion System</h2>
+            <p class="sop-intro">From Roadshow Contact to Signed Client — The Complete Follow-Up Playbook.<br>
+            <strong>Current conversion: 1 in 10 (10%) &nbsp;→&nbsp; Target: 3 in 10 (30%)</strong></p>
+
+            <!-- Quick Reference -->
+            <div class="sop-quickref">
+                <div class="sop-quickref-title">⚡ Quick Reference — Voucher Follow-Up</div>
+                <div class="sop-quickref-grid">
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Mindset Shift</div>
+                        <div class="sop-quickref-value">Financial Health Check = consultation, not sales. Listen first. Recommend one thing. Close with confidence.</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Pre-Meeting — CPRD</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">C</strong>onfirm (2hrs) · <strong style="color:#ffffff;font-size:1.05em">P</strong>rep (2 days) · <strong style="color:#ffffff;font-size:1.05em">R</strong>emind (day before) · <strong style="color:#ffffff;font-size:1.05em">D</strong>ay-of (PM appts)</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Meeting Flow — WDSRCO</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">W</strong>elcome · <strong style="color:#ffffff;font-size:1.05em">D</strong>iscover · <strong style="color:#ffffff;font-size:1.05em">S</strong>ummarise · <strong style="color:#ffffff;font-size:1.05em">R</strong>ecommend (1 only) · <strong style="color:#ffffff;font-size:1.05em">C</strong>lose · <strong style="color:#ffffff;font-size:1.05em">O</strong>bjections</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">No-Show — 2DH</div>
+                        <div class="sop-quickref-value">Offer <strong style="color:#ffffff;font-size:1.05em">2</strong> dates · <strong style="color:#ffffff;font-size:1.05em">D</strong>on't chase (reply within 1hr) · <strong style="color:#ffffff;font-size:1.05em">H</strong>old voucher · Max 3 WhatsApps total</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Products (pick ONE)</div>
+                        <div class="sop-quickref-value">CareShield Life Supplement · Savings/Endowment · Investment-Linked Plan · Whole Life/Term</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Post-Close — TPRA</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">T</strong>hank you WhatsApp (2hrs) · <strong style="color:#ffffff;font-size:1.05em">P</strong>olicy Follow-Up · <strong style="color:#ffffff;font-size:1.05em">R</strong>eferral ask (1 wk) · <strong style="color:#ffffff;font-size:1.05em">A</strong>nnual review (12 mths)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 1 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">1</div>
+                    <h3 class="sop-section-title">Why Your Conversion Is 1 in 10 — And How to Fix It</h3>
+                </div>
+                <p class="sop-section-sub">Most advisers treat the voucher follow-up as a second roadshow. The fix is a mindset shift — the follow-up meeting is a <em>financial health consultation</em>, not a sales appointment.</p>
+                <div class="sop-compare-wrap">
+                    <table class="sop-compare">
+                        <thead><tr><th>What Advisers Do Now</th><th>What High Converters Do</th></tr></thead>
+                        <tbody>
+                            <tr><td>Arrive and immediately start presenting products</td><td>Spend the first 10 minutes asking questions and listening</td></tr>
+                            <tr><td>Present 2–3 products hoping one sticks</td><td>Recommend exactly one product tailored to what they heard</td></tr>
+                            <tr><td>Use roadshow language: 'This plan gives you...'</td><td>Use consultation language: 'Based on what you told me...'</td></tr>
+                            <tr><td>End with: 'So what do you think?'</td><td>End with: 'Based on what we've discussed, the next step is...'</td></tr>
+                            <tr><td>Let 'I'll think about it' end the meeting</td><td>Always leave with a specific next action or date</td></tr>
+                            <tr><td>Don't follow up after a no-show</td><td>Have a no-show recovery script ready and follow up within 1 hour</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">2</div>
+                    <h3 class="sop-section-title">Pre-Meeting Confirmation Sequence <span class="sop-acc-badge">CPRD</span></h3>
+                </div>
+                <p class="sop-section-sub">The meeting starts before the meeting. A confirmed appointment reduces no-shows by 50%. Follow this exact sequence for every voucher booking.</p>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">1</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Confirmation WhatsApp <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— Within 2 hours of roadshow</span></div>
+                        <div class="sop-step-detail">Send immediately after the shift. Do not wait until the next day.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! This is [Your Name] from Great Eastern Life. So glad we met today at [Location]. Just confirming our Financial Health Check on [Day], [Date] at [Time] at [Location / your office]. Looking forward to helping you get a clearer picture of your coverage. See you then!"</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">2</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Preparation Message <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 2 days before appointment</span></div>
+                        <div class="sop-step-detail">Shows professionalism and builds anticipation. Makes them feel valued.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! Looking forward to our session on [Day] at [Time]. To make it as useful as possible for you, could you let me know: (1) Do you have any existing insurance or savings plans? (2) Any financial goals you are working towards? No pressure — even a rough idea helps me prepare something useful for you."</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">3</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Day-Before Reminder <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— Evening before appointment</span></div>
+                        <div class="sop-step-detail">Final confirmation. Keeps the appointment front of mind.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name], just a quick reminder about our appointment tomorrow at [Time] at [Location]. Please bring your NRIC if you have it handy. Really looking forward to our chat! And don't forget — your $20 voucher is waiting for you."</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">4</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Day-Of Morning Message <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— Morning of appointment (afternoon appts only)</span></div>
+                        <div class="sop-step-detail">Only needed if the appointment is in the afternoon. Reinforces commitment.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Good morning [Name]! See you this afternoon at [Time]. I've prepared a personalised review based on what you shared with me. It should be a useful 30 minutes for you!"</div>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">3</div>
+                    <h3 class="sop-section-title">No-Show Recovery Script <span class="sop-acc-badge">2DH</span></h3>
+                </div>
+                <p class="sop-section-sub">No-shows happen. How you respond determines whether you lose that lead permanently or recover it. Always attempt recovery within 1 hour of a missed appointment.</p>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name], it's [Your Name] from Great Eastern. I was at [Location] for our session today — just wanted to check everything is okay on your end! No worries at all if something came up. I'm flexible — would [Day Option 1] or [Day Option 2] work for a quick rescheduled chat? I'll keep your $20 voucher for you."</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">No-Show Rules</div>
+                    <ul>
+                        <li>Always assume the best — life happens, never sound annoyed or passive-aggressive</li>
+                        <li>Offer exactly 2 specific alternative dates — not an open-ended 'let me know when you're free'</li>
+                        <li>Mention you are keeping their voucher — it is a small but effective retention anchor</li>
+                        <li>If no response after recovery message: follow up once more in 3 days, then move on</li>
+                        <li>Never send more than 3 follow-up messages total — respect boundaries</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">4</div>
+                    <h3 class="sop-section-title">The Follow-Up Meeting Flow — Full Script <span class="sop-acc-badge">WDSRCO</span></h3>
+                </div>
+                <p class="sop-section-sub">Every follow-up meeting should follow this 6-phase structure. Total time: 30–45 minutes. Do not rush. The quality of this conversation determines whether they sign.</p>
+
+                <!-- Phase 1 -->
+                <div class="sop-phase-label">Phase 1 — 3–5 minutes</div>
+                <div class="sop-phase-title">Welcome & Tone Setting</div>
+                <div class="sop-phase-desc">Start warm. Make them feel this is a relaxed, professional conversation — not a sales pitch.</div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! Great to see you again. Please, sit down and make yourself comfortable. Can I get you some water? I have about 30 minutes set aside for us today. My goal is just to understand your current situation and see if there's anything I can help you with — no pressure at all."</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Before I show you anything, I'd love to hear a bit more about you. Can you tell me — what's most important to you financially right now?"</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Phase 1 Mindset</div>
+                    <ul>
+                        <li>You are a doctor conducting a consultation — not a salesperson opening a pitch</li>
+                        <li>Sit beside them or at a 90-degree angle, not directly across — reduces confrontational feeling</li>
+                        <li>Put your phone face down. Give them your full attention</li>
+                        <li>Do not open your product folder or laptop until Phase 3</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="sop-phase-label">Phase 2 — 8–10 minutes</div>
+                <div class="sop-phase-title">Needs Discovery</div>
+                <div class="sop-phase-desc">This is the most important phase. Ask, listen, and take notes. Clients who feel heard are far more likely to say yes.</div>
+                <div class="sop-table-wrap">
+                    <table class="sop-table">
+                        <thead><tr><th>Question to Ask</th><th>Why You Ask This</th></tr></thead>
+                        <tbody>
+                            <tr><td>Are you currently working? What do you do?</td><td>Understand income, stability, and ability to pay premiums</td></tr>
+                            <tr><td>Are you married? Do you have children or dependants?</td><td>Identifies protection needs and urgency</td></tr>
+                            <tr><td>Do you own or rent your home? Any outstanding loans?</td><td>Reveals financial commitments and risk exposure</td></tr>
+                            <tr><td>Do you have any existing insurance — life, health, or savings?</td><td>Avoids duplication and identifies gaps</td></tr>
+                            <tr><td>What are your savings goals? Retirement?</td><td>Opens the door to savings and investment products</td></tr>
+                            <tr><td>Children's education?</td><td>Opens education planning products</td></tr>
+                            <tr><td>If you could not work for 6 months due to illness, would you be financially okay?</td><td>Creates awareness of income protection gap</td></tr>
+                            <tr><td>What is your biggest financial worry right now?</td><td>Most powerful question — reveals the real concern driving their decisions</td></tr>
+                            <tr><td>Have you thought about retirement planning yet? When do you hope to retire?</td><td>Opens long-term savings conversation</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sop-tip" style="margin-bottom:16px;">
+                    <div class="sop-tip-title">Discovery Tips</div>
+                    <ul>
+                        <li>Take notes while they talk — it shows you are listening and helps you tailor your recommendation</li>
+                        <li>Do not interrupt — let them finish every answer fully</li>
+                        <li>Use follow-up probes: 'Tell me more about that' or 'What do you mean by that?'</li>
+                        <li>If they ask 'Why do you need to know this?' — say: 'So I can make sure I only show you what's relevant to your situation, and nothing that isn't'</li>
+                        <li>Pay attention to emotional signals — a pause when talking about family or retirement often reveals the real need</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="sop-phase-label">Phase 3 — 2–3 minutes</div>
+                <div class="sop-phase-title">The Summary & Insight</div>
+                <div class="sop-phase-desc">Before presenting anything, summarise what you heard. This is where trust is built.</div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Thank you for sharing that with me. Let me just summarise what I'm hearing to make sure I've got it right..."</div>
+                </div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"You're [age], [married/single], [with/without] children. Your main financial priority right now is [their answer]. You have [existing coverage / no coverage]. Your biggest concern is [their answer]. Is that roughly right?"</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Based on what you've told me, there's one thing I think could make a real difference for you right now. Can I show you?"</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Why This Step Matters So Much</div>
+                    <ul>
+                        <li>Summarising what they said triggers a psychological principle — when people feel understood, they become more open</li>
+                        <li>It also positions everything that follows as a personalised recommendation, not a generic product pitch</li>
+                        <li>Never skip this step — it is the bridge between listening and recommending</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="sop-phase-label">Phase 4 — 8–10 minutes</div>
+                <div class="sop-phase-title">The One Recommendation</div>
+                <div class="sop-phase-desc">Present exactly ONE product. Match it precisely to what they told you in Phase 2. If you present three products, you will close zero.</div>
+
+                <div class="sop-product">
+                    <div class="sop-product-name">CareShield Supplement</div>
+                    <div class="sop-product-best">Best for: Anyone who has not yet upgraded — especially those who mentioned disability fear or caring for elderly parents</div>
+                    <div class="sop-product-say">Say: "Based on what you told me about [concern], the most important thing for you right now is making sure you have a reliable income if you ever cannot work due to disability. Let me show you how we can top up your government coverage."</div>
+                </div>
+                <div class="sop-product">
+                    <div class="sop-product-name">Savings / Endowment Plan</div>
+                    <div class="sop-product-best">Best for: Clients who mentioned savings goals — children's education, home purchase, emergency fund, or retirement</div>
+                    <div class="sop-product-say">Say: "You mentioned you want to save for [goal]. The challenge with regular savings accounts is that the interest barely keeps up with inflation. I'd like to show you a plan that guarantees your savings grow and gives you a fixed payout at exactly the time you need it."</div>
+                </div>
+                <div class="sop-product">
+                    <div class="sop-product-name">Investment-Linked Plan (ILP)</div>
+                    <div class="sop-product-best">Best for: Higher income earners, younger clients comfortable with some risk, those who mentioned wanting their money to grow faster</div>
+                    <div class="sop-product-say">Say: "Since you mentioned you are comfortable with some risk and you want your savings to grow more aggressively over the long term, let me show you a plan that gives you both insurance coverage and the potential for higher returns."</div>
+                </div>
+                <div class="sop-product">
+                    <div class="sop-product-name">Whole Life / Term Protection</div>
+                    <div class="sop-product-best">Best for: Clients with dependants, outstanding loans, or who expressed fear of leaving family unprotected</div>
+                    <div class="sop-product-say">Say: "You mentioned you have [children / a mortgage / dependants]. The most important thing I can help you with right now is making sure your family is protected if anything happens to you. Let me show you what that looks like."</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Presentation Rules for Phase 4</div>
+                    <ul>
+                        <li>Show one illustration only — on paper or tablet</li>
+                        <li>Anchor premium to something relatable: 'That's about the cost of a daily bubble tea'</li>
+                        <li>For savings: show the maturity value prominently — clients buy outcomes, not products</li>
+                        <li>For CareShield: show the $600 vs $3,000 monthly payout gap visually</li>
+                        <li>For ILP: emphasise the flexibility and long-term growth potential, not the insurance component</li>
+                        <li>Speak for no more than 5 minutes — then ask a question to check understanding</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 5 -->
+                <div class="sop-phase-label">Phase 5 — 2–3 minutes</div>
+                <div class="sop-phase-title">The Close</div>
+                <div class="sop-phase-desc">Ask directly. Every time. The close is not aggressive — it is a service to the client.</div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Based on everything we've discussed today — your goal of [their goal] and your concern about [their concern] — I think this plan is a strong fit for your situation. Shall we go ahead and get the paperwork started?"</div>
+                </div>
+                <div class="sop-tip" style="border-left-color: var(--navy);">
+                    <div class="sop-tip-title">Then stay silent. Do not add anything. Wait for their response.</div>
+                </div>
+                <div class="sop-phase-label" style="margin-top:16px;">Soft Close Alternative</div>
+                <p style="font-size:0.87rem;color:var(--muted);margin-bottom:10px;">If you sense hesitation, use this softer version before the direct close:</p>
+                <div class="sop-script adviser" style="margin-bottom:8px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"On a scale of 1 to 10 — with 10 being 'yes, let's do this' and 1 being 'I have serious concerns' — where are you right now?"</div>
+                </div>
+                <div class="sop-tip" style="margin-bottom:16px;">
+                    <ul>
+                        <li><strong>If they say 7 or above:</strong> ask 'What would it take to get you to a 10?' — address that specific concern and close</li>
+                        <li><strong>If they say 5 or below:</strong> ask 'What's holding you back?' — surface the real objection and address it</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 6 -->
+                <div class="sop-phase-label">Phase 6</div>
+                <div class="sop-phase-title">Follow-Up Meeting Objection Handling</div>
+                <div class="sop-phase-desc">Objections in a follow-up meeting are more nuanced than roadshow objections. The client has had time to think — so their concerns are more specific. Address them precisely.</div>
+                <div class="sop-table-wrap">
+                    <table class="sop-table">
+                        <thead><tr><th>Objection</th><th>Response</th></tr></thead>
+                        <tbody>
+                            <tr><td>I need more time to think.</td><td>That's completely reasonable. Can I ask — is there a specific part you are unsure about? Sometimes there is just one small thing, and once I address it, everything else makes sense. What is on your mind?</td></tr>
+                            <tr><td>My spouse needs to be involved.</td><td>Absolutely — that is the responsible approach. Let me prepare a simple one-page summary you can share with them tonight. And I would love to meet both of you together — I can answer any questions your spouse has directly. Would [Day] work for a short 20-minute call?</td></tr>
+                            <tr><td>I am not sure if I can commit to the premium.</td><td>Let me show you the minimum entry point. Most clients are surprised at how affordable it is — and for savings plans, you can adjust contributions later. Would it help to see what the smallest commitment looks like?</td></tr>
+                            <tr><td>I want to compare with other companies.</td><td>That is smart — you should. What I can tell you is that Great Eastern has been in Singapore for over 100 years and consistently ranks highly for claims payout. I am also here long-term as your adviser — not just for the sale. Please compare, and if you have questions about what you find, call me. I am happy to walk through any comparison with you.</td></tr>
+                            <tr><td>The returns don't seem very high.</td><td>You're right that endowments are not designed for maximum growth — they are designed for certainty. You get a guaranteed payout on a fixed date. For clients who want higher potential returns, I have an investment-linked option as well. Would you like to see how they compare side by side?</td></tr>
+                            <tr><td>I had a bad experience with insurance before.</td><td>I am really sorry to hear that. Can you tell me a bit about what happened? [Listen fully.] That must have been frustrating. What I can promise you is that my role is to be your long-term adviser — I am here for claims, reviews, and questions, not just the sale. Let me show you how we work differently.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">5</div>
+                    <h3 class="sop-section-title">The Rebook Script — When They Don't Sign Today</h3>
+                </div>
+                <p class="sop-section-sub">Not every first meeting results in a close. That is normal. What matters is that you always leave with a next step — never a vague 'I'll get back to you.'</p>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"I completely understand — there's no rush at all. I just want to make sure you have everything you need to make the best decision for yourself. Let me do this: I'll prepare a personalised proposal based on what we discussed today and send it to you by [tomorrow/specific date]. Can we schedule a short follow-up — even 15 minutes on [Day] at [Time] — just to go through it together and answer any final questions?"</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Rebook Rules — Non-Negotiable</div>
+                    <ul>
+                        <li>Never leave a meeting without a specific next date and time</li>
+                        <li>If they say 'I'll contact you' — respond: 'Of course! And just so I don't miss you, shall I also check in on [specific date] in case you have questions?'</li>
+                        <li>Maximum 3 follow-up meetings before you respectfully close the lead</li>
+                        <li>After 3 meetings with no close: 'I respect your time and I understand this may not be the right time. If anything changes, please reach out — I am always here to help'</li>
+                        <li>Never guilt-trip or pressure — a respectful no today can become a yes in 6 months</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 6 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">6</div>
+                    <h3 class="sop-section-title">Post-Close — What to Do After They Sign <span class="sop-acc-badge">TPRA</span></h3>
+                </div>
+                <p class="sop-section-sub">The close is not the end — it is the beginning of the relationship. What you do in the 48 hours after a client signs determines whether they refer you to others.</p>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">1</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Thank You Message <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— Within 2 hours of signing</span></div>
+                        <div class="sop-step-detail">Send a warm, personal WhatsApp — not a template. Mention something specific from your conversation.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:10px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! Thank you so much for trusting me today. I am really glad we could sort out your [CareShield/savings] coverage — it is a great step forward for [you/your family]. I will keep you updated on the policy issuance. And please — if you have any questions at any time, just message me directly. Looking forward to being your adviser for a long time!"</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">2</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Policy Issuance Follow-Up <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— When policy is issued</span></div>
+                        <div class="sop-step-detail">Confirm the policy details and answer any questions. This reassures the client and reduces cancellations.</div>
+                    </div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">3</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">The Referral Ask <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 1 week after policy issuance</span></div>
+                        <div class="sop-step-detail">This is the best time to ask — client is satisfied and trust is at its peak.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:10px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! Just checking in — your policy has been issued and everything is in order. I hope you're feeling good about it! I wanted to ask — is there anyone in your circle, maybe family or close friends, who might also benefit from what we did together today? Even just one name would mean a lot to me, and I'll make sure to take great care of them."</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">4</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Annual Review Booking <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— At the 12-month mark</span></div>
+                        <div class="sop-step-detail">Keeps the relationship active and opens opportunities to review and upgrade coverage.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">7</div>
+                    <h3 class="sop-section-title">Weekly Follow-Up Tracker</h3>
+                </div>
+                <p class="sop-section-sub">Every adviser must track their voucher pipeline every week. Fill it in every Friday.</p>
+                <div class="sop-tracker-wrap">
+                    <table class="sop-tracker">
+                        <thead><tr><th>Client Name</th><th>Voucher Date</th><th>Appt Date</th><th>Meeting Done?</th><th>Outcome</th><th>Next Step</th></tr></thead>
+                        <tbody>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Weekly Pipeline Review — Ask Yourself These Questions</div>
+                    <ul>
+                        <li>How many voucher appointments did I book this week?</li>
+                        <li>How many did I actually meet? (Track your show-up rate)</li>
+                        <li>Of those I met — how many resulted in a close or a rebook?</li>
+                        <li>What was the most common reason people did not close?</li>
+                        <li>What will I do differently next week to improve my conversion?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sop-banner">
+                <h3>The Follow-Up Is Where the Money Is.</h3>
+                <p>Every roadshow prospect who takes a voucher is a warm lead. Follow the system. Listen first. Recommend one thing. Close with confidence.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- ROADSHOW SOP                                        -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div class="sop-subpanel" id="sop-roadshow">
+            <h2 class="sop-h1">Roadshow SOP & CareShield Close Script</h2>
+            <p class="sop-intro">Full Operating Procedures · Roles & Responsibilities · Word-for-Word Scripts · Objection Handling</p>
+
+            <!-- Quick Reference -->
+            <div class="sop-quickref">
+                <div class="sop-quickref-title">⚡ Quick Reference — Roadshow SOP</div>
+                <div class="sop-quickref-grid">
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">KPIs per Shift</div>
+                        <div class="sop-quickref-value">15–25 engaged · 8–12 presented · 1–2 CareShield Life closes · 3–5 vouchers booked</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Roles — PPS</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">P</strong>uller (engage + qualify) → <strong style="color:#ffffff;font-size:1.05em">P</strong>resenter (5-step close) → <strong style="color:#ffffff;font-size:1.05em">S</strong>upport (admin + track)</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Puller Script — OQH</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">O</strong>pen (hook) → <strong style="color:#ffffff;font-size:1.05em">Q</strong>ualify (3 questions, 30 sec) → <strong style="color:#ffffff;font-size:1.05em">H</strong>and-off to Presenter</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">5-Step CSL Close — WPSBC</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">W</strong>elcome · <strong style="color:#ffffff;font-size:1.05em">P</strong>roblem ($600 gap) · <strong style="color:#ffffff;font-size:1.05em">S</strong>olution (top-up) · <strong style="color:#ffffff;font-size:1.05em">B</strong>enefits (3 reasons) · <strong style="color:#ffffff;font-size:1.05em">C</strong>lose → Silence</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Voucher Booking — CRLPC</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">C</strong>onfirm (2hrs) · <strong style="color:#ffffff;font-size:1.05em">R</strong>emind (day before) · <strong style="color:#ffffff;font-size:1.05em">L</strong>isten first · <strong style="color:#ffffff;font-size:1.05em">P</strong>resent 1 solution · <strong style="color:#ffffff;font-size:1.05em">C</strong>lose/Rebook</div>
+                    </div>
+                    <div class="sop-quickref-item">
+                        <div class="sop-quickref-label">Post-Shift — LSD</div>
+                        <div class="sop-quickref-value"><strong style="color:#ffffff;font-size:1.05em">L</strong>og numbers · <strong style="color:#ffffff;font-size:1.05em">S</strong>end shift report to group chat · <strong style="color:#ffffff;font-size:1.05em">D</strong>ebrief with team (10 min)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 1 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">1</div>
+                    <h3 class="sop-section-title">Roadshow Overview</h3>
+                </div>
+                <p class="sop-section-sub">The roadshow is Dream Planners Group's primary lead generation channel — a high-volume, cost-effective way to meet prospects who have not yet upgraded their CareShield coverage and transition them into full financial planning clients. Every adviser must know this SOP. Every shift must follow it.</p>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Roadshow KPI Benchmarks — Know Your Numbers</div>
+                    <ul>
+                        <li>Leads engaged per shift: <strong>15–25 prospects</strong></li>
+                        <li>Presentations completed per shift: <strong>8–12</strong></li>
+                        <li>CareShield closes per shift: Target <strong>1 minimum</strong>, aim for 2</li>
+                        <li>Voucher follow-up bookings per shift: <strong>3–5</strong></li>
+                        <li>Voucher appointments that convert to a case: Target <strong>3 in 10 (30%)</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">2</div>
+                    <h3 class="sop-section-title">Team Roles & Responsibilities <span class="sop-acc-badge">PPS</span></h3>
+                </div>
+                <p class="sop-section-sub">Every roadshow shift requires a minimum of 2 people. Larger shifts (3–4 advisers) should have clearly assigned roles before the shift begins.</p>
+                <div class="sop-role-grid">
+                    <div class="sop-role-card">
+                        <div class="sop-role-header">Puller (Engager)</div>
+                        <div class="sop-role-body">
+                            <p>Attract foot traffic using gift redemption offer. Qualify basic eligibility. Hand off warm leads to Presenter.</p>
+                            <div class="sop-role-key">High energy, friendly, never pushy. Target people who slow down or make eye contact. Always smile.</div>
+                        </div>
+                    </div>
+                    <div class="sop-role-card">
+                        <div class="sop-role-header">Presenter (Closer)</div>
+                        <div class="sop-role-body">
+                            <p>Sit down with prospect. Run the 5-step presentation. Attempt to close CareShield case on the spot. Offer voucher follow-up if no same-day close.</p>
+                            <div class="sop-role-key">Calm, confident, consultative. Listen before talking. Always attempt a close — never end a presentation without asking.</div>
+                        </div>
+                    </div>
+                    <div class="sop-role-card">
+                        <div class="sop-role-header">Support / Table Manager</div>
+                        <div class="sop-role-body">
+                            <p>Manage application forms, gifts, vouchers. Assist with paperwork when a close happens. Track numbers on shift tracker sheet.</p>
+                            <div class="sop-role-key">Organised and efficient. Ensures no close is delayed by missing paperwork. Proactively offers help without interrupting presentations.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Role Rotation Rule</div>
+                    <ul>
+                        <li>Rotate Puller and Presenter roles every shift where possible — this prevents burnout and builds every adviser's skill in both engagement and closing</li>
+                        <li>New recruits in their first 4 shifts should be on Puller duty — it builds confidence and product knowledge through repetition</li>
+                        <li>New recruits should only move to Presenter role after completing Phase 1 of the Onboarding Playbook</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">3</div>
+                    <h3 class="sop-section-title">Before the Shift — Setup Checklist</h3>
+                </div>
+                <p class="sop-section-sub">A disorganised setup loses leads before the shift even starts. Complete all of the following at least 20 minutes before the shift begins.</p>
+                <div class="sop-checklist-wrap">
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">1</div><div class="sop-checklist-text">Confirm roles: who is Puller, who is Presenter, who is Support</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">2</div><div class="sop-checklist-text">Set up table: tablecloth, Great Eastern banner/backdrop if available</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">3</div><div class="sop-checklist-text">Lay out gifts in clear view — visible from 5 metres away</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">4</div><div class="sop-checklist-text">Prepare sufficient application forms (min 15 per adviser)</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">5</div><div class="sop-checklist-text">Prepare voucher cards — enough for every prospect who sits down</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">6</div><div class="sop-checklist-text">Brief all advisers on today's shift target (e.g. 'Our goal today is 2 closes and 5 voucher bookings')</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">7</div><div class="sop-checklist-text">Confirm the close script and top 3 objection responses — say them out loud as a team</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">8</div><div class="sop-checklist-text">Ensure all advisers have charged phones for e-applications</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">9</div><div class="sop-checklist-text">Confirm who is logging numbers on the shift tracker</div><div class="sop-checklist-box"></div></div>
+                    <div class="sop-checklist-item"><div class="sop-checklist-num">10</div><div class="sop-checklist-text">Say the team target out loud together before the shift starts — 'Two closes today. Let's go.'</div><div class="sop-checklist-box"></div></div>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">4</div>
+                    <h3 class="sop-section-title">The Puller Script — Engagement & Qualification <span class="sop-acc-badge">OQH</span></h3>
+                </div>
+                <p class="sop-section-sub">The Puller's job is not to sell. It is to get the right person to sit down. Use this script to engage, qualify, and hand off.</p>
+
+                <div class="sop-phase-label">Step 1 — The Opening Hook</div>
+                <p class="sop-phase-desc">Use this when someone slows down near the table or makes eye contact:</p>
+                <div class="sop-script puller">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Hi! Are you a Singapore Citizen or PR? We have a complimentary gift for you today — it only takes 2 minutes!"</div>
+                </div>
+                <div class="sop-script puller" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Great! Have you upgraded your CareShield Life coverage? The government gives you basic coverage, but most people don't know it may not be enough if something serious happens."</div>
+                </div>
+
+                <div class="sop-phase-label">Step 2 — Quick Qualification (30 seconds)</div>
+                <p class="sop-phase-desc">Ask these 3 questions quickly while keeping energy high:</p>
+                <div class="sop-script puller">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Quick question — are you between 30 and 67 years old?"</div>
+                </div>
+                <div class="sop-script puller">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Have you already upgraded your CareShield with a private insurer?"</div>
+                </div>
+                <div class="sop-script puller" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Are you currently medically insured — no major pre-existing conditions that affect your eligibility?"</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Qualification Logic — Who to Hand Off</div>
+                    <ul>
+                        <li><strong>IDEAL:</strong> Singapore Citizen/PR, aged 30–67, NOT yet upgraded CareShield, no major conditions — hand off immediately</li>
+                        <li><strong>ALREADY UPGRADED:</strong> Still hand off — our adviser can do a review and identify gaps</li>
+                        <li><strong>OVER 67:</strong> Politely thank them and offer the gift anyway — do not waste presentation time</li>
+                        <li><strong>CLEARLY NOT INTERESTED:</strong> Thank them, hand gift, let them go — never chase</li>
+                    </ul>
+                </div>
+
+                <div class="sop-phase-label">Step 3 — The Hand-Off</div>
+                <p class="sop-phase-desc">Bring the prospect to the Presenter. Physical movement to the table is critical. Do NOT leave them standing.</p>
+                <div class="sop-script puller">
+                    <span class="sop-script-role">Puller</span>
+                    <div class="sop-script-text">"Let me introduce you to my colleague [Name] — she/he can share more details and answer any questions you have. Please have a seat!"</div>
+                </div>
+                <div class="sop-tip" style="margin-top:12px;">
+                    <ul><li>Then immediately step back and look for the next prospect. Do not hover over the Presenter's table.</li></ul>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">5</div>
+                    <h3 class="sop-section-title">The Presenter — 5-Step CareShield Close Script <span class="sop-acc-badge">WPSBC</span></h3>
+                </div>
+                <p class="sop-section-sub">This is the core of the roadshow. Follow all 5 steps in order. Do not skip steps. The sequence is designed to build trust before asking for the sale. <strong>Target time: 10–15 minutes for a close. 5–8 minutes for a voucher booking.</strong></p>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">1</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">Warm Welcome & Seat <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 60 seconds</span></div>
+                        <div class="sop-step-detail">Make the prospect feel comfortable. Do not open with product.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Hi [Name]! Please sit down. Thank you for taking the time. I'm [Name] from Great Eastern Life. I just want to share something quick with you today — it won't take long, and it could be really useful for you."</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Before I start, can I ask — do you know roughly what CareShield Life covers you for right now?"</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">2</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">The Problem — Government Coverage Is Not Enough <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 2–3 minutes</span></div>
+                        <div class="sop-step-detail">Educate the prospect on the gap between what the government provides and what they actually need.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"So the government's CareShield Life gives you $600 a month if you become severely disabled — meaning you can't do 3 out of 6 daily activities on your own. Things like bathing, dressing, eating."</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Now I want to ask you — if that happened tomorrow and you could no longer work, would $600 a month be enough to cover your expenses? Rent, food, transport, medical care?"</div>
+                </div>
+                <div class="sop-tip" style="border-left-color:var(--navy);">
+                    <ul><li><em>Pause and let them answer. They will almost always say no.</em></li></ul>
+                </div>
+                <div class="sop-script adviser" style="margin-top:10px;margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Exactly. That's the gap. And this is why Great Eastern offers a CareShield supplement — it tops up your monthly payout to a level that actually covers your lifestyle. You choose the amount. And you only pay while you're healthy and working."</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">3</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">The Solution — Show the Numbers <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 3–4 minutes</span></div>
+                        <div class="sop-step-detail">Present a specific, simple illustration. One number. One premium. One clear benefit.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Let me show you a simple example. For someone your age, to top up your monthly payout from $600 to $3,000, the premium is roughly [$ amount] per month. That's less than a daily coffee. And it's claimable from your MediSave — you don't even need to use cash."</div>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Presentation Tips for Step 3</div>
+                    <ul>
+                        <li>Show the illustration on paper or tablet — visuals increase trust</li>
+                        <li>Always anchor to a relatable comparison: 'less than a daily kopi'</li>
+                        <li>Do NOT show too many options — one clear recommendation only</li>
+                        <li>Mention MediSave claimability early — it removes the 'I can't afford it' objection before it is raised</li>
+                        <li>Keep it simple: Problem → Solution → Premium → Benefit → Ask</li>
+                    </ul>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">4</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">The Benefit Stack — 3 Reasons to Act Today <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 1–2 minutes</span></div>
+                        <div class="sop-step-detail">Stack three benefits to build urgency without pressure.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"There are three reasons why most people who upgrade are glad they did it early. First — the premium is lower when you're younger and healthier. Every year you wait, it costs more. Second — once you have a health condition, you may not be eligible to upgrade anymore. Third — MediSave covers most of the premium, so your take-home income is not affected."</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"So the question isn't really whether you need this — most Singaporeans do. The question is just when is the right time to lock in. And for most people, today is actually the best time."</div>
+                </div>
+
+                <div class="sop-step">
+                    <div class="sop-step-num">5</div>
+                    <div class="sop-step-body">
+                        <div class="sop-step-title">The Close — Ask Directly <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">— 1 minute</span></div>
+                        <div class="sop-step-detail">This is where most advisers hesitate. Do not hesitate. Ask clearly and then stay silent.</div>
+                    </div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:10px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Based on what we've discussed, I'd like to help you get this sorted today. The application is straightforward — I just need a few details from you. Shall we go ahead?"</div>
+                </div>
+                <div class="sop-tip" style="border-left-color:var(--navy);margin-bottom:16px;">
+                    <ul><li><strong>Then stop talking. Do not fill the silence. The next person to speak is the prospect.</strong></li></ul>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">If They Say YES</div>
+                    <ul>
+                        <li>Begin application immediately — do not pause to celebrate</li>
+                        <li>Walk them through the form step by step</li>
+                        <li>Confirm MediSave details and health declaration</li>
+                        <li>Book a follow-up call for 1 week after policy issuance</li>
+                        <li>Offer the $20 voucher for their next appointment — 'I'd also love to do a full financial health check for you soon'</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 6 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">6</div>
+                    <h3 class="sop-section-title">Objection Handling — Word for Word</h3>
+                </div>
+                <p class="sop-section-sub">Objections are not rejections. They are requests for more information or reassurance. Memorise these responses until they feel natural.</p>
+                <div class="sop-table-wrap">
+                    <table class="sop-table">
+                        <thead><tr><th>Objection</th><th>Your Response (say this word for word until it feels natural)</th></tr></thead>
+                        <tbody>
+                            <tr><td>I need to think about it.</td><td>That's completely fine. Most people feel the same way. Can I ask — is there a specific part you're unsure about? Sometimes it's just one small thing I can clarify right now, and then you can make a decision with full information.</td></tr>
+                            <tr><td>I already have insurance.</td><td>Great — that's a good start. CareShield is actually a very specific type of coverage that most regular insurance policies don't fully address. It's about severe disability income. Can I take 2 minutes to show you how it's different? You might find it fills a gap you didn't know was there.</td></tr>
+                            <tr><td>I'm still young, I don't need this yet.</td><td>I totally understand that feeling. The irony is — being young is exactly why today is the best time. Your premium is at its lowest, and you're healthy enough to qualify. Many of our clients who waited told me they wished they'd done it earlier. It literally costs less to start today.</td></tr>
+                            <tr><td>I can't afford it.</td><td>I hear you. The good news is the premium is claimable from MediSave — it doesn't come from your wallet at all for most people. So it's not a question of affordability; it's just about whether you want the coverage. Shall I check your MediSave eligibility?</td></tr>
+                            <tr><td>I need to ask my spouse/partner first.</td><td>Of course — that's a very responsible approach. What I'd suggest is this: let me prepare a simple summary for you to share with your spouse tonight. And if it makes sense to both of you, I can arrange for us to meet together this week to answer any questions. Would that work?</td></tr>
+                            <tr><td>I'm not interested.</td><td>No problem at all, I appreciate your honesty. Before you go — can I just leave you with one quick fact? The average cost of long-term care in Singapore is over $2,500 a month. The government covers $600. That gap affects most families eventually. If you ever want to revisit this, here's my card.</td></tr>
+                            <tr><td>I'll do it online myself.</td><td>Absolutely, you can do that. The only thing I'd flag is that doing it with an adviser means I can make sure you get the right coverage amount for your situation — not too little, not too much. And I'm here to help with any claims in future too. Takes the same time, but you get a lot more support.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">7</div>
+                    <h3 class="sop-section-title">Voucher Follow-Up Booking — When They Don't Close on the Spot <span class="sop-acc-badge">CRLPC</span></h3>
+                </div>
+                <p class="sop-section-sub">Not every prospect will close on the day. When they don't, the voucher follow-up is your second chance. This step is critical — it is the bridge between a roadshow contact and a full planning client.</p>
+
+                <div class="sop-phase-label">How to Offer the Voucher</div>
+                <div class="sop-script adviser">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"I completely understand — there's no rush. What I'd love to do is this: let me set up a proper 30-minute financial health check for you. I'll bring a full picture of your current coverage and show you exactly where the gaps are. And as a thank you for your time today, here's a $20 voucher for you. It's my way of saying — this conversation is worth your time."</div>
+                </div>
+                <div class="sop-script adviser" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Adviser</span>
+                    <div class="sop-script-text">"Can I take your number? I'll send you a confirmation and we can fix a time that works for you — even on a weekend if that's easier."</div>
+                </div>
+
+                <div class="sop-phase-label">Voucher Follow-Up Sequence — Do This Every Time</div>
+                <div class="sop-step"><div class="sop-step-num">1</div><div class="sop-step-body"><div class="sop-step-title">Confirm within 2 hours of the roadshow</div><div class="sop-step-detail">WhatsApp: 'Hi [Name], this is [Your Name] from Great Eastern. Great meeting you today! Looking forward to our financial health check on [Date/Time]. See you soon!'</div></div></div>
+                <div class="sop-step"><div class="sop-step-num">2</div><div class="sop-step-body"><div class="sop-step-title">Reminder the day before</div><div class="sop-step-detail">WhatsApp: 'Hi [Name], just a quick reminder of our appointment tomorrow at [Time] at [Location]. Please bring your NRIC. Looking forward to it!'</div></div></div>
+                <div class="sop-step"><div class="sop-step-num">3</div><div class="sop-step-body"><div class="sop-step-title">At the meeting — first 10 minutes</div><div class="sop-step-detail">Do NOT start selling. Ask: 'Tell me a bit about yourself — do you have any savings goals or financial concerns right now?' Listen. Build trust first.</div></div></div>
+                <div class="sop-step"><div class="sop-step-num">4</div><div class="sop-step-body"><div class="sop-step-title">Present one clear solution</div><div class="sop-step-detail">Based on what they share, recommend ONE product. Do not overwhelm. 'Based on what you've told me, I think the most important thing for you right now is...'</div></div></div>
+                <div class="sop-step" style="margin-bottom:16px;"><div class="sop-step-num">5</div><div class="sop-step-body"><div class="sop-step-title">Close or rebook</div><div class="sop-step-detail">If they need more time: 'No problem — let me prepare a personalised illustration for you. Can we meet again next [day] at [time]?' Always leave with a next date.</div></div></div>
+            </div>
+
+            <!-- Section 8 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">8</div>
+                    <h3 class="sop-section-title">After the Shift — Numbers & Debrief <span class="sop-acc-badge">LSD</span></h3>
+                </div>
+                <p class="sop-section-sub">What gets measured gets improved. Every adviser must log their numbers after every shift. No exceptions.</p>
+
+                <div class="sop-tracker-wrap" style="margin-bottom:16px;">
+                    <table class="sop-tracker">
+                        <thead><tr><th>Metric</th><th>Your Number</th></tr></thead>
+                        <tbody>
+                            <tr><td>Number of prospects engaged (by Puller)</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Number of prospects who sat down for a presentation</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Number of presentations completed</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Number of close attempts made</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Number of CareShield cases closed</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Number of voucher follow-up appointments booked</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>Top objection heard today</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                            <tr><td>One thing you will do differently next shift</td><td style="color:var(--muted);font-style:italic;">___________</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sop-phase-label">Post-Shift WhatsApp to Team Lead</div>
+                <p class="sop-phase-desc" style="margin-bottom:8px;">Every adviser sends this message to the team group chat after every shift:</p>
+                <div class="sop-script format" style="margin-bottom:16px;">
+                    <span class="sop-script-role">Format</span>
+                    <div class="sop-script-text">Shift Report — [Date] [Location]: Engaged: ___ | Presented: ___ | Closed: ___ | Vouchers Booked: ___ | Top Objection: ___ | My Takeaway: ___</div>
+                </div>
+
+                <div class="sop-phase-label">Team Debrief — After Every Shift</div>
+                <p class="sop-phase-desc" style="margin-bottom:8px;">If 2 or more advisers were on the same shift, spend 10 minutes debriefing together before leaving:</p>
+                <div class="sop-tip">
+                    <ul>
+                        <li>What worked well today that we should repeat?</li>
+                        <li>What was the hardest objection and how did we handle it?</li>
+                        <li>Did we hit our shift target? If not, what got in the way?</li>
+                        <li>What is one thing each of us will practise before the next shift?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 9 -->
+            <div class="sop-section">
+                <div class="sop-section-header">
+                    <div class="sop-num">9</div>
+                    <h3 class="sop-section-title">Roadshow Cost Management</h3>
+                </div>
+                <p class="sop-section-sub">Roadshows are expensive. Every shift must generate enough closed cases and follow-up pipeline to justify the cost.</p>
+                <div class="sop-table-wrap" style="margin-bottom:16px;">
+                    <table class="sop-table">
+                        <thead><tr><th>Cost Item</th><th>Estimated Cost</th><th>Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td>Booth/location rental</td><td>$300–$800 per shift</td><td>MRT/mall varies significantly</td></tr>
+                            <tr><td>Puller / promoter fee</td><td>$80–$150 per shift</td><td>If using external puller</td></tr>
+                            <tr><td>Gifts / redemption items</td><td>$100–$300 per shift</td><td>Depends on volume</td></tr>
+                            <tr><td>Vouchers ($20 each)</td><td>$60–$150 per shift</td><td>For 3–8 voucher bookings</td></tr>
+                            <tr class="sop-cost-total"><td>Total Cost</td><td>~$600–$1,400 per shift</td><td>Varies by location</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sop-tip">
+                    <div class="sop-tip-title">Break-Even Rule — Every Shift Must Hit This</div>
+                    <ul>
+                        <li>Minimum 1 CareShield close per shift just to cover costs</li>
+                        <li>2 closes per shift = profitable shift</li>
+                        <li>3 closes per shift = excellent — evaluate if this location should be a regular slot</li>
+                        <li>0 closes, 0 voucher bookings = review immediately — wrong location, wrong time, or execution issue</li>
+                        <li>Track cost per case closed every month — if it exceeds $700, the roadshow model needs optimisation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sop-banner">
+                <h3>The Roadshow Is a System.</h3>
+                <p>When every person knows their role, follows the script, and measures their numbers — the system produces results consistently.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADSHOW -->
+    <div class="portal-panel" id="panel-roadshow">
+        <h2 class="portal-section-title">Roadshow Tool</h2>
+        <p class="portal-section-sub">Commission and income calculator for roadshow events.</p>
+        <div class="roadshow-card">
+            <h3>Coming Soon</h3>
+            <p>The Roadshow calculator is currently in development and will be available here once ready.</p>
+            <div class="roadshow-dev-pill">In Development</div>
+        </div>
+    </div>
+
+    <!-- LEADS: DIRECTOR VIEW -->
+    <div class="portal-panel" id="panel-leads-director" style="display:none;">
+        <h2 class="portal-section-title">Unassigned Leads</h2>
+        <p class="portal-section-sub">Assign new leads to agents from here.</p>
+        <div class="unassigned-tabs">
+            <button class="unassigned-tab active" id="tab-sales" onclick="switchLeadTab('sales')">Sales Leads <span class="tab-badge" id="sales-count">…</span></button>
+            <button class="unassigned-tab" id="tab-recruitment" onclick="switchLeadTab('recruitment')">Recruitment Leads <span class="tab-badge" id="recruitment-count">…</span></button>
+        </div>
+        <div id="leads-sales-panel"><div class="leads-empty"><h3>Loading…</h3></div></div>
+        <div id="leads-recruitment-panel" style="display:none;"><div class="leads-empty"><h3>Loading…</h3></div></div>
+    </div>
+
+    <!-- LEADS: AGENT VIEW -->
+    <div class="portal-panel" id="panel-leads-agent" style="display:none;">
+        <h2 class="portal-section-title">My Leads</h2>
+        <p class="portal-section-sub">Leads assigned to you by Jason.</p>
+        <div id="myLeadsContent"><div class="leads-empty"><h3>Loading…</h3></div></div>
+    </div>
+
+    <!-- LEADS: PLACEHOLDER (active on load, replaced by JS) -->
+    <div class="portal-panel active" id="panel-leads">
+        <div class="leads-empty"><h3>Loading…</h3><p>Please wait.</p></div>
+    </div>
+
+</div>
+
+<script>
+    // ── TOOL LABELS ──
+    const TOOL_LABELS = {
+        gap_calculator: 'Gap Calculator', health_check: 'Health Check',
+        life_stage: 'Life Stage', comparison: 'Comparison',
+        cpf_guide: 'CPF Guide', tax_guide: 'Tax Guide',
+        careers: 'Careers', enneagram: 'Enneagram'
+    };
+
+    let currentAgent = null;
+
+    // ── INIT ──
+    async function initPortal() {
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (!session) { window.location.href = 'agent-login.html'; return; }
+
+        const agentId = session.user.user_metadata.agent_id;
+        const { data: agent } = await _supabase
+            .from('agents').select('*').eq('id', agentId).single();
+        if (!agent) { window.location.href = 'agent-login.html'; return; }
+
+        currentAgent = agent;
+        document.getElementById('agentName').textContent = agent.name;
+        document.getElementById('agentRole').textContent = agent.role;
+        document.getElementById('agentIdDisplay').textContent = 'ID: ' + agent.id;
+
+        // Remove loading placeholder, show correct leads panel in nav
+        document.getElementById('panel-leads').remove();
+
+        if (agent.role === 'Director') {
+            showDirectorLeadsPanel();
+            await loadSalesLeads();
+            await loadRecruitmentLeads();
+        } else {
+            showAgentLeadsPanel();
+            await loadMyLeads();
+        }
+    }
+
+    function showDirectorLeadsPanel() {
+        document.getElementById('panel-leads-director').style.display = '';
+        // Make it active if leads tab is currently active
+        const activePanel = document.querySelector('.portal-panel.active');
+        if (!activePanel) document.getElementById('panel-leads-director').classList.add('active');
+    }
+
+    function showAgentLeadsPanel() {
+        document.getElementById('panel-leads-agent').style.display = '';
+        const activePanel = document.querySelector('.portal-panel.active');
+        if (!activePanel) document.getElementById('panel-leads-agent').classList.add('active');
+    }
+
+    // ── DIRECTOR: LOAD SALES LEADS ──
+    async function loadSalesLeads() {
+        const { data: leads, error } = await _supabase
+            .from('client_leads').select('*')
+            .eq('status', 'unassigned').order('created_at', { ascending: false });
+        const { data: agents } = await _supabase
+            .from('agents').select('id, name').eq('is_active', true).neq('role', 'Director');
+
+        document.getElementById('sales-count').textContent = leads ? leads.length : 0;
+        document.getElementById('leads-sales-panel').innerHTML =
+            error ? '<div class="leads-empty"><h3>Error loading leads.</h3></div>'
+                  : renderLeadsTable(leads || [], agents || [], 'client');
+    }
+
+    // ── DIRECTOR: LOAD RECRUITMENT LEADS ──
+    async function loadRecruitmentLeads() {
+        const { data: leads, error } = await _supabase
+            .from('recruitment_leads').select('*')
+            .eq('status', 'unassigned').order('created_at', { ascending: false });
+        const { data: agents } = await _supabase
+            .from('agents').select('id, name').eq('is_active', true).neq('role', 'Director');
+
+        document.getElementById('recruitment-count').textContent = leads ? leads.length : 0;
+        document.getElementById('leads-recruitment-panel').innerHTML =
+            error ? '<div class="leads-empty"><h3>Error loading leads.</h3></div>'
+                  : renderLeadsTable(leads || [], agents || [], 'recruitment');
+    }
+
+    function renderLeadsTable(leads, agents, type) {
+        if (leads.length === 0) {
+            return '<div class="leads-empty"><h3>No unassigned leads</h3><p>All caught up!</p></div>';
+        }
+        const agentOptions = agents.map(a =>
+            `<option value="${a.id}">${a.name}</option>`).join('');
+        const rows = leads.map(lead => {
+            const source = lead.tool || lead.source;
+            const toolData = lead.tool_data || lead.source_data || {};
+            const pills = Object.entries(toolData)
+                .filter(([,v]) => v !== null && v !== undefined && v !== '' && v !== '{}')
+                .slice(0, 6)
+                .map(([k, v]) => `<span class="tool-data-pill"><b>${k.replace(/_/g,' ')}:</b> ${typeof v === 'object' ? '…' : v}</span>`)
+                .join('');
+            return `<tr>
+                <td>${lead.name}</td>
+                <td>${lead.phone || '—'}</td>
+                <td>${lead.email || '—'}</td>
+                <td><span class="tool-badge">${TOOL_LABELS[source] || source}</span><div class="tool-data-wrap">${pills}</div></td>
+                <td>${new Date(lead.created_at).toLocaleDateString('en-SG')}</td>
+                <td>
+                    <select class="assign-select" id="assign-${lead.id}">
+                        <option value="">Select agent…</option>${agentOptions}
+                    </select>
+                    <button class="assign-btn" onclick="assignLead('${lead.id}','${type}')">Assign</button>
+                </td>
+            </tr>`;
+        }).join('');
+        return `<div class="leads-table-wrap"><table class="leads-table">
+            <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Tool & Inputs</th><th>Date</th><th>Assign To</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table></div>`;
+    }
+
+    window.assignLead = async function(leadId, type) {
+        const agentId = document.getElementById('assign-' + leadId).value;
+        if (!agentId) { alert('Please select an agent first.'); return; }
+        const table = type === 'client' ? 'client_leads' : 'recruitment_leads';
+        const { error } = await _supabase.from(table).update({
+            status: 'assigned',
+            assigned_to: agentId,
+            assigned_at: new Date().toISOString()
+        }).eq('id', leadId);
+        if (error) { alert('Assignment failed: ' + error.message); return; }
+        const row = document.getElementById('assign-' + leadId).closest('tr');
+        row.remove();
+        // Update count badge
+        const countEl = document.getElementById(type === 'client' ? 'sales-count' : 'recruitment-count');
+        if (countEl) countEl.textContent = Math.max(0, parseInt(countEl.textContent) - 1);
+    };
+
+    // ── AGENT: LOAD MY LEADS ──
+    async function loadMyLeads() {
+        const [{ data: clientLeads }, { data: recruitLeads }] = await Promise.all([
+            _supabase.from('client_leads').select('*')
+                .eq('assigned_to', currentAgent.id).order('assigned_at', { ascending: false }),
+            _supabase.from('recruitment_leads').select('*')
+                .eq('assigned_to', currentAgent.id).order('assigned_at', { ascending: false })
+        ]);
+        const all = [...(clientLeads || []), ...(recruitLeads || [])];
+        document.getElementById('leadsCount').textContent = all.length;
+        if (all.length === 0) {
+            document.getElementById('myLeadsContent').innerHTML =
+                '<div class="leads-empty"><h3>No leads assigned yet</h3><p>Check back soon.</p></div>';
+            return;
+        }
+        const rows = all.map(lead => {
+            const source = lead.tool || lead.source;
+            return `<tr>
+                <td>${lead.name}</td>
+                <td>${lead.phone || '—'}</td>
+                <td>${lead.email || '—'}</td>
+                <td><span class="tool-badge">${TOOL_LABELS[source] || source}</span></td>
+                <td>${new Date(lead.assigned_at || lead.created_at).toLocaleDateString('en-SG')}</td>
+            </tr>`;
+        }).join('');
+        document.getElementById('myLeadsContent').innerHTML =
+            `<p class="leads-count">You have <strong>${all.length}</strong> lead${all.length !== 1 ? 's' : ''} assigned.</p>
+            <div class="leads-table-wrap"><table class="leads-table">
+                <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Source</th><th>Assigned</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table></div>`;
+    }
+
+    // ── LEADS SUB-TAB SWITCH ──
+    window.switchLeadTab = function(tab) {
+        document.getElementById('leads-sales-panel').style.display = tab === 'sales' ? '' : 'none';
+        document.getElementById('leads-recruitment-panel').style.display = tab === 'recruitment' ? '' : 'none';
+        document.getElementById('tab-sales').classList.toggle('active', tab === 'sales');
+        document.getElementById('tab-recruitment').classList.toggle('active', tab === 'recruitment');
+    };
+
+    // ── TAB SWITCHING ──
+    function switchTab(panel, btn) {
+        document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+        const el = document.getElementById('panel-' + panel);
+        if (el) el.classList.add('active');
+        btn.classList.add('active');
+        // For leads tab, show correct panel based on role
+        if (panel === 'leads') {
+            if (currentAgent && currentAgent.role === 'Director') {
+                document.getElementById('panel-leads-director').classList.add('active');
+            } else if (currentAgent) {
+                document.getElementById('panel-leads-agent').classList.add('active');
+            }
+        }
+    }
+
+    // ── TRAINING CATEGORY SWITCHING ──
+    function switchTraining(folderId, btn) {
+        document.querySelectorAll('.training-cat').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.training-iframe').forEach(function(f) {
+            f.style.display = f.dataset.folder === folderId ? 'block' : 'none';
+        });
+    }
+
+    // ── SOP ACCORDION ──
+    function initAccordions() {
+        document.querySelectorAll('.sop-section').forEach(function(section) {
+            var header = section.querySelector('.sop-section-header');
+            if (!header || header.dataset.accInit) return;
+            header.dataset.accInit = '1';
+            var arrow = document.createElement('span');
+            arrow.className = 'sop-acc-arrow';
+            arrow.innerHTML = '&#9660;';
+            header.appendChild(arrow);
+            var content = document.createElement('div');
+            content.className = 'sop-acc-content';
+            var siblings = [];
+            var node = header.nextElementSibling;
+            while (node) { siblings.push(node); node = node.nextElementSibling; }
+            siblings.forEach(function(s) { content.appendChild(s); });
+            section.appendChild(content);
+            header.addEventListener('click', function() {
+                var isOpen = content.classList.contains('acc-open');
+                var subpanel = section.closest('.sop-subpanel');
+                subpanel.querySelectorAll('.sop-acc-content').forEach(function(c) { c.classList.remove('acc-open'); });
+                subpanel.querySelectorAll('.sop-section-header').forEach(function(h) { h.classList.remove('acc-open'); });
+                if (!isOpen) { content.classList.add('acc-open'); header.classList.add('acc-open'); }
+            });
+        });
+    }
+    initAccordions();
+
+    function switchSop(panel, btn) {
+        document.querySelectorAll('.sop-subpanel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.sop-subbtn').forEach(b => b.classList.remove('active'));
+        document.getElementById('sop-' + panel).classList.add('active');
+        btn.classList.add('active');
+        initAccordions();
+    }
+
+    // ── LOGOUT ──
+    async function logout() {
+        await _supabase.auth.signOut();
+        window.location.href = 'agent-login.html';
+    }
+
+    // ── START ──
+    initPortal();
+</script>
+</body>
+</html>

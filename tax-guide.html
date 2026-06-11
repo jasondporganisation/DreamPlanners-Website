@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Savings Through SRS + Insurance — Dream Planners Group</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html" class="active">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html" class="active">Tools</a>
+    <a href="careers.html">Careers</a>
+        <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<section class="dpg-hero">
+  <div>
+    <h1>Save Up to $5,000/Year on Taxes Through <em>SRS + Insurance</em></h1>
+    <p>Most working Singaporeans overpay their taxes simply because they do not know about these legitimate strategies.</p>
+  </div>
+  <div class="dpg-scroll-indicator">
+      <span></span>
+  </div>
+</section>
+
+<main class="dpg-container">
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 1. SRS: The Tax Savings Account Most People Ignore</h3>
+    <p>The Supplementary Retirement Scheme (SRS) is a voluntary savings scheme that gives you an immediate tax deduction on every dollar you contribute.</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Contribution cap:</strong> $15,300/year for Singaporeans and PRs ($35,700 for foreigners)</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Tax deduction:</strong> Every dollar contributed reduces your taxable income dollar-for-dollar</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Withdrawal benefit:</strong> When you withdraw at/after the statutory retirement age, only 50% of the amount is taxable</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Investment flexibility:</strong> SRS funds can be invested in insurance, unit trusts, shares, fixed deposits, and more</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">For someone in the 15% tax bracket, contributing $15,300 to SRS saves $2,295 in taxes immediately. That is a guaranteed 15% return on the first year alone.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 2. How Insurance Premiums Reduce Your Tax Bill</h3>
+    <p>Several insurance-related deductions are available to Singapore tax residents:</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Life insurance relief:</strong> Premiums paid on life insurance policies qualify for tax relief of up to $5,000 (subject to CPF contribution limits)</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>CPF Cash top-up relief:</strong> Voluntary cash top-ups to your SA/RA (up to $8,000 self + $8,000 for a family member) are tax-deductible under the Retirement Sum Topping-Up Scheme</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Course fees relief:</strong> If you pursue financial planning qualifications, course fees qualify for up to $5,500 in relief</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">Life insurance relief is available when your CPF contributions are less than $5,000/year. This often applies to self-employed individuals or those with lower incomes.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 3. SRS + Insurance Combo Strategy</h3>
+    <p>Here is where things get powerful. You can use your SRS funds to purchase insurance policies, achieving two goals at once:</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Immediate tax relief</strong> on the SRS contribution itself</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Insurance coverage</strong> (e.g., endowment plans, retirement income plans) purchased with SRS funds</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Wealth accumulation</strong> through the policy's investment growth over time</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)"><strong>Reduced tax on withdrawal</strong> since only 50% of SRS withdrawals after retirement age are taxed</li>
+    </ul>
+    <p>Popular SRS-eligible insurance products include:</p>
+    <ul style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Single-premium endowment plans</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Retirement income plans with guaranteed payouts</li>
+      <li style="list-style:disc;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Investment-linked policies (ILPs)</li>
+    </ul>
+    <div class="dpg-alert dpg-alert-info">By funneling SRS into an insurance policy, you get tax savings today, coverage now, and retirement income later.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 4. Year-End Tax Planning Checklist</h3>
+    <p>Complete these steps before December 31 each year to maximize your deductions for the current Year of Assessment:</p>
+    <ol style="padding-left:1.25rem;margin-top:.5rem;margin-bottom:.75rem">
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Contribute to SRS (up to $15,300 for Singaporeans/PRs)</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Make CPF cash top-ups to your own SA/RA (up to $8,000 relief)</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Make CPF cash top-ups for a family member (up to $8,000 additional relief)</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Review your life insurance policies and ensure premiums are paid before year-end</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Check if you qualify for NSman, parent, spouse, or child relief</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Consolidate donation receipts (250% tax deduction on qualifying donations)</li>
+      <li style="list-style:decimal;font-size:.95rem;margin-bottom:.6rem;color:var(--text)">Review your SRS investment allocation — do not let cash sit idle in the account</li>
+    </ol>
+    <div class="dpg-alert dpg-alert-info">Set a calendar reminder for early December each year. Most of these actions take less than 30 minutes online but can save you thousands.</div>
+  </div>
+
+  <div class="dpg-section">
+    <h3 class="dpg-section-title"><span class="dot"></span> 5. Real Example: $80,000 Earner</h3>
+    <p>Let us look at how a salaried Singaporean earning $80,000/year can reduce their tax bill:</p>
+
+    <table class="dpg-compare-table">
+      <thead>
+        <tr><th>Strategy</th><th style="text-align:right">Tax Relief</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SRS contribution</td><td style="text-align:right;font-weight:600">$15,300</td></tr>
+        <tr><td>CPF top-up (self)</td><td style="text-align:right;font-weight:600">$8,000</td></tr>
+        <tr><td>CPF top-up (parent)</td><td style="text-align:right;font-weight:600">$8,000</td></tr>
+        <tr><td style="font-weight:700;color:var(--gold)">Total deductions</td><td style="text-align:right;font-weight:700;color:var(--gold)">$31,300</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:1rem"><strong>Without optimization:</strong></p>
+    <p>Taxable income = $80,000. After personal reliefs and CPF deductions, estimated tax = ~$3,350.</p>
+
+    <p><strong>With optimization:</strong></p>
+    <p>Taxable income effectively reduced by $31,300. New estimated tax = ~$1,050.</p>
+
+    <div class="dpg-alert dpg-alert-success"><strong>Estimated annual tax savings: ~$2,300.</strong> Over 20 years, that is $46,000 saved — and your CPF and SRS balances are growing with compound interest the entire time.</div>
+  </div>
+
+  <!-- Lead Capture Form -->
+  <div class="dpg-section" id="formContainer" style="border-color:var(--gold);text-align:center">
+    <div id="formContent">
+      <h3 class="dpg-section-title" style="justify-content:center"><span class="dot"></span> Find Out Exactly How Much You Can Save</h3>
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:.95rem">Book a free 15-minute tax optimization review. We will analyze your income, CPF balances, and existing policies to identify your best savings opportunities.</p>
+      <form id="leadForm" class="dpg-form" style="text-align:left">
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="name">Name</label>
+          <input class="dpg-form-input" type="text" id="name" name="name" required placeholder="Your full name">
+        </div>
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="phone">Phone</label>
+          <input class="dpg-form-input" type="tel" id="phone" name="phone" required placeholder="9XXX XXXX">
+          <div class="dpg-consent-error" id="taxPhoneError">Please enter a valid phone number (digits only).</div>
+        </div>
+        <div class="dpg-form-group">
+          <label class="dpg-form-label" for="email">Email</label>
+          <input class="dpg-form-input" type="email" id="email" name="email" required placeholder="you@example.com">
+          <div class="dpg-consent-error" id="taxEmailError">Please enter a valid email address (must include @).</div>
+        </div>
+        <div class="dpg-consent-wrap">
+          <input type="checkbox" id="taxConsent" name="consent" />
+          <label class="dpg-consent-label" for="taxConsent">
+            I agree to Dream Planners Group collecting and using my personal data to conduct a free tax optimization review and contact me about relevant strategies and services, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('taxTc')">Terms &amp; Conditions and Privacy Policy</button>.
+          </label>
+        </div>
+        <div class="dpg-tc-expand" id="taxTc">
+          <h4>1. Purpose of Data Collection</h4>
+          <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, and email address) for the purpose of conducting your complimentary tax optimization review and contacting you about financial products and services distributed by GEFA through all channels including SMS, phone call, email, and social media.</p>
+          <h4>2. Data Protection (PDPA)</h4>
+          <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. Data will be retained for no longer than 12 months or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+          <h4>3. Nature of the Review</h4>
+          <p>The tax optimization review is informational only and does not constitute financial advice under the Financial Advisers Act (Cap. 110). You are under no obligation to purchase any product or service. This service is available to Singapore residents aged 18 and above.</p>
+          <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+          <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>.</div>
+          <h4>5. General</h4>
+          <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This service is governed by the laws of Singapore.</p>
+        </div>
+        <div class="dpg-consent-error" id="taxConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+        <button type="submit" class="dpg-btn" style="width:100%;margin-top:.5rem">Book My Free Tax Review</button>
+      </form>
+    </div>
+    <div class="dpg-thankyou" id="thankYou" style="display:none">
+      <h3>Thank you!</h3>
+      <p>We have received your details. One of our advisors will reach out within 1-2 business days to schedule your free 15-minute tax optimization review.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const consent = document.getElementById('taxConsent').checked;
+  const consentErr = document.getElementById('taxConsentError');
+  if (!consent) { consentErr.classList.add('visible'); return; }
+  consentErr.classList.remove('visible');
+
+  const phoneVal = document.getElementById('phone').value.trim();
+  const emailVal = document.getElementById('email').value.trim();
+  const phoneErrEl = document.getElementById('taxPhoneError');
+  const emailErrEl = document.getElementById('taxEmailError');
+  let valid = true;
+  if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phoneVal.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+  if (!valid) return;
+
+  const data = {
+    name: document.getElementById('name').value.trim(),
+    phone: phoneVal,
+    email: emailVal,
+    source: 'tax-guide',
+    timestamp: new Date().toISOString()
+  };
+
+  const { error: sbError } = await _supabase
+    .from('client_leads')
+    .insert({
+      tool: 'tax_guide',
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      tool_data: {}
+    });
+  if (sbError) {
+    console.error('Submission failed:', sbError.message);
+    alert('Something went wrong. Please try again or contact us directly.');
+    return;
+  }
+
+  // Show thank you message
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('thankYou').style.display = 'block';
+});
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

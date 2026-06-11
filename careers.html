@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers — Dream Planners Group</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .careers-who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .careers-training-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) {
+            .careers-who-grid { grid-template-columns: 1fr; }
+            .careers-training-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html">Tools</a>
+        <a href="careers.html" class="active">Careers</a>
+    </div>
+    <a href="agent-login.html" class="dpg-nav-agent-login">Agent Login</a>
+    <a href="contact.html" class="dpg-nav-cta">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html">Tools</a>
+    <a href="careers.html" class="active">Careers</a>
+    <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="dpg-hero" style="min-height:50vh;">
+    <div>
+        <div style="font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-pale); margin-bottom:16px; font-weight:600;">Join Our Team</div>
+        <h1>Build Your Career in<br>Financial Advisory</h1>
+        <p style="margin-bottom:32px;">Join Dream Planners Group — Great Eastern's fastest-growing advisory team in Singapore.</p>
+        <a href="#apply" class="dpg-btn" style="text-decoration:none; padding:14px 32px; font-size:1rem;">Apply Now</a>
+    </div>
+    <div class="dpg-scroll-indicator">
+        <span></span>
+    </div>
+</section>
+
+<!-- ENNEAGRAM BANNER -->
+<div class="dpg-container dpg-fade-in" style="padding-top:2rem; padding-bottom:0;">
+    <div style="background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); border-radius:var(--radius-xl); padding:2rem 2.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:1.5rem; box-shadow:var(--shadow-lg);">
+        <div>
+            <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-pale); margin-bottom:8px;">Career Discovery Tool</div>
+            <div style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--white); margin-bottom:6px;">What's Your Work Personality Type?</div>
+            <div style="font-size:0.9rem; color:rgba(255,255,255,0.65);">18 questions · 5 minutes · Discover which of the 9 Enneagram types you are and what roles suit you best.</div>
+        </div>
+        <a href="enneagram.html" class="dpg-btn" style="background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--white); text-decoration:none; padding:12px 32px; font-size:0.9rem;">Take the Test →</a>
+    </div>
+</div>
+
+<!-- THIS ISN'T JUST SALES -->
+<div class="dpg-container dpg-fade-in">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">More Than a Sales Job</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">You're not selling — you're solving</h2>
+        <div class="dpg-divider"></div>
+        <p style="color:var(--muted); max-width:600px; margin:0 auto;">Financial advisory isn't about pushing products. It's about understanding people — their goals, fears, and life stages — and building strategies that protect what matters most to them.</p>
+    </div>
+</div>
+
+<!-- WHY JOIN US -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Why Join Us</div>
+        <h2 style="font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:8px;">A career that grows with you</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="dpg-why-grid">
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="dpg-why-title">Uncapped Earnings</div>
+            <div class="dpg-why-desc">Performance-based income with no ceiling. Build both active and passive income streams over time.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div class="dpg-why-title">Full Training & Mentorship</div>
+            <div class="dpg-why-desc">In-house tutorials, exam clinics, 1-to-1 coaching, and guidance from experienced leaders — from day one.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="dpg-why-title">Great Eastern Brand</div>
+            <div class="dpg-why-desc">Represent Singapore's most established insurer with over 100 years of trust and the resources to match.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="dpg-why-title">Flexible Lifestyle</div>
+            <div class="dpg-why-desc">Set your own schedule. No fixed office hours. Build a career around your life, not the other way around.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="dpg-why-title">Career Progression</div>
+            <div class="dpg-why-desc">A proven advancement pathway — fast-track into management where you identify, nurture, and develop future talent.</div>
+        </div>
+        <div class="dpg-why-item">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <div class="dpg-why-title">Digital Tools</div>
+            <div class="dpg-why-desc">Access to Great Eastern's suite of digital tools for prospecting, client management, and needs analysis.</div>
+        </div>
+    </div>
+</div>
+
+<!-- WHO IS THIS FOR -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Who Is This For</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy);">Whether you're starting out or starting over</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="careers-who-grid">
+        <div class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div class="dpg-card-title">Undergraduates</div>
+            <div class="dpg-card-desc">Start building your career early. Gain real-world experience, develop client skills, and earn while you study.</div>
+        </div>
+        <div class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+            <div class="dpg-card-title">Fresh Graduates</div>
+            <div class="dpg-card-desc">Skip the job hunt. Step into a career with unlimited potential from day one — no experience required.</div>
+        </div>
+        <div class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+            <div class="dpg-card-title">Mid-Career Switchers</div>
+            <div class="dpg-card-desc">Bring your life experience to a fulfilling second career. Your network and maturity are your biggest assets.</div>
+        </div>
+    </div>
+</div>
+
+<!-- CAREER PROGRESSION -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Career Track</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy);">Together, we soar</h2>
+        <div class="dpg-divider"></div>
+        <p style="color:var(--muted); max-width:500px; margin:0 auto;">A clear progression path from day one. Your growth has no ceiling.</p>
+    </div>
+    <div style="max-width:500px; margin:0 auto; display:flex; flex-direction:column; gap:0; position:relative;">
+        <!-- Vertical line -->
+        <div style="position:absolute; left:50%; top:24px; bottom:24px; width:2px; background:linear-gradient(to bottom, var(--gold-pale), var(--gold), var(--navy)); transform:translateX(-50%); z-index:0;"></div>
+
+        <div style="text-align:center; padding:14px 24px; background:var(--navy-dark); color:var(--white); border-radius:8px; font-weight:700; font-size:1rem; position:relative; z-index:1; box-shadow:0 4px 16px rgba(26,36,114,0.2);">
+            Director
+        </div>
+        <div style="height:20px;"></div>
+        <div style="text-align:center; padding:12px 24px; background:var(--navy); color:var(--white); border-radius:8px; font-weight:600; font-size:0.95rem; position:relative; z-index:1; max-width:85%; margin:0 auto; box-shadow:0 4px 16px rgba(26,36,114,0.15);">
+            Associate Director
+        </div>
+        <div style="height:16px;"></div>
+        <div style="text-align:center; padding:12px 24px; background:var(--blue-mid); color:var(--white); border-radius:8px; font-weight:600; font-size:0.9rem; position:relative; z-index:1; max-width:75%; margin:0 auto; box-shadow:0 4px 12px rgba(59,91,219,0.15);">
+            Executive Senior Manager
+        </div>
+        <div style="height:14px;"></div>
+        <div style="text-align:center; padding:12px 24px; background:var(--blue); color:var(--white); border-radius:8px; font-weight:600; font-size:0.9rem; position:relative; z-index:1; max-width:65%; margin:0 auto; box-shadow:0 4px 12px rgba(37,99,235,0.15);">
+            Senior Manager
+        </div>
+        <div style="height:12px;"></div>
+        <div style="text-align:center; padding:11px 24px; background:linear-gradient(135deg, var(--blue), var(--blue-mid)); color:var(--white); border-radius:8px; font-weight:600; font-size:0.88rem; position:relative; z-index:1; max-width:58%; margin:0 auto;">
+            Manager
+        </div>
+        <div style="height:12px;"></div>
+        <div style="display:flex; gap:12px; justify-content:center; align-items:stretch; position:relative; z-index:1; max-width:75%; margin:0 auto;">
+            <div style="flex:1; text-align:center; padding:12px 16px; background:var(--white); color:var(--navy); border:2px solid var(--gold); border-radius:8px; font-weight:600; font-size:0.82rem; display:flex; align-items:center; justify-content:center;">
+                Executive Senior FP
+            </div>
+            <div style="flex:1; text-align:center; padding:12px 16px; background:var(--white); color:var(--navy); border:2px solid var(--gold); border-radius:8px; font-weight:600; font-size:0.82rem; display:flex; align-items:center; justify-content:center;">
+                Senior FP
+            </div>
+        </div>
+        <div style="height:12px;"></div>
+        <div style="text-align:center; padding:14px 24px; background:var(--gold); color:var(--white); border-radius:8px; font-weight:700; font-size:1rem; position:relative; z-index:1; max-width:70%; margin:0 auto; box-shadow:0 4px 16px rgba(184,149,42,0.25);">
+            Financial Planner
+            <div style="font-size:0.75rem; font-weight:400; opacity:0.8; margin-top:2px;">You start here</div>
+        </div>
+    </div>
+</div>
+
+<!-- TRAINING -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="dpg-section">
+        <div class="dpg-section-title"><span class="dot"></span> How We Train You</div>
+        <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">You don't need any prior experience. Our structured programme takes you from zero to confident advisor.</p>
+        <div class="careers-training-grid">
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">Pre-contract exam preparation (CMFAS M5, M9, M9A, HI)</span>
+            </div>
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">In-house tutorials and exam clinics</span>
+            </div>
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">1-to-1 coaching with experienced mentors</span>
+            </div>
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">Mock exams and online practice questions</span>
+            </div>
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">Prospecting and sales presentation skills</span>
+            </div>
+            <div class="dpg-checklist-item">
+                <span style="color:var(--gold); font-weight:600;">&#10003;</span>
+                <span class="dpg-checklist-text">Client communication and telephone etiquette</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TRAINING PROGRAMME -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="dpg-section">
+        <div class="dpg-section-title"><span class="dot"></span> Our Training Programme</div>
+        <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">A structured progression path that takes you from newcomer to top performer — the Wolf Training Programme.</p>
+        <div class="careers-training-grid">
+            <div style="background:var(--white); border-radius:10px; padding:16px; border-left:4px solid var(--gold);">
+                <div style="font-weight:700; color:var(--navy); margin-bottom:4px;">Epsilon (0–3 months)</div>
+                <div style="color:var(--muted); font-size:0.85rem;">In-house training for newcomers. Build foundational knowledge, pass licensing exams, and learn the basics of financial advisory.</div>
+            </div>
+            <div style="background:var(--white); border-radius:10px; padding:16px; border-left:4px solid var(--gold);">
+                <div style="font-weight:700; color:var(--navy); margin-bottom:4px;">Alpha (4–8 months)</div>
+                <div style="color:var(--muted); font-size:0.85rem;">Alpha ONE and Alpha Sales 2 Success programs. Develop prospecting skills, client presentation techniques, and closing strategies.</div>
+            </div>
+            <div style="background:var(--white); border-radius:10px; padding:16px; border-left:4px solid var(--gold);">
+                <div style="font-weight:700; color:var(--navy); margin-bottom:4px;">Beta (9 months – 2 years)</div>
+                <div style="color:var(--muted); font-size:0.85rem;">Personal branding and seminar selling. Build your professional identity and learn to engage larger audiences effectively.</div>
+            </div>
+            <div style="background:var(--white); border-radius:10px; padding:16px; border-left:4px solid var(--gold);">
+                <div style="font-weight:700; color:var(--navy); margin-bottom:4px;">Gamma (3+ years)</div>
+                <div style="color:var(--muted); font-size:0.85rem;">Advanced level — becoming top salespeople. Master complex financial strategies and transition into leadership and mentorship roles.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:16px;">
+        <div class="dpg-section-label">How It Works</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy);">3 simple steps to get started</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="dpg-steps">
+        <div class="dpg-step">
+            <div class="dpg-step-num">1</div>
+            <div class="dpg-step-title">Apply</div>
+            <div class="dpg-step-desc">Fill in the form below or chat with us on WhatsApp.</div>
+        </div>
+        <div class="dpg-step">
+            <div class="dpg-step-num">2</div>
+            <div class="dpg-step-title">Interview</div>
+            <div class="dpg-step-desc">A casual conversation about your goals — no trick questions, just getting to know you.</div>
+        </div>
+        <div class="dpg-step">
+            <div class="dpg-step-num">3</div>
+            <div class="dpg-step-title">Onboard</div>
+            <div class="dpg-step-desc">We handle your licensing, training, and setup. You focus on learning.</div>
+        </div>
+    </div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;" id="apply">
+    <div class="dpg-section">
+        <div class="dpg-section-title"><span class="dot"></span> Apply Now</div>
+        <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">Fill in the form below and we'll get back to you within 48 hours.</p>
+        <form id="careerForm" class="dpg-form" onsubmit="submitCareerForm(event)">
+            <div class="dpg-form-group">
+                <label class="dpg-form-label">Full Name</label>
+                <input type="text" class="dpg-form-input" id="careerName" required placeholder="Your full name">
+            </div>
+            <div class="dpg-form-group">
+                <label class="dpg-form-label">Mobile Number</label>
+                <input type="tel" class="dpg-form-input" id="careerPhone" required placeholder="+65 9XXX XXXX">
+                <div class="dpg-consent-error" id="careerPhoneError">Please enter a valid phone number (digits only).</div>
+            </div>
+            <div class="dpg-form-group">
+                <label class="dpg-form-label">Email</label>
+                <input type="email" class="dpg-form-input" id="careerEmail" required placeholder="your@email.com">
+                <div class="dpg-consent-error" id="careerEmailError">Please enter a valid email address (must include @).</div>
+            </div>
+            <div class="dpg-form-group">
+                <label class="dpg-form-label">Current Status</label>
+                <select class="dpg-form-select" id="careerStatus" required>
+                    <option value="">Select your status</option>
+                    <option value="Student">Student</option>
+                    <option value="Working Professional">Working Professional</option>
+                    <option value="Career Switcher">Career Switcher</option>
+                    <option value="National Service">National Service</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="dpg-form-group">
+                <label class="dpg-form-label">Why are you interested?</label>
+                <textarea class="dpg-form-input" id="careerWhy" rows="4" placeholder="Tell us about yourself and what interests you about financial advisory..."></textarea>
+            </div>
+            <div class="dpg-consent-wrap">
+                <input type="checkbox" id="careerConsent" name="consent" />
+                <label class="dpg-consent-label" for="careerConsent">
+                    I agree to Dream Planners Group (Great Eastern Financial Advisers) collecting, using, and disclosing my personal data to process my career application and contact me regarding this opportunity, in accordance with the <button type="button" class="dpg-tc-toggle" onclick="toggleTC('careerTc')">Terms &amp; Conditions and Privacy Policy</button>. I understand this does not guarantee an offer of employment.
+                </label>
+            </div>
+            <div class="dpg-tc-expand" id="careerTc">
+                <h4>1. Purpose of Data Collection</h4>
+                <p>By submitting this form, you consent to Dream Planners Group and Great Eastern Financial Advisers Pte Ltd ("GEFA") and its authorised representatives collecting, using, and disclosing your personal data (name, phone number, email address, current status, and application response) for the purpose of evaluating your career application and contacting you regarding this opportunity through all channels including SMS, phone call, and email.</p>
+                <h4>2. Data Protection (PDPA)</h4>
+                <p>Your personal data is collected in compliance with the Singapore Personal Data Protection Act 2012 (PDPA). Your data will not be sold to third parties. It will be shared only with the Dream Planners Group hiring team and relevant GEFA representatives involved in recruitment. Data will be retained for no longer than 12 months from submission or until you withdraw consent, whichever is earlier. To withdraw consent or request access to or deletion of your personal data, email jason.ng@dporganisation.com.</p>
+                <h4>3. Nature of the Application</h4>
+                <p>Submitting this form does not constitute an offer of employment or a guarantee of an interview. Dream Planners Group reserves the right to accept or decline any application at its discretion. This opportunity is open to Singapore residents and Permanent Residents aged 18 and above.</p>
+                <h4>4. Great Eastern Financial Advisers Disclosure</h4>
+                <div class="dpg-tc-disclaimer">Dream Planners Group is part of Great Eastern Financial Advisers Pte Ltd ("GEFA"). By submitting this form, you confirm that you have read and consent to GEFA and its authorised representatives collecting, using, and disclosing your personal data in accordance with the <a href="https://www.greateasternlife.com/sg/en/privacy-and-security-policy/general-public.html" target="_blank" rel="noopener">Great Eastern Life Data Privacy Notice</a>. Your consent does not supersede any previous consents you may have given to GEFA.</div>
+                <h4>5. General</h4>
+                <p>Dream Planners Group reserves the right to amend these terms at any time without prior notice. This application process is governed by the laws of Singapore.</p>
+            </div>
+            <div class="dpg-consent-error" id="careerConsentError">Please tick the checkbox to confirm your consent before proceeding.</div>
+            <button type="submit" class="dpg-btn" style="width:100%;">Apply Now</button>
+        </form>
+        <div id="careerThanks" class="dpg-thankyou" style="display:none;">
+            <h3>Thanks for your interest!</h3>
+            <p>We'll review your application and be in touch within 48 hours.</p>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:32px;">
+        <div class="dpg-section-label">Frequently Asked Questions</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy);">Common questions about joining</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div class="dpg-section">
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">Do I need a finance background?</div>
+            <div class="dpg-faq-a">Not at all. We provide comprehensive training from scratch — product knowledge, client management, prospecting, and presentation skills. Many of our top advisors came from completely unrelated fields.</div>
+        </div>
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">Is this just a sales job?</div>
+            <div class="dpg-faq-a">No. Financial advisory is about holistic planning — understanding each client's life situation and building strategies around their real needs. You're a trusted advisor, not a salesperson.</div>
+        </div>
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">How much can I earn?</div>
+            <div class="dpg-faq-a">There's no income ceiling. You earn based on performance — a combination of active income and passive, recurring income that grows over time. Monthly earnings may vary, but are usually much higher than a regular salaried position.</div>
+        </div>
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">Is this a full-time role?</div>
+            <div class="dpg-faq-a">Yes, but with full flexibility. You manage your own schedule — no fixed office hours, no micromanagement. Most advisors structure their time around their lifestyle and personal commitments.</div>
+        </div>
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">What certifications do I need?</div>
+            <div class="dpg-faq-a">You'll need to pass pre-contract licensing exams (CMFAS M5, M9, M9A, HI). We provide in-house tutorials, sample papers, exam clinics, and 1-to-1 coaching to make sure you're fully prepared.</div>
+        </div>
+        <div class="dpg-faq-item">
+            <div class="dpg-faq-q">Can I advance into management?</div>
+            <div class="dpg-faq-a">Absolutely. There's a proven career advancement pathway that lets you fast-track into management — where your primary role shifts to identifying, mentoring, and developing the next generation of advisors.</div>
+        </div>
+    </div>
+</div>
+
+<!-- TEAM CULTURE -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div style="text-align:center; margin-bottom:24px;">
+        <div class="dpg-section-label">Life at Dream Planners</div>
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--navy); margin-bottom:8px;">We work hard and celebrate together</h2>
+        <div class="dpg-divider"></div>
+    </div>
+    <div style="text-align:center;">
+        <img src="images/christmas-party.jpg" alt="Dream Planners Group Christmas party" style="max-width:100%; border-radius:12px; box-shadow:0 4px 20px rgba(26,36,114,0.10);">
+        <p style="color:var(--muted); font-size:0.85rem; margin-top:12px;">Our annual Christmas celebration — building bonds beyond the boardroom.</p>
+    </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="dpg-cta-banner">
+        <h2>Ready to start your journey?</h2>
+        <p>Take the first step toward a rewarding career in financial advisory.</p>
+        <a href="#apply" class="dpg-btn" style="text-decoration:none;">Apply Now</a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+
+function toggleTC(id) { document.getElementById(id).classList.toggle('open'); }
+
+async function submitCareerForm(e) {
+    e.preventDefault();
+
+    // PDPA consent check
+    const consent = document.getElementById('careerConsent').checked;
+    const consentErr = document.getElementById('careerConsentError');
+    if (!consent) { consentErr.classList.add('visible'); return; }
+    consentErr.classList.remove('visible');
+
+    const phoneVal = document.getElementById('careerPhone').value.trim();
+    const emailVal = document.getElementById('careerEmail').value.trim();
+    const phoneErrEl = document.getElementById('careerPhoneError');
+    const emailErrEl = document.getElementById('careerEmailError');
+    let valid = true;
+    if (!(function(p){return /^\d+$/.test(p)&&p.length>=6;})(phoneVal.replace(/[\s\+\-\(\)]/g,""))) { phoneErrEl.classList.add('visible'); valid = false; } else { phoneErrEl.classList.remove('visible'); }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailErrEl.classList.add('visible'); valid = false; } else { emailErrEl.classList.remove('visible'); }
+    if (!valid) return;
+
+    const data = {
+        name: document.getElementById('careerName').value,
+        phone: phoneVal,
+        email: emailVal,
+        status: document.getElementById('careerStatus').value,
+        interest: document.getElementById('careerWhy').value,
+        source: 'careers-page',
+        submittedAt: new Date().toISOString()
+    };
+
+    const { error: sbError } = await _supabase
+        .from('recruitment_leads')
+        .insert({
+            source: 'careers',
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            source_data: {
+                status: data.status,
+                interest: data.interest
+            }
+        });
+    if (sbError) {
+        console.error('Submission failed:', sbError.message);
+        alert('Something went wrong. Please try again or contact us directly.');
+        return;
+    }
+
+    document.getElementById('careerForm').style.display = 'none';
+    document.getElementById('careerThanks').style.display = 'block';
+    document.getElementById('careerThanks').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.dpg-fade-in').forEach(el => observer.observe(el));
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>

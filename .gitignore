@@ -1,0 +1,8 @@
+# Supabase credentials — never commit real keys
+config.js
+
+# Node
+node_modules/
+
+# Mac
+.DS_Store

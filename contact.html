@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — Dream Planners Group</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        @media (max-width: 768px) { .contact-channels { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav class="dpg-nav">
+    <a class="dpg-nav-logo" href="index.html"><img src="logo.png" alt="Dream Planners Group"></a>
+    <div class="dpg-nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tools.html">Tools</a>
+        <a href="careers.html">Careers</a>
+    </div>
+    <a href="contact.html" class="dpg-nav-cta active">Get In Touch</a>
+    <button class="dpg-hamburger" onclick="document.querySelector('.dpg-hamburger').classList.toggle('open'); document.querySelector('.dpg-mobile-menu').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="dpg-mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="tools.html">Tools</a>
+    <a href="careers.html">Careers</a>
+    <a href="agent-login.html">Agent Login</a>
+    <a href="contact.html">Get In Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="dpg-hero" style="min-height:35vh;">
+    <div>
+        <h1>Get In Touch</h1>
+        <p>We'd love to hear from you. Reach out for a free consultation or any questions.</p>
+    </div>
+    <div class="dpg-scroll-indicator">
+        <span></span>
+    </div>
+</section>
+
+<!-- CONTACT OPTIONS -->
+<div class="dpg-container dpg-fade-in">
+    <div class="contact-channels">
+        <a href="https://wa.me/6586495495" target="_blank" class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="dpg-card-title">WhatsApp</div>
+            <div class="dpg-card-desc">+65 8649 5495 — We typically reply within minutes.</div>
+            <span class="dpg-card-btn">Chat on WhatsApp <span class="arrow">&rarr;</span></span>
+        </a>
+        <a href="mailto:jason.ng@dporganisation.com" class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="dpg-card-title">Email</div>
+            <div class="dpg-card-desc">Drop us an email and we'll get back to you within 24 hours.</div>
+            <span class="dpg-card-btn">Send Email <span class="arrow">&rarr;</span></span>
+        </a>
+        <a href="https://maps.google.com/?q=3+Pickering+Street+Singapore+048660" target="_blank" class="dpg-card" style="text-align:center;">
+            <div class="dpg-icon-circle" style="margin:0 auto 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="dpg-card-title">Visit Us</div>
+            <div class="dpg-card-desc">3 Pickering Street, #02-49, Singapore 048660</div>
+            <span class="dpg-card-btn">Open in Google Maps <span class="arrow">&rarr;</span></span>
+        </a>
+    </div>
+</div>
+
+
+<!-- OFFICE HOURS -->
+<div class="dpg-container dpg-fade-in" style="padding-top:0;">
+    <div class="dpg-section" style="text-align:center;">
+        <div class="dpg-section-title" style="justify-content:center;"><span class="dot"></span> Office Hours</div>
+        <div style="color:var(--muted); font-size:0.95rem; line-height:2;">
+            <div><strong>Monday – Friday:</strong> 9:00 AM – 6:00 PM</div>
+            <div><strong>Saturday, Sunday & Public Holidays:</strong> Closed</div>
+            <div style="margin-top:12px; color:var(--gold); font-weight:500;">For urgent matters, WhatsApp us anytime.</div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="dpg-footer">
+    <div class="dpg-footer-brand">Dream Planners Group</div>
+    <div class="dpg-footer-tagline">Your trusted financial planning partners</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:16px 0;">
+        <a href="index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Home</a>
+        <a href="about.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">About</a>
+        <a href="tools.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Tools</a>
+        <a href="careers.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Careers</a>
+        <a href="contact.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem;">Contact</a>
+    </div>
+    <div class="dpg-footer-note">Dream Planners Group is part of Great Eastern Financial Advisers (GEFA).</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.dpg-fade-in').forEach(el => observer.observe(el));
+</script>
+<script src="premium.js"></script>
+
+</body>
+</html>
